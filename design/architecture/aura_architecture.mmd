@@ -1,0 +1,92 @@
+%% Aura — System Architecture
+%% Three layers: Sense → Intelligence → Experience
+%% Source of truth for slide 4 of the Phase 1 blueprint deck.
+%% Paste this file into https://mermaid.live, export SVG, then re-style in Figma
+%% per /Users/shauryapunj/Desktop/Samsung Hack/aura/design/architecture/aura_architecture_styling.md
+%% Locked context: deck_spec.md §0, §4 + plan.md §10.
+
+flowchart LR
+
+    %% =========================================================
+    %% SENSE LAYER — on-device signal acquisition
+    %% =========================================================
+    subgraph SENSE["SENSE"]
+        direction TB
+        S1["Health Connect / HealthKit"]
+        S2["NotifListener / UNUserNotif"]
+        S3["UsageStatsManager"]
+        S4["Calendar Provider / EventKit"]
+        S5["SMS Read (Android)"]
+        S6["IME typing entropy"]
+        S7["Gmail OAuth metadata"]
+    end
+
+    %% =========================================================
+    %% INTELLIGENCE LAYER — 4 agents + orchestrator + memory
+    %% =========================================================
+    subgraph INTEL["INTELLIGENCE"]
+        direction TB
+        COMMS["Comms Agent<br/>Gemma 2B + LoRA"]
+        CAL["Calendar Agent<br/>Phi-3-mini + rules"]
+        FIN["Finance Agent<br/>Gemma 2B + LoRA"]
+        WELL["Wellness Agent<br/>XGBoost + Phi-3 prose"]
+        ORCH[["Orchestrator<br/>Phi-3-mini · LangGraph<br/>Idle → Listening → Deliberating →<br/>AwaitingConfirm → Executing →<br/>LoggingTrace → Cooldown"]]
+        MEM[("Memory Graph<br/>sqlite-vss + Keystore<br/>per-day Merkle audit")]
+        TRACE[/"Reasoning Trace<br/>typed JSON · local-only"/]
+    end
+
+    %% =========================================================
+    %% EXPERIENCE LAYER — surfaces
+    %% =========================================================
+    subgraph EXP["EXPERIENCE"]
+        direction TB
+        PH["Phone — Brief · Action · Trace · Memory"]
+        WA["Watch — glance + haptic"]
+        EB["Earbuds — TTS whisper"]
+        TB["Tablet / Laptop — pull-tab"]
+    end
+
+    %% =========================================================
+    %% SENSE → AGENTS (signal flow, unlabelled)
+    %% =========================================================
+    S1 --> WELL
+    S2 --> COMMS
+    S3 --> ORCH
+    S4 --> CAL
+    S5 --> FIN
+    S6 --> WELL
+    S7 --> COMMS
+    S7 --> FIN
+
+    %% =========================================================
+    %% AGENTS ↔ ORCHESTRATOR (typed JSON tool calls only)
+    %% =========================================================
+    COMMS -- "classify() / draft_reply()" --> ORCH
+    CAL   -- "detect_conflicts() / suggest_slots()" --> ORCH
+    FIN   -- "parse_sms() / anomaly_flag()" --> ORCH
+    WELL  -- "compute_load_score() / intervention_select()" --> ORCH
+
+    %% =========================================================
+    %% ORCHESTRATOR ↔ MEMORY ↔ TRACE
+    %% =========================================================
+    ORCH <--> MEM
+    ORCH -- "emit trace fragment" --> TRACE
+    TRACE --> MEM
+
+    %% =========================================================
+    %% ORCHESTRATOR → SURFACES
+    %% =========================================================
+    ORCH -- "brief" --> PH
+    ORCH -- "action_card + confirm" --> PH
+    ORCH -- "trace_drawer (glass box)" --> PH:::orange
+    ORCH -- "watch_haptic" --> WA
+    ORCH -- "tts_whisper" --> EB
+    ORCH -- "pull_tab" --> TB
+
+    %% =========================================================
+    %% STYLE — orchestrator gets a sunset-orange edge in re-style.
+    %% Mermaid's classDef is a hint only; the Figma re-style pass
+    %% per aura_architecture_styling.md is the final treatment.
+    %% =========================================================
+    classDef orange stroke:#FF5B2E,stroke-width:3px;
+    class ORCH orange

@@ -1,0 +1,48 @@
+{"fixture": "storm_47", "description": "WhatsApp project group flood, 47 messages in 8 minutes, 3 actionable. Mirrors technical_spec.md §3.1 worked example A.", "expected": {"top_suggested_action": "BATCH_DIGEST", "urgent_count": 3, "muted_count": 44}}
+{"id": "n_8a01", "app_pkg": "com.whatsapp", "channel": "group:Thapar-DSA-Project", "sender_hash": "h_anu", "preview": "lol that meme tho", "ts": "2026-05-07T22:23:00+05:30"}
+{"id": "n_8a02", "app_pkg": "com.whatsapp", "channel": "group:Thapar-DSA-Project", "sender_hash": "h_manish", "preview": "haha same", "ts": "2026-05-07T22:23:09+05:30"}
+{"id": "n_8a03", "app_pkg": "com.whatsapp", "channel": "group:Thapar-DSA-Project", "sender_hash": "h_riya", "preview": "guys", "ts": "2026-05-07T22:23:18+05:30"}
+{"id": "n_8a04", "app_pkg": "com.whatsapp", "channel": "group:Thapar-DSA-Project", "sender_hash": "h_anu", "preview": "@you can you push the merge tonight, deadline tomorrow", "ts": "2026-05-07T22:23:30+05:30"}
+{"id": "n_8a05", "app_pkg": "com.whatsapp", "channel": "group:Thapar-DSA-Project", "sender_hash": "h_aarav", "preview": "lmao", "ts": "2026-05-07T22:23:42+05:30"}
+{"id": "n_8a06", "app_pkg": "com.whatsapp", "channel": "group:Thapar-DSA-Project", "sender_hash": "h_riya", "preview": "okay", "ts": "2026-05-07T22:23:55+05:30"}
+{"id": "n_8a07", "app_pkg": "com.whatsapp", "channel": "group:Thapar-DSA-Project", "sender_hash": "h_manish", "preview": "ngl that one was bad", "ts": "2026-05-07T22:24:08+05:30"}
+{"id": "n_8a08", "app_pkg": "com.whatsapp", "channel": "group:Thapar-DSA-Project", "sender_hash": "h_anu", "preview": "fr", "ts": "2026-05-07T22:24:20+05:30"}
+{"id": "n_8a09", "app_pkg": "com.whatsapp", "channel": "group:Thapar-DSA-Project", "sender_hash": "h_aarav", "preview": "btw", "ts": "2026-05-07T22:24:33+05:30"}
+{"id": "n_8a10", "app_pkg": "com.whatsapp", "channel": "group:Thapar-DSA-Project", "sender_hash": "h_riya", "preview": "true", "ts": "2026-05-07T22:24:45+05:30"}
+{"id": "n_8a11", "app_pkg": "com.whatsapp", "channel": "group:Thapar-DSA-Project", "sender_hash": "h_anu", "preview": "haha", "ts": "2026-05-07T22:24:57+05:30"}
+{"id": "n_8a12", "app_pkg": "com.whatsapp", "channel": "group:Thapar-DSA-Project", "sender_hash": "h_manish", "preview": "lol", "ts": "2026-05-07T22:25:09+05:30"}
+{"id": "n_8a13", "app_pkg": "com.whatsapp", "channel": "group:Thapar-DSA-Project", "sender_hash": "h_aarav", "preview": "same", "ts": "2026-05-07T22:25:21+05:30"}
+{"id": "n_8a14", "app_pkg": "com.whatsapp", "channel": "group:Thapar-DSA-Project", "sender_hash": "h_anu", "preview": "lol", "ts": "2026-05-07T22:25:33+05:30"}
+{"id": "n_8a15", "app_pkg": "com.whatsapp", "channel": "group:Thapar-DSA-Project", "sender_hash": "h_riya", "preview": "tbh", "ts": "2026-05-07T22:25:45+05:30"}
+{"id": "n_8a16", "app_pkg": "com.whatsapp", "channel": "group:Thapar-DSA-Project", "sender_hash": "h_manish", "preview": "okay", "ts": "2026-05-07T22:25:57+05:30"}
+{"id": "n_8a17", "app_pkg": "com.whatsapp", "channel": "group:Thapar-DSA-Project", "sender_hash": "h_anu", "preview": "haha", "ts": "2026-05-07T22:26:09+05:30"}
+{"id": "n_8a18", "app_pkg": "com.whatsapp", "channel": "group:Thapar-DSA-Project", "sender_hash": "h_manish", "preview": "@you please review the schema diagram before we submit", "ts": "2026-05-07T22:26:18+05:30"}
+{"id": "n_8a19", "app_pkg": "com.whatsapp", "channel": "group:Thapar-DSA-Project", "sender_hash": "h_aarav", "preview": "lmao", "ts": "2026-05-07T22:26:30+05:30"}
+{"id": "n_8a20", "app_pkg": "com.whatsapp", "channel": "group:Thapar-DSA-Project", "sender_hash": "h_riya", "preview": "lol", "ts": "2026-05-07T22:26:42+05:30"}
+{"id": "n_8a21", "app_pkg": "com.whatsapp", "channel": "group:Thapar-DSA-Project", "sender_hash": "h_anu", "preview": "same", "ts": "2026-05-07T22:26:54+05:30"}
+{"id": "n_8a22", "app_pkg": "com.whatsapp", "channel": "group:Thapar-DSA-Project", "sender_hash": "h_manish", "preview": "haha", "ts": "2026-05-07T22:27:06+05:30"}
+{"id": "n_8a23", "app_pkg": "com.whatsapp", "channel": "group:Thapar-DSA-Project", "sender_hash": "h_aarav", "preview": "okay", "ts": "2026-05-07T22:27:18+05:30"}
+{"id": "n_8a24", "app_pkg": "com.whatsapp", "channel": "group:Thapar-DSA-Project", "sender_hash": "h_riya", "preview": "ngl", "ts": "2026-05-07T22:27:30+05:30"}
+{"id": "n_8a25", "app_pkg": "com.whatsapp", "channel": "group:Thapar-DSA-Project", "sender_hash": "h_anu", "preview": "lmao", "ts": "2026-05-07T22:27:42+05:30"}
+{"id": "n_8a26", "app_pkg": "com.whatsapp", "channel": "group:Thapar-DSA-Project", "sender_hash": "h_manish", "preview": "haha", "ts": "2026-05-07T22:27:54+05:30"}
+{"id": "n_8a27", "app_pkg": "com.whatsapp", "channel": "group:Thapar-DSA-Project", "sender_hash": "h_aarav", "preview": "lol", "ts": "2026-05-07T22:28:06+05:30"}
+{"id": "n_8a28", "app_pkg": "com.whatsapp", "channel": "group:Thapar-DSA-Project", "sender_hash": "h_riya", "preview": "fr", "ts": "2026-05-07T22:28:18+05:30"}
+{"id": "n_8a29", "app_pkg": "com.whatsapp", "channel": "group:Thapar-DSA-Project", "sender_hash": "h_anu", "preview": "tbh", "ts": "2026-05-07T22:28:30+05:30"}
+{"id": "n_8a30", "app_pkg": "com.whatsapp", "channel": "group:Thapar-DSA-Project", "sender_hash": "h_manish", "preview": "lol", "ts": "2026-05-07T22:28:42+05:30"}
+{"id": "n_8a31", "app_pkg": "com.whatsapp", "channel": "group:Thapar-DSA-Project", "sender_hash": "h_aarav", "preview": "haha", "ts": "2026-05-07T22:28:54+05:30"}
+{"id": "n_8a32", "app_pkg": "com.whatsapp", "channel": "group:Thapar-DSA-Project", "sender_hash": "h_riya", "preview": "same", "ts": "2026-05-07T22:29:06+05:30"}
+{"id": "n_8a33", "app_pkg": "com.whatsapp", "channel": "group:Thapar-DSA-Project", "sender_hash": "h_anu", "preview": "lol", "ts": "2026-05-07T22:29:18+05:30"}
+{"id": "n_8a34", "app_pkg": "com.whatsapp", "channel": "group:Thapar-DSA-Project", "sender_hash": "h_manish", "preview": "haha", "ts": "2026-05-07T22:29:30+05:30"}
+{"id": "n_8a35", "app_pkg": "com.whatsapp", "channel": "group:Thapar-DSA-Project", "sender_hash": "h_anu", "preview": "@you need you to confirm the deploy slot tonight, can you reply asap", "ts": "2026-05-07T22:29:42+05:30"}
+{"id": "n_8a36", "app_pkg": "com.whatsapp", "channel": "group:Thapar-DSA-Project", "sender_hash": "h_aarav", "preview": "lmao", "ts": "2026-05-07T22:29:54+05:30"}
+{"id": "n_8a37", "app_pkg": "com.whatsapp", "channel": "group:Thapar-DSA-Project", "sender_hash": "h_riya", "preview": "lol", "ts": "2026-05-07T22:30:06+05:30"}
+{"id": "n_8a38", "app_pkg": "com.whatsapp", "channel": "group:Thapar-DSA-Project", "sender_hash": "h_anu", "preview": "haha", "ts": "2026-05-07T22:30:18+05:30"}
+{"id": "n_8a39", "app_pkg": "com.whatsapp", "channel": "group:Thapar-DSA-Project", "sender_hash": "h_manish", "preview": "okay", "ts": "2026-05-07T22:30:30+05:30"}
+{"id": "n_8a40", "app_pkg": "com.whatsapp", "channel": "group:Thapar-DSA-Project", "sender_hash": "h_aarav", "preview": "ngl", "ts": "2026-05-07T22:30:42+05:30"}
+{"id": "n_8a41", "app_pkg": "com.whatsapp", "channel": "group:Thapar-DSA-Project", "sender_hash": "h_riya", "preview": "fr", "ts": "2026-05-07T22:30:54+05:30"}
+{"id": "n_8a42", "app_pkg": "com.whatsapp", "channel": "group:Thapar-DSA-Project", "sender_hash": "h_anu", "preview": "lol", "ts": "2026-05-07T22:31:06+05:30"}
+{"id": "n_8a43", "app_pkg": "com.whatsapp", "channel": "group:Thapar-DSA-Project", "sender_hash": "h_manish", "preview": "haha", "ts": "2026-05-07T22:31:18+05:30"}
+{"id": "n_8a44", "app_pkg": "com.whatsapp", "channel": "group:Thapar-DSA-Project", "sender_hash": "h_aarav", "preview": "tbh", "ts": "2026-05-07T22:31:30+05:30"}
+{"id": "n_8a45", "app_pkg": "com.whatsapp", "channel": "group:Thapar-DSA-Project", "sender_hash": "h_riya", "preview": "same", "ts": "2026-05-07T22:31:42+05:30"}
+{"id": "n_8a46", "app_pkg": "com.whatsapp", "channel": "group:Thapar-DSA-Project", "sender_hash": "h_anu", "preview": "lol", "ts": "2026-05-07T22:31:54+05:30"}
+{"id": "n_8a47", "app_pkg": "com.whatsapp", "channel": "group:Thapar-DSA-Project", "sender_hash": "h_manish", "preview": "haha", "ts": "2026-05-07T22:32:00+05:30"}

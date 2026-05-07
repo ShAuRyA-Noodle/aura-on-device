@@ -1,0 +1,14 @@
+{"fixture": "gmail_batch", "description": "Morning Gmail batch — 3 receipts, 1 prof email, 8 promotional. Mirrors §3.1 worked example B (Morning Brief inbox triage).", "expected": {"top_suggested_action": "SHOW_BRIEF", "urgent_count": 1, "muted_count": 8}}
+{"kind": "notif", "id": "n_gm_prof", "app_pkg": "com.google.android.gm", "channel": "inbox", "sender_hash": "h_prof", "preview": "@you please submit the DBMS assignment by tonight, deadline 9pm", "ts": "2026-05-07T07:30:00+05:30"}
+{"kind": "gmail", "thread_id": "tg_p01", "from_domain": "thapar.edu", "subject_class": "prof", "ts": "2026-05-06T23:11:00+05:30"}
+{"kind": "gmail", "thread_id": "tg_r01", "from_domain": "swiggy.in", "subject_class": "receipt", "ts": "2026-05-07T01:14:00+05:30"}
+{"kind": "gmail", "thread_id": "tg_r02", "from_domain": "zomato.com", "subject_class": "receipt", "ts": "2026-05-06T22:48:00+05:30"}
+{"kind": "gmail", "thread_id": "tg_r03", "from_domain": "blinkit.com", "subject_class": "receipt", "ts": "2026-05-06T20:01:00+05:30"}
+{"kind": "gmail", "thread_id": "tg_promo01", "from_domain": "myntra.com", "subject_class": "promo", "ts": "2026-05-07T05:00:00+05:30"}
+{"kind": "gmail", "thread_id": "tg_promo02", "from_domain": "amazon.in", "subject_class": "promo", "ts": "2026-05-07T05:10:00+05:30"}
+{"kind": "gmail", "thread_id": "tg_promo03", "from_domain": "ajio.com", "subject_class": "promo", "ts": "2026-05-07T05:20:00+05:30"}
+{"kind": "gmail", "thread_id": "tg_promo04", "from_domain": "flipkart.com", "subject_class": "promo", "ts": "2026-05-07T05:30:00+05:30"}
+{"kind": "gmail", "thread_id": "tg_promo05", "from_domain": "uber.com", "subject_class": "promo", "ts": "2026-05-07T05:40:00+05:30"}
+{"kind": "gmail", "thread_id": "tg_promo06", "from_domain": "bookmyshow.com", "subject_class": "promo", "ts": "2026-05-07T05:50:00+05:30"}
+{"kind": "gmail", "thread_id": "tg_promo07", "from_domain": "swiggy.in", "subject_class": "promo", "ts": "2026-05-07T06:00:00+05:30"}
+{"kind": "gmail", "thread_id": "tg_promo08", "from_domain": "irctc.co.in", "subject_class": "promo", "ts": "2026-05-07T06:10:00+05:30"}

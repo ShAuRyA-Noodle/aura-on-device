@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleDisplayName</key>
+	<string>Aura</string>
+	<key>CFBundleIdentifier</key>
+	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+	<key>CFBundleName</key>
+	<string>$(PRODUCT_NAME)</string>
+	<key>CFBundleShortVersionString</key>
+	<string>0.1.0</string>
+	<key>CFBundleVersion</key>
+	<string>1</string>
+	<key>LSRequiresIPhoneOS</key>
+	<true/>
+
+	<key>NSHealthShareUsageDescription</key>
+	<string>Aura reads HRV, sleep, heart rate, and step count to compute your Wellness Load Score on-device. Nothing leaves the device.</string>
+	<key>NSHealthUpdateUsageDescription</key>
+	<string>Aura does not write to HealthKit.</string>
+
+	<key>NSCalendarsUsageDescription</key>
+	<string>Aura reads your calendar so the Calendar agent can surface conflicts, travel-time alerts, and the morning brief. Calendar data stays on the device.</string>
+	<key>NSCalendarsFullAccessUsageDescription</key>
+	<string>Aura reads your calendar so the Calendar agent can surface conflicts, travel-time alerts, and the morning brief. Calendar data stays on the device.</string>
+
+	<key>NSUserNotificationsUsageDescription</key>
+	<string>Aura sends at most three proactive nudges per day, capped by the Silence Budget. You can lower the cap to zero in Settings.</string>
+
+	<key>NSContactsUsageDescription</key>
+	<string>Aura uses contacts only to label senders in your inbox digest. Contact entries are not exported.</string>
+
+	<key>NSLocalNetworkUsageDescription</key>
+	<string>Aura uses your local Wi-Fi to hand off the current card between your iPhone, iPad, and Mac. Nothing is sent to the internet.</string>
+
+	<key>NSBonjourServices</key>
+	<array>
+		<string>_aura-handoff._tcp</string>
+		<string>_aura-handoff._udp</string>
+	</array>
+
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>fetch</string>
+		<string>processing</string>
+	</array>
+
+	<key>BGTaskSchedulerPermittedIdentifiers</key>
+	<array>
+		<string>ai.aura.refresh</string>
+		<string>ai.aura.processing</string>
+	</array>
+
+	<key>UIRequiredDeviceCapabilities</key>
+	<array>
+		<string>arm64</string>
+	</array>
+</dict>
+</plist>

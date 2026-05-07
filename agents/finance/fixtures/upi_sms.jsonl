@@ -1,0 +1,50 @@
+{"id":"s_001","from":"VK-HDFCBK","body":"Sent Rs.350.00 from A/c **1234 to ZOMATO via UPI on 07-MAY","ts":"2026-05-07T13:12:00+05:30"}
+{"id":"s_002","from":"VK-HDFCBK","body":"Sent Rs. 450.00 From HDFC Bank A/C *1234 To VPA zomato@hdfcbank On 07-05-26","ts":"2026-05-07T20:42:00+05:30"}
+{"id":"s_003","from":"VK-HDFCBK","body":"Sent Rs.120.00 from A/c **1234 to RAPIDO via UPI on 06-MAY","ts":"2026-05-06T08:15:00+05:30"}
+{"id":"s_004","from":"VK-HDFCBK","body":"Sent Rs.2,400.00 from A/c **1234 to AMAZON via UPI on 05-MAY","ts":"2026-05-05T19:01:00+05:30"}
+{"id":"s_005","from":"VK-HDFCBK","body":"Sent Rs.85.00 from A/c **1234 to NAMMA-METRO via UPI on 07-MAY","ts":"2026-05-07T09:01:00+05:30"}
+{"id":"s_006","from":"VK-HDFCBK","body":"Sent Rs.199.00 from A/c **1234 to NETFLIX via UPI on 03-MAY","ts":"2026-05-03T11:00:00+05:30"}
+{"id":"s_007","from":"VK-HDFCBK","body":"Sent Rs.540.00 from A/c **1234 to SWIGGY via UPI on 06-MAY","ts":"2026-05-06T22:18:00+05:30"}
+{"id":"s_008","from":"VK-HDFCBK","body":"Received Rs.85,000.00 from PROJECT-INVOICE in A/c **1234 via UPI on 04-MAY","ts":"2026-05-04T11:30:00+05:30"}
+{"id":"s_009","from":"VK-HDFCBK","body":"Sent Rs.1,200.00 from A/c **1234 to BLINKIT via UPI on 07-MAY","ts":"2026-05-07T18:25:00+05:30"}
+{"id":"s_010","from":"VK-HDFCBK","body":"Sent Rs.640.00 from A/c **1234 to UBER via UPI on 06-MAY","ts":"2026-05-06T22:55:00+05:30"}
+{"id":"s_011","from":"AX-SBIINB","body":"Dear Customer, Rs.1200.00 debited from A/c X1234 on 07-05-26 to VPA bigbasket@okhdfc Ref 412345. -SBI","ts":"2026-05-07T11:30:00+05:30"}
+{"id":"s_012","from":"AX-SBIINB","body":"Dear Customer, Rs.350.00 debited from A/c X1234 on 06-05-26 to VPA zomato@oksbi Ref 412312. -SBI","ts":"2026-05-06T13:42:00+05:30"}
+{"id":"s_013","from":"AX-SBIINB","body":"Dear Customer, Rs.250.00 debited from A/c X1234 on 05-05-26 to VPA spotify@oksbi Ref 412112. -SBI","ts":"2026-05-05T08:00:00+05:30"}
+{"id":"s_014","from":"AX-SBIINB","body":"Dear Customer, Rs.4500.00 debited from A/c X1234 on 04-05-26 to VPA flipkart@oksbi Ref 411998. -SBI","ts":"2026-05-04T15:00:00+05:30"}
+{"id":"s_015","from":"AX-SBIINB","body":"Dear Customer, Rs.620.00 debited from A/c X1234 on 03-05-26 to VPA ola@oksbi Ref 411822. -SBI","ts":"2026-05-03T22:11:00+05:30"}
+{"id":"s_016","from":"AX-SBIINB","body":"Dear Customer, Rs.300.00 debited from A/c X1234 on 02-05-26 to VPA bookmyshow@oksbi Ref 411701. -SBI","ts":"2026-05-02T18:15:00+05:30"}
+{"id":"s_017","from":"AX-SBIINB","body":"Dear Customer, Rs.1000.00 debited from A/c X1234 on 07-05-26 to VPA myntra@oksbi Ref 412401. -SBI","ts":"2026-05-07T16:11:00+05:30"}
+{"id":"s_018","from":"AX-SBIINB","body":"Dear Customer, Rs.480.00 debited from A/c X1234 on 06-05-26 to VPA swiggy@oksbi Ref 412211. -SBI","ts":"2026-05-06T14:00:00+05:30"}
+{"id":"s_019","from":"AX-SBIINB","body":"Dear Customer, Rs.220.00 debited from A/c X1234 on 05-05-26 to VPA blinkit@oksbi Ref 412050. -SBI","ts":"2026-05-05T10:45:00+05:30"}
+{"id":"s_020","from":"AX-SBIINB","body":"Dear Customer, Rs.78.00 debited from A/c X1234 on 04-05-26 to VPA metro@oksbi Ref 411910. -SBI","ts":"2026-05-04T08:30:00+05:30"}
+{"id":"s_021","from":"VK-ICICIB","body":"INR 250.00 spent on ICICI Bank Card XX1234 at SWIGGY on 07-May-26","ts":"2026-05-07T22:14:00+05:30"}
+{"id":"s_022","from":"VK-ICICIB","body":"INR 1500.00 spent on ICICI Bank Card XX1234 at AMAZON on 06-May-26","ts":"2026-05-06T20:00:00+05:30"}
+{"id":"s_023","from":"VK-ICICIB","body":"INR 95.00 spent on ICICI Bank Card XX1234 at UBER on 05-May-26","ts":"2026-05-05T08:50:00+05:30"}
+{"id":"s_024","from":"VK-ICICIB","body":"INR 320.00 spent on ICICI Bank Card XX1234 at PHARMEASY on 04-May-26","ts":"2026-05-04T12:00:00+05:30"}
+{"id":"s_025","from":"VK-ICICIB","body":"Dear Customer, Acct XX1234 debited with INR 800.00 on 07-May-26; UPI:412345678912; toward swiggy@icici.","ts":"2026-05-07T13:00:00+05:30"}
+{"id":"s_026","from":"VK-ICICIB","body":"Dear Customer, Acct XX1234 debited with INR 250.00 on 06-May-26; UPI:412345678901; toward zerodha@icici.","ts":"2026-05-06T11:00:00+05:30"}
+{"id":"s_027","from":"VK-ICICIB","body":"Dear Customer, Acct XX1234 debited with INR 199.00 on 05-May-26; UPI:412345678877; toward hotstar@icici.","ts":"2026-05-05T07:30:00+05:30"}
+{"id":"s_028","from":"VK-ICICIB","body":"Dear Customer, Acct XX1234 debited with INR 1100.00 on 04-May-26; UPI:412345678800; toward irctc@icici.","ts":"2026-05-04T18:00:00+05:30"}
+{"id":"s_029","from":"VK-ICICIB","body":"INR 540.00 spent on ICICI Bank Card XX1234 at ZOMATO on 03-May-26","ts":"2026-05-03T21:00:00+05:30"}
+{"id":"s_030","from":"VK-ICICIB","body":"INR 75.00 spent on ICICI Bank Card XX1234 at NAMMA-METRO on 02-May-26","ts":"2026-05-02T08:30:00+05:30"}
+{"id":"s_031","from":"VM-AXISBK","body":"INR 540 debited A/c no. XX1234 07-05-26 13:42 UPI/P2A/uber@axis/Uber","ts":"2026-05-07T13:42:00+05:30"}
+{"id":"s_032","from":"VM-AXISBK","body":"INR 220 debited A/c no. XX1234 06-05-26 14:30 UPI/P2A/zomato@axis/Zomato","ts":"2026-05-06T14:30:00+05:30"}
+{"id":"s_033","from":"VM-AXISBK","body":"INR 980 debited A/c no. XX1234 05-05-26 19:14 UPI/P2A/amazon@axis/Amazon","ts":"2026-05-05T19:14:00+05:30"}
+{"id":"s_034","from":"VM-AXISBK","body":"INR 65 debited A/c no. XX1234 04-05-26 09:10 UPI/P2A/rapido@axis/Rapido","ts":"2026-05-04T09:10:00+05:30"}
+{"id":"s_035","from":"VM-AXISBK","body":"INR 159 debited A/c no. XX1234 03-05-26 22:00 UPI/P2A/spotify@axis/Spotify","ts":"2026-05-03T22:00:00+05:30"}
+{"id":"s_036","from":"VM-AXISBK","body":"INR 450 debited A/c no. XX1234 02-05-26 12:00 UPI/P2A/swiggy@axis/Swiggy","ts":"2026-05-02T12:00:00+05:30"}
+{"id":"s_037","from":"VM-AXISBK","body":"INR 90 debited A/c no. XX1234 01-05-26 08:30 UPI/P2A/metro@axis/Metro","ts":"2026-05-01T08:30:00+05:30"}
+{"id":"s_038","from":"VM-AXISBK","body":"INR 800 debited A/c no. XX1234 07-05-26 18:25 UPI/P2A/blinkit@axis/Blinkit","ts":"2026-05-07T18:25:00+05:30"}
+{"id":"s_039","from":"VM-AXISBK","body":"INR 1499 debited A/c no. XX1234 06-05-26 21:00 UPI/P2A/myntra@axis/Myntra","ts":"2026-05-06T21:00:00+05:30"}
+{"id":"s_040","from":"VM-AXISBK","body":"INR 320 debited A/c no. XX1234 05-05-26 11:00 UPI/P2A/practo@axis/Practo","ts":"2026-05-05T11:00:00+05:30"}
+{"id":"s_041","from":"VK-HDFCBK","body":"Sent Rs.420.00 from A/c **1234 to SWIGGY via UPI on 07-MAY","ts":"2026-05-07T13:15:00+05:30"}
+{"id":"s_042","from":"AX-SBIINB","body":"Dear Customer, Rs.150.00 debited from A/c X1234 on 07-05-26 to VPA chai@oksbi Ref 412445. -SBI","ts":"2026-05-07T17:00:00+05:30"}
+{"id":"s_043","from":"VK-ICICIB","body":"INR 320.00 spent on ICICI Bank Card XX1234 at BIGBASKET on 04-May-26","ts":"2026-05-04T18:30:00+05:30"}
+{"id":"s_044","from":"VM-AXISBK","body":"INR 999 debited A/c no. XX1234 03-05-26 10:00 UPI/P2A/groww@axis/Groww","ts":"2026-05-03T10:00:00+05:30"}
+{"id":"s_045","from":"VK-HDFCBK","body":"Sent Rs.59.00 from A/c **1234 to JIO via UPI on 02-MAY","ts":"2026-05-02T09:00:00+05:30"}
+{"id":"s_046","from":"AX-SBIINB","body":"Dear Customer, Rs.640.00 debited from A/c X1234 on 02-05-26 to VPA pvr@oksbi Ref 411680. -SBI","ts":"2026-05-02T19:30:00+05:30"}
+{"id":"s_047","from":"VK-ICICIB","body":"INR 220.00 spent on ICICI Bank Card XX1234 at BLINKIT on 02-May-26","ts":"2026-05-02T22:30:00+05:30"}
+{"id":"s_048","from":"VM-AXISBK","body":"INR 110 debited A/c no. XX1234 01-05-26 10:00 UPI/P2A/airtel@axis/Airtel","ts":"2026-05-01T10:00:00+05:30"}
+{"id":"s_049","from":"VK-HDFCBK","body":"Sent Rs.349.00 from A/c **1234 to UNACADEMY via UPI on 01-MAY","ts":"2026-05-01T12:00:00+05:30"}
+{"id":"s_050","from":"VK-HDFCBK","body":"Sent Rs.225.00 from A/c **1234 to BLINKIT via UPI on 30-APR","ts":"2026-04-30T20:00:00+05:30"}

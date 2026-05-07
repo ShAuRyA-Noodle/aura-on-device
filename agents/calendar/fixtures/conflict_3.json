@@ -1,0 +1,16 @@
+{
+  "fixture": "conflict_3",
+  "description": "Three overlapping events (worked example B from technical_spec.md §3.2). e_x and e_y overlap by 30 minutes; e_z is fully contained in e_x.",
+  "tick_ts": "2026-05-07T15:00:00+05:30",
+  "events_today": [
+    {"id": "e_x", "title": "Design review with Manish", "start": "2026-05-07T15:30:00+05:30", "end": "2026-05-07T16:30:00+05:30", "loc": "Block 4 LT-2", "attendees": 4},
+    {"id": "e_y", "title": "1:1 with Anu", "start": "2026-05-07T16:00:00+05:30", "end": "2026-05-07T16:45:00+05:30", "loc": "Hostel mess", "attendees": 2},
+    {"id": "e_z", "title": "Stand-up", "start": "2026-05-07T15:45:00+05:30", "end": "2026-05-07T16:00:00+05:30", "loc": "Slack huddle", "attendees": 5}
+  ],
+  "user_loc": {"lat": 30.354, "lon": 76.367},
+  "preferences": {"buffer_minutes": 15, "morning_brief_time": "07:45"},
+  "expected": {
+    "conflict_count": 2,
+    "decision": "flag_conflict_with_slot"
+  }
+}
