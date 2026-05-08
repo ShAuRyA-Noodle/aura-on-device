@@ -4,6 +4,9 @@
 # no sentence-transformers (we ship the hash-bucket embedder).
 
 gradio==4.44.0
+# huggingface_hub<1.0 because gradio 4.44 imports HfFolder from the legacy
+# location, which was removed in huggingface_hub 1.0.
+huggingface_hub<1.0
 pydantic==2.7.4
 jsonschema==4.23.0
 python-dateutil==2.9.0.post0
