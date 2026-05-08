@@ -1,0 +1,59 @@
+{
+  "candidates": [
+    {
+      "components": {
+        "cost": 0.2,
+        "dnd": 0.0,
+        "recent": 0.0,
+        "util": 0.72
+      },
+      "confirm_required": false,
+      "kind": "SURFACE_ANOMALY",
+      "score": 0.52
+    }
+  ],
+  "chosen": "SURFACE_ANOMALY",
+  "confirm_required": false,
+  "outcome": "executed_auto",
+  "rationale": "Spend velocity is well above your baseline.",
+  "rationale_source": "template",
+  "redactions": [],
+  "signals": [
+    {
+      "agent": "comms",
+      "decision": "do_nothing",
+      "drivers": [
+        "volume_0",
+        "actionable_0",
+        "load_score_48"
+      ],
+      "slow": false
+    },
+    {
+      "agent": "calendar",
+      "decision": "do_nothing",
+      "drivers": [
+        "no_events"
+      ],
+      "slow": false
+    },
+    {
+      "agent": "wellness",
+      "decision": "do_nothing",
+      "drivers": [
+        "typing_entropy=3.4",
+        "rmssd_z=-0.112",
+        "sleep_debt_min=10.0"
+      ],
+      "slow": false
+    }
+  ],
+  "trace_id": "tr_4d38ae6f50b2",
+  "trigger": {
+    "source": "finance_anomaly",
+    "value": {
+      "reason": "velocity_3x"
+    }
+  },
+  "ts": "2026-05-07T20:00:00+05:30"
+}

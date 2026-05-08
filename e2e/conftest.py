@@ -154,7 +154,34 @@ def memory_graph() -> MemoryGraph:
 # ---------------------------------------------------------------------------
 
 
+def _load_replay_with_burst(name: str) -> Dict[str, Any]:
+    """Load a replay and expand any synthetic burst markers."""
+    from orchestrator.replay import _expand_burst  # local import to avoid cycle
+
+    fx = json.loads((REPLAYS_DIR / f"{name}.replay.json").read_text())
+    _expand_burst(fx)
+    return fx
+
+
 @pytest.fixture
 def monday_brief_replay() -> Dict[str, Any]:
     """Loads `orchestrator/replays/monday_brief.replay.json`."""
-    return json.loads((REPLAYS_DIR / "monday_brief.replay.json").read_text())
+    return _load_replay_with_burst("monday_brief")
+
+
+@pytest.fixture
+def quiet_group_chat_replay() -> Dict[str, Any]:
+    """Loads `orchestrator/replays/quiet_group_chat.replay.json` (137 msgs)."""
+    return _load_replay_with_burst("quiet_group_chat")
+
+
+@pytest.fixture
+def spend_mirror_replay() -> Dict[str, Any]:
+    """Loads `orchestrator/replays/spend_mirror.replay.json` (14 UPI SMS)."""
+    return _load_replay_with_burst("spend_mirror")
+
+
+@pytest.fixture
+def canonical_traces_dir() -> Path:
+    """Path to ``orchestrator/replays/output/`` (the frozen canonical hashes)."""
+    return REPLAYS_DIR / "output"

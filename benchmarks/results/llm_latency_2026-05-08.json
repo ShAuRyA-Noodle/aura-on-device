@@ -1,0 +1,30 @@
+{
+  "date": "2026-05-08",
+  "host": {
+    "platform": "darwin",
+    "apple_silicon": true,
+    "ram_gb_total": 8.0,
+    "cpu_count": 8
+  },
+  "prompt": "Hello, my name is",
+  "max_tokens": 32,
+  "results": [
+    {
+      "model": "gemma-2b-4bit",
+      "runs": 3,
+      "warmup": 1,
+      "backend": "mlx",
+      "model_path": "mlx-community/gemma-2-2b-it-4bit",
+      "first_token_ms_mean": 264.095416670898,
+      "first_token_ms_ci95": 21.81899584300177,
+      "first_token_ms_p50": 258.1798750034068,
+      "first_token_ms_p95": 285.6415830028709,
+      "tokens_per_sec_mean": 33.963205909841854,
+      "tokens_per_sec_ci95": 0.8369907555253346,
+      "tokens_decoded_mean": 32.0,
+      "rss_gb_before": 0.3898468017578125,
+      "rss_gb_after": 0.126007080078125,
+      "rss_gb_delta": -0.2638397216796875
+    }
+  ]
+}

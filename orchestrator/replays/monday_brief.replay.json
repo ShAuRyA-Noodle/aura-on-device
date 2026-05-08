@@ -1,8 +1,9 @@
 {
-  "fixture_version": "1.0",
+  "fixture_version": "1.1",
   "name": "monday_brief",
-  "description": "plan §7 Journey A — Rohan's Monday Morning Brief. Unlock at 07:45 -> SHOW_BRIEF + LEAVE_BY_ALERT in first 60s.",
+  "description": "plan §7 Journey A — Rohan's Monday Morning Brief. Unlock at 07:45 -> SHOW_BRIEF + LEAVE_BY_ALERT + NAP_15(sleep alert) surfaced; chosen surfaces auto-execute.",
   "tick_ts": "2026-05-07T07:45:00+05:30",
+  "trigger": {"source": "phone_unlock", "value": {"hour": 7.75}},
   "user_baseline": {"rmssd_p50": 38.2, "rmssd_p10": 22.1, "switch_p50": 6, "sleep_target_min": 420},
   "user_state": {
     "load_score": 42,
@@ -37,18 +38,27 @@
       "balance_seed": {"account_hash": "a_hdfc_1234", "amount": 68400, "as_of": "2026-05-07T08:00:00+05:30"}
     },
     "wellness": {
-      "hrv_window": {"rmssd_ms": 39.5, "samples": 12, "window_min": 5},
-      "sleep_last_night": {"asleep_min": 312, "rem_min": 41, "deep_min": 33, "efficiency": 0.82},
-      "typing_entropy_60s": 3.0,
+      "hrv_window": {"rmssd_ms": 26.5, "samples": 12, "window_min": 5},
+      "sleep_last_night": {"asleep_min": 280, "rem_min": 35, "deep_min": 28, "efficiency": 0.78},
+      "typing_entropy_60s": 3.2,
       "app_switch_rate_60s": 4,
       "notif_dismiss_rate_60m": 0.2,
       "screen_on_min_60m": 5,
-      "personal_baseline": {"rmssd_p50": 38.2, "rmssd_p10": 22.1, "switch_p50": 6}
+      "personal_baseline": {"rmssd_p50": 38.2, "rmssd_p10": 22.1, "switch_p50": 6},
+      "hrv_5day_window": [
+        {"date": "2026-05-03", "mean_rmssd": 39.9},
+        {"date": "2026-05-04", "mean_rmssd": 31.8},
+        {"date": "2026-05-05", "mean_rmssd": 26.9},
+        {"date": "2026-05-06", "mean_rmssd": 28.6},
+        {"date": "2026-05-07", "mean_rmssd": 33.7}
+      ]
     }
   },
   "expected": {
     "trace_count_min": 1,
+    "min_candidates": 3,
     "chosen_in": ["SHOW_BRIEF", "LEAVE_BY_ALERT"],
-    "must_not_choose": ["MUTE_GROUP_30"]
+    "must_not_choose": ["MUTE_GROUP_30"],
+    "must_surface_kinds": ["SHOW_BRIEF", "LEAVE_BY_ALERT", "NAP_15"]
   }
 }

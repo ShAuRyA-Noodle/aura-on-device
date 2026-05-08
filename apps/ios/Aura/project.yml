@@ -1,10 +1,7 @@
 # project.yml — xcodegen spec for the Aura iOS app.
 #
-# This spec produces `Aura.xcodeproj` from the existing SwiftUI source tree
-# under `Sources/Aura/`. It is the single source of truth for target
-# configuration; any change here should be re-applied with `xcodegen generate`.
+# Source of truth for the Xcode project file. Regenerate after any change:
 #
-# To regenerate the Xcode project from the command line:
 #   brew install xcodegen          # one-time
 #   cd apps/ios/Aura
 #   xcodegen generate
@@ -19,7 +16,7 @@ options:
   createIntermediateGroups: true
   defaultConfig: Debug
   deploymentTarget:
-    iOS: "17.0"
+    iOS: "18.0"
   groupSortPosition: top
   generateEmptyDirectories: false
   xcodeVersion: "16.0"
@@ -31,7 +28,7 @@ configs:
 settings:
   base:
     SWIFT_VERSION: "5.10"
-    IPHONEOS_DEPLOYMENT_TARGET: "17.0"
+    IPHONEOS_DEPLOYMENT_TARGET: "18.0"
     ENABLE_USER_SCRIPT_SANDBOXING: YES
     SWIFT_STRICT_CONCURRENCY: minimal
     CLANG_ENABLE_MODULES: YES
@@ -49,20 +46,24 @@ settings:
 packages:
   GoogleSignIn-iOS:
     url: https://github.com/google/GoogleSignIn-iOS
-    from: "7.0.0"
+    from: "7.1.0"
   KeychainAccess:
     url: https://github.com/kishikawakatsumi/KeychainAccess
-    from: "4.2.0"
+    from: "4.2.2"
+  GRDB:
+    url: https://github.com/groue/GRDB.swift
+    from: "6.29.0"
 
 targets:
   Aura:
     type: application
     platform: iOS
-    deploymentTarget: "17.0"
+    deploymentTarget: "18.0"
     sources:
       - path: Sources/Aura
         excludes:
           - "Resources/Info.plist"
+          - "Resources/Aura.entitlements"
     resources:
       - path: Sources/Aura/Resources/Assets.xcassets
     configFiles:
@@ -75,11 +76,14 @@ targets:
         product: GoogleSignInSwift
       - package: KeychainAccess
         product: KeychainAccess
+      - package: GRDB
+        product: GRDB
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.galaxybrain.aura
         PRODUCT_NAME: Aura
         CODE_SIGN_STYLE: Automatic
+        CODE_SIGN_ENTITLEMENTS: Sources/Aura/Resources/Aura.entitlements
         ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
         ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME: AccentColor
         ENABLE_HEALTHKIT: YES
@@ -104,13 +108,16 @@ targets:
         NSCalendarsFullAccessUsageDescription: "Aura reads your calendar so the Calendar agent can surface conflicts, travel-time alerts, and the morning brief. Calendar data stays on the device."
         NSUserNotificationsUsageDescription: "Aura sends at most three proactive nudges per day, capped by the Silence Budget. You can lower the cap to zero in Settings."
         NSContactsUsageDescription: "Aura uses contacts only to label senders in your inbox digest. Contact entries are not exported."
-        NSLocalNetworkUsageDescription: "Aura uses your local Wi-Fi to hand off the current card between your iPhone, iPad, and Mac. Nothing is sent to the internet."
+        NSLocalNetworkUsageDescription: "Aura uses your local Wi-Fi to reach the Mac-side orchestrator bridge and to hand off the current card between your iPhone, iPad, and Mac. Nothing is sent to the internet."
+        NSLocationWhenInUseUsageDescription: "Aura uses your location to compute travel time to your next calendar event. Location is read only when the brief is open."
+        NSUserTrackingUsageDescription: "Aura does not track you across apps. This prompt only appears because the SDK linker requires the description string."
         NSBonjourServices:
           - _aura-handoff._tcp
           - _aura-handoff._udp
         UIBackgroundModes:
           - fetch
           - processing
+          - remote-notification
         BGTaskSchedulerPermittedIdentifiers:
           - com.galaxybrain.aura.refresh
           - com.galaxybrain.aura.processing
@@ -119,11 +126,17 @@ targets:
         UILaunchScreen:
           UIColorName: ""
           UIImageName: ""
+        NSAppTransportSecurity:
+          NSAllowsLocalNetworking: true
+          NSExceptionDomains:
+            localhost:
+              NSExceptionAllowsInsecureHTTPLoads: true
+              NSIncludesSubdomains: true
 
   AuraTests:
     type: bundle.unit-test
     platform: iOS
-    deploymentTarget: "17.0"
+    deploymentTarget: "18.0"
     sources:
       - path: Tests/AuraTests
     dependencies:

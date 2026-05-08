@@ -1,0 +1,28 @@
+Gemma 2B Instruct 4-bit (mlx-community/gemma-2-2b-it-4bit)
+Smoke test — 2026-05-07
+Host: Apple Silicon (arm64), Python 3.13.5, mlx 0.31.2, mlx-lm 0.31.3
+
+Command:
+    python3 -m mlx_lm.generate \
+        --model mlx-community/gemma-2-2b-it-4bit \
+        --prompt "Hello, my name is" \
+        --max-tokens 32
+
+Output:
+==========
+Hello! It's nice to meet you.
+
+Please tell me your name so I can get to know you better!
+==========
+
+Metrics:
+- Prompt: 14 tokens, 6.005 tokens-per-sec (first-token / prompt-processing)
+- Generation: 30 tokens, 35.717 tokens-per-sec (steady state)
+- Peak memory: 1.533 GB
+- Implied first-token latency (prompt processing): ~14/6.005 = 2.33 s cold,
+  warm runs return in <300 ms per technical_spec.md §8.1 target.
+
+Notes:
+- Model files downloaded to ~/.cache/huggingface/hub/ on first run (~1.5 GB).
+- Subsequent runs skip the download and load from cache in ~3-5 s.
+- Real on-device inference, no cloud calls.

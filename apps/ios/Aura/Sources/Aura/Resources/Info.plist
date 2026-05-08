@@ -27,6 +27,21 @@
 	<string>1</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsLocalNetworking</key>
+		<true/>
+		<key>NSExceptionDomains</key>
+		<dict>
+			<key>localhost</key>
+			<dict>
+				<key>NSExceptionAllowsInsecureHTTPLoads</key>
+				<true/>
+				<key>NSIncludesSubdomains</key>
+				<true/>
+			</dict>
+		</dict>
+	</dict>
 	<key>NSBonjourServices</key>
 	<array>
 		<string>_aura-handoff._tcp</string>
@@ -43,13 +58,18 @@
 	<key>NSHealthUpdateUsageDescription</key>
 	<string>Aura does not write to HealthKit.</string>
 	<key>NSLocalNetworkUsageDescription</key>
-	<string>Aura uses your local Wi-Fi to hand off the current card between your iPhone, iPad, and Mac. Nothing is sent to the internet.</string>
+	<string>Aura uses your local Wi-Fi to reach the Mac-side orchestrator bridge and to hand off the current card between your iPhone, iPad, and Mac. Nothing is sent to the internet.</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Aura uses your location to compute travel time to your next calendar event. Location is read only when the brief is open.</string>
 	<key>NSUserNotificationsUsageDescription</key>
 	<string>Aura sends at most three proactive nudges per day, capped by the Silence Budget. You can lower the cap to zero in Settings.</string>
+	<key>NSUserTrackingUsageDescription</key>
+	<string>Aura does not track you across apps. This prompt only appears because the SDK linker requires the description string.</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>fetch</string>
 		<string>processing</string>
+		<string>remote-notification</string>
 	</array>
 	<key>UILaunchScreen</key>
 	<dict>

@@ -13,10 +13,9 @@ Asserts:
 
 from __future__ import annotations
 
+import json
 import time
 from typing import Any, Dict
-
-import pytest
 
 from agents.core.types import UserState
 from orchestrator.graph import Orchestrator, OrchestratorState
@@ -119,6 +118,45 @@ def test_monday_brief_drivers_are_pii_free(
     payload = res.trace.model_dump_json()
     for snippet in banned_substrings:
         assert snippet not in payload, f"PII leak: {snippet}"
+
+
+def test_monday_brief_matches_canonical_trace(canonical_traces_dir) -> None:
+    """The trace JSON must structurally match the canonical artifact.
+
+    Uses ``deepdiff.DeepDiff`` with timestamp fields excluded so the
+    comparison is reproducible across machines and clocks.
+    """
+    from deepdiff import DeepDiff
+    from orchestrator.replay import run_replay
+
+    canonical = json.loads((canonical_traces_dir / "monday_brief_trace.json").read_text())
+    out = run_replay("monday_brief", write_output=False)
+    diff = DeepDiff(
+        canonical,
+        out["trace"],
+        exclude_paths=["root['ts']"],
+        ignore_order=False,
+    )
+    assert not diff, f"trace drift vs canonical: {diff}"
+
+
+def test_monday_brief_surfaces_three_actions(
+    orchestrator: Orchestrator,
+    monday_brief_replay: Dict[str, Any],
+) -> None:
+    """Replay must surface at least 3 candidate actions (sleep alert,
+    leave-by alert, professor's slides summary)."""
+    fx = monday_brief_replay
+    user_state = UserState(**fx["user_state"])
+    res = orchestrator.tick(
+        user_state=user_state,
+        agent_payloads=fx["agent_payloads"],
+        tick_ts=fx["tick_ts"],
+        trigger=fx.get("trigger"),
+    )
+    kinds = {c.kind for c in res.trace.candidates}
+    expected_kinds = set(fx["expected"]["must_surface_kinds"])
+    assert expected_kinds <= kinds, f"missing surfaces: {expected_kinds - kinds}; got {kinds}"
 
 
 # ---------------------------------------------------------------------------

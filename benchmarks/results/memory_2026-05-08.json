@@ -1,0 +1,16 @@
+{
+  "benchmark": "memory_throughput",
+  "node_insert_per_s": 7809.525670442443,
+  "node_insert_dt_s": 0.02560974999505561,
+  "embedding_insert_per_s": 2597.2761070314837,
+  "embedding_insert_dt_s": 0.038501874994835816,
+  "search_p50_ms": 0.15945799532346427,
+  "search_p95_ms": 0.18820801051333547,
+  "search_n": 16.0,
+  "merkle_compute_ms": 1.3555829937104136,
+  "merkle_root_len": 64.0,
+  "embedding_dim": 384.0,
+  "vss_loaded": 1.0,
+  "embedder_kind": 0.0,
+  "backend_sqlcipher": 0.0
+}

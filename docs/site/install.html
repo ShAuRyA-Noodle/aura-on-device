@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Install Aura — free Apple ID sideload</title>
+<meta name="description" content="Sideload Aura on a personal iPhone using a free Apple ID Personal Team certificate. No paid Apple Developer Program needed for evaluators." />
+<meta name="theme-color" content="#FAF8F5" />
+<link rel="icon" type="image/svg+xml" href="assets/aura_logo.svg" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600&family=Inter+Tight:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<a class="skip" href="#main">skip to content</a>
+
+<header class="topbar" role="banner">
+  <a class="brand" href="index.html" aria-label="Aura, home">
+    <img src="assets/aura_logo.svg" alt="" width="28" height="28" />
+    <span>Aura</span>
+  </a>
+  <nav class="nav" aria-label="primary">
+    <a href="index.html#04">wedges</a>
+    <a href="install.html" aria-current="page">install</a>
+    <a href="privacy.html">privacy</a>
+    <a href="about.html">about</a>
+  </nav>
+</header>
+
+<main id="main" class="page" role="main">
+  <p class="crumbs"><a href="index.html">Aura</a> &rsaquo; Install</p>
+  <h1>Install Aura on a personal iPhone</h1>
+  <p class="lede">
+    Aura ships as an Xcode project. Sign it with the free Apple ID Personal Team certificate
+    and install on a personal iPhone for seven days at a time. No paid Apple Developer Program
+    needed for evaluators or pilot users.
+  </p>
+
+  <h2>What you need</h2>
+  <ul>
+    <li>A Mac with macOS 14 (Sonoma) or newer.</li>
+    <li>Xcode 16 or newer, free from the Mac App Store.</li>
+    <li>An Apple ID — a free one is enough. Sign in to Xcode under <em>Settings &rsaquo; Accounts</em>.</li>
+    <li>An iPhone running iOS 17 or newer, connected via USB or paired over Wi-Fi.</li>
+    <li>About 10 minutes for the first build.</li>
+  </ul>
+
+  <h2>Step 1 — Clone the repo</h2>
+  <pre class="code"><code>git clone https://github.com/ShAuRyA-Noodle/Combobulating.git
+cd Combobulating/aura/apps/ios/Aura</code></pre>
+
+  <h2>Step 2 — Generate the Xcode project</h2>
+  <p>
+    The team does not commit the <code>.xcodeproj</code>. Regenerate it locally with
+    <a href="https://github.com/yonaskolb/XcodeGen">XcodeGen</a>, a one-time install.
+  </p>
+  <pre class="code"><code>brew install xcodegen
+xcodegen generate
+open Aura.xcodeproj</code></pre>
+
+  <h2>Step 3 — Sign with your Personal Team</h2>
+  <ol>
+    <li>Select the <strong>Aura</strong> target in the project navigator.</li>
+    <li>Open the <em>Signing &amp; Capabilities</em> tab.</li>
+    <li>Tick <em>Automatically manage signing</em>.</li>
+    <li>Pick your name as the <em>Team</em>. Xcode will label it as <em>Personal Team</em>.</li>
+    <li>Change the bundle identifier to something unique to you, for example
+      <code>com.yourname.aura</code>. The default
+      <code>com.galaxybrain.aura</code> is reserved for the Galaxy Brain account.</li>
+  </ol>
+
+  <h2>Step 4 — Trust the certificate on the iPhone</h2>
+  <ol>
+    <li>Plug your iPhone in and pick it from the Xcode device dropdown.</li>
+    <li>Press the run button. The build will install but refuse to launch the first time.</li>
+    <li>On the iPhone, open <em>Settings &rsaquo; General &rsaquo; VPN &amp; Device Management</em>.</li>
+    <li>Tap your Apple ID under <em>Developer App</em>, then <em>Trust</em>.</li>
+    <li>Re-launch Aura from the home screen.</li>
+  </ol>
+
+  <h2>Step 5 — Grant permissions on first launch</h2>
+  <p>
+    Aura asks for HealthKit (HRV, sleep, steps), EventKit (calendar), and a Google sign-in
+    for Gmail metadata. You may decline any of these — the relevant agent gracefully degrades.
+    The first launch sets up the SQLCipher key inside the iOS Secure Enclave and writes
+    a fresh memory graph to the app sandbox.
+  </p>
+
+  <h2>What the seven-day limit means</h2>
+  <p>
+    A free Apple ID Personal Team certificate is valid for seven days. After that, you have
+    to plug the iPhone back into the same Mac and re-run the build. This is an Apple
+    constraint on free certificates, not an Aura choice. For an unlimited install we
+    recommend the TestFlight build that Galaxy Brain ships during Phase 2.
+  </p>
+
+  <h2>Troubleshooting</h2>
+  <ul>
+    <li><strong>“Could not launch Aura” after install.</strong> You forgot Step 4. Trust the certificate in <em>VPN &amp; Device Management</em>.</li>
+    <li><strong>Bundle identifier already in use.</strong> Change <code>com.galaxybrain.aura</code> to something with your name.</li>
+    <li><strong>HealthKit pairing fails.</strong> Open the Health app on the phone once before launching Aura — iOS has to initialise the HealthKit container.</li>
+    <li><strong>Gmail sign-in loops.</strong> Confirm OAuth client IDs in <code>Aura/Sources/Aura/Resources/Info.plist</code> match your Google Cloud project.</li>
+  </ul>
+
+  <p>
+    The full developer notes live in
+    <a href="https://github.com/ShAuRyA-Noodle/Combobulating/blob/main/aura/apps/ios/README.md"><code>apps/ios/README.md</code></a>.
+  </p>
+</main>
+
+<footer class="foot" role="contentinfo">
+  <p>Galaxy Brain &mdash; Thapar Institute of Engineering and Technology, Patiala.</p>
+  <p>Samsung EnnovateX 2026 submission. MIT licensed code. v1.0.0 &middot; &copy; 2026.</p>
+</footer>
+</body>
+</html>

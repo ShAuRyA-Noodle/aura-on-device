@@ -1,0 +1,83 @@
+{
+  "candidates": [
+    {
+      "components": {
+        "cost": 0.15,
+        "dnd": 0.0,
+        "recent": 0.0,
+        "util": 0.91
+      },
+      "confirm_required": true,
+      "kind": "MUTE_GROUP_30",
+      "score": 0.76
+    },
+    {
+      "components": {
+        "cost": 0.15,
+        "dnd": 0.0,
+        "recent": 0.0,
+        "util": 0.588
+      },
+      "confirm_required": true,
+      "kind": "MUTE_GROUP_30",
+      "score": 0.438
+    },
+    {
+      "components": {
+        "cost": 0.2,
+        "dnd": 0.0,
+        "recent": 0.0,
+        "util": 0.328
+      },
+      "confirm_required": false,
+      "kind": "BATCH_DIGEST",
+      "score": 0.128
+    }
+  ],
+  "chosen": "MUTE_GROUP_30",
+  "confirm_required": true,
+  "outcome": "pending",
+  "rationale": "High load with active group context; muting 30 minutes.",
+  "rationale_source": "template",
+  "redactions": [],
+  "signals": [
+    {
+      "agent": "comms",
+      "decision": "batch_digest",
+      "drivers": [
+        "volume_137",
+        "actionable_3",
+        "load_score_78"
+      ],
+      "slow": false
+    },
+    {
+      "agent": "calendar",
+      "decision": "do_nothing",
+      "drivers": [
+        "no_events"
+      ],
+      "slow": false
+    },
+    {
+      "agent": "wellness",
+      "decision": "mute_group_30",
+      "drivers": [
+        "app_switch_rate=16.0",
+        "rmssd_z=-0.876",
+        "typing_entropy=4.92"
+      ],
+      "slow": false
+    }
+  ],
+  "trace_id": "tr_19a4f6947d52",
+  "trigger": {
+    "source": "comms_burst",
+    "value": {
+      "channel": "group:Thapar-DSA-Project",
+      "count": 137,
+      "window_min": 8
+    }
+  },
+  "ts": "2026-05-07T22:31:47+05:30"
+}

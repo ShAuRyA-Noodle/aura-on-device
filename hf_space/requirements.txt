@@ -1,16 +1,12 @@
-# HuggingFace Spaces — Aura showcase demo (CPU tier).
-# Only the *minimum* deps the agent reference stack needs. No ML models,
-# no LangGraph (Orchestrator's deterministic fallback path is used here),
-# no sentence-transformers (we ship the hash-bucket embedder).
+# HuggingFace Spaces — Aura interactive demo (CPU tier).
+# Lightweight only: no torch, no mlx, no llama.cpp, no sentence-transformers.
 
 gradio==4.44.0
 # huggingface_hub<1.0 because gradio 4.44 imports HfFolder from the legacy
-# location, which was removed in huggingface_hub 1.0.
+# location, removed in huggingface_hub 1.0.
 huggingface_hub<1.0
 # starlette<1.0 because gradio 4.44 + starlette 1.0.0 collide in jinja2
-# template rendering (TypeError: unhashable type: 'dict'). Starlette 1.0
-# changed how globals are passed to Jinja2; gradio 4.44 was never patched
-# for it. Pin to last 0.x release that gradio 4.44 was tested against.
+# template rendering. Pin to last 0.x release that gradio 4.44 was tested with.
 starlette<1.0
 fastapi<0.130
 pydantic==2.7.4

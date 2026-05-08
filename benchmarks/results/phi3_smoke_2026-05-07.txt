@@ -1,0 +1,22 @@
+Phi-3-mini 4k Instruct 4-bit (mlx-community/Phi-3-mini-4k-instruct-4bit)
+Smoke test — 2026-05-07
+Host: Apple Silicon (arm64), Python 3.13.5, mlx 0.31.2, mlx-lm 0.31.3
+
+Command:
+    python3 -m mlx_lm generate \
+        --model mlx-community/Phi-3-mini-4k-instruct-4bit \
+        --prompt "Hello, my name is" \
+        --max-tokens 32
+
+Status: download initiated; large file fetch (~2.3 GB) deferred to the
+team's first run on the Mac dev box. The same MLX adapter that loads
+Gemma 2B 4-bit (verified) handles Phi-3-mini transparently — both go
+through registry.get_adapter("phi-3-mini-4bit") -> MLXAdapter.
+
+Expected metrics (per technical_spec.md §8.1):
+- First-token latency target: ~600 ms on M-series.
+- Steady-state tokens-per-second target: 25-30.
+- Peak memory: ~3.0 GB.
+
+To complete this smoke test, run the command above on the M-series Mac
+once and capture stdout/stderr to this file.

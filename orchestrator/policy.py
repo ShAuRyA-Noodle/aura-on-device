@@ -98,6 +98,64 @@ class DNDWindow:
 
 
 # ---------------------------------------------------------------------------
+# Silence Budget — plan §1.2
+# ---------------------------------------------------------------------------
+
+
+@dataclass
+class SilenceBudget:
+    """Token-bucket Silence Budget per local-day.
+
+    - Capacity = ``total`` (default 3 per spec).
+    - ``decrement(kind)`` removes a token if the action is non-safety.
+    - ``refund_on_useful(kind)`` adds a token back, capped at ``total``,
+      when the user marks the surface useful.
+    - ``maybe_reset(now)`` resets the bucket at local midnight.
+    - ``remaining`` is always in ``[0, total]``.
+    """
+
+    total: int = 3
+    remaining: int = 3
+    last_reset_date: Optional[str] = None  # local-date isoformat YYYY-MM-DD
+
+    def __post_init__(self) -> None:
+        # invariants
+        if self.remaining > self.total:
+            self.remaining = self.total
+        if self.remaining < 0:
+            self.remaining = 0
+
+    def maybe_reset(self, now: datetime) -> bool:
+        """Reset to ``total`` if the local-date rolled over since last reset."""
+        local_date = now.astimezone().date().isoformat()
+        if self.last_reset_date is None:
+            self.last_reset_date = local_date
+            return False
+        if local_date != self.last_reset_date:
+            self.remaining = self.total
+            self.last_reset_date = local_date
+            return True
+        return False
+
+    def can_spend(self, kind: str) -> bool:
+        if kind in SAFETY_KINDS:
+            return True
+        return self.remaining > 0
+
+    def decrement(self, kind: str) -> None:
+        if kind in SAFETY_KINDS:
+            return
+        # Floor at 0 — invariant.
+        self.remaining = max(0, self.remaining - 1)
+
+    def refund_on_useful(self, kind: str) -> None:
+        if kind in SAFETY_KINDS:
+            return
+        # Cap at total — invariant.
+        self.remaining = min(self.total, self.remaining + 1)
+
+
+# ---------------------------------------------------------------------------
 # Scoring
 # ---------------------------------------------------------------------------
 

@@ -1,0 +1,82 @@
+{
+  "candidates": [
+    {
+      "components": {
+        "cost": 0.2,
+        "dnd": 0.0,
+        "recent": 0.0,
+        "util": 0.68
+      },
+      "confirm_required": false,
+      "kind": "LEAVE_BY_ALERT",
+      "score": 0.48
+    },
+    {
+      "components": {
+        "cost": 0.2,
+        "dnd": 0.0,
+        "recent": 0.0,
+        "util": 0.49
+      },
+      "confirm_required": false,
+      "kind": "SHOW_BRIEF",
+      "score": 0.29
+    },
+    {
+      "components": {
+        "cost": 0.25,
+        "dnd": 0.0,
+        "recent": 0.0,
+        "util": 0.4
+      },
+      "confirm_required": true,
+      "kind": "NAP_15",
+      "score": 0.15
+    }
+  ],
+  "chosen": "LEAVE_BY_ALERT",
+  "confirm_required": false,
+  "outcome": "executed_auto",
+  "rationale": "Travel time means you should leave now.",
+  "rationale_source": "template",
+  "redactions": [],
+  "signals": [
+    {
+      "agent": "comms",
+      "decision": "show_brief",
+      "drivers": [
+        "volume_2",
+        "actionable_1",
+        "load_score_42"
+      ],
+      "slow": false
+    },
+    {
+      "agent": "calendar",
+      "decision": "leave_by_alert",
+      "drivers": [
+        "travel_22min",
+        "buffer_15min"
+      ],
+      "slow": false
+    },
+    {
+      "agent": "wellness",
+      "decision": "nap_15",
+      "drivers": [
+        "rmssd_z=-0.727",
+        "sleep_debt_min=140.0",
+        "typing_entropy=3.2"
+      ],
+      "slow": false
+    }
+  ],
+  "trace_id": "tr_bbb8ab26ea7c",
+  "trigger": {
+    "source": "phone_unlock",
+    "value": {
+      "hour": 7.75
+    }
+  },
+  "ts": "2026-05-07T07:45:00+05:30"
+}

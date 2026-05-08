@@ -9,28 +9,37 @@ app_file: app.py
 python_version: "3.11"
 pinned: false
 license: mit
-short_description: Synthetic showcase of Aura's four on-device agents.
+short_description: Aura interactive demo - 6 tabs, real agent stack.
 ---
 
-# Aura — public showcase Space
+# Aura — public interactive Space
 
-A *synthetic-data* live demo of Aura's four on-device agents (Comms,
-Calendar, Finance, Wellness) wired through the same orchestrator that ships
-in the mobile build.
+A live, interactive demo of Aura's on-device agent stack (Comms, Calendar,
+Finance, Wellness) wired through the same orchestrator + Reasoning Trace
+emitter that ships in the mobile build. The Space accepts your own pasted
+inputs (SMS, chat, calendar events, sliders) and renders the real agent
+output plus the full glass-box trace.
 
-> **DEMO ON SYNTHETIC DATA — NO USER DATA EVER LEAVES YOUR DEVICE IN PRODUCTION.**
-
-The agents themselves are unchanged from the on-device build. The only
-difference is that this Space is fed example inputs the visitor types,
-slides, or pastes — never personal logs.
+> **Demo runs on synthetic + your-pasted data. Nothing is logged.**
+> Production runs on-device. The classifier and embedder fall back to the
+> deterministic regex / hash-bucket path on this CPU-only Space.
 
 ## Tabs
 
-1. **Morning Brief** — Health + Calendar + Comms inputs flow through the orchestrator. See the brief card and the full Reasoning Trace JSON.
-2. **Quiet Group Chat** — paste any chat blob; CommsAgent triages to actionable + muted with a Reasoning Trace.
-3. **Spend Mirror** — paste Indian UPI SMS; FinanceAgent regex pack parses, hashes the merchant, and categorises.
-4. **Load Score** — slide HRV / typing-entropy / app-switch / sleep-debt; watch the regressor + intervention picker.
-5. **Memory Graph** — interact with the on-device sqlite-vss memory: add nodes, search, export JSON, see audit log.
+1. **Morning Brief Builder** — HRV slider, sleep hours, three calendar events, five notifications. Real Calendar Agent conflict-detect + Comms Agent triage + Wellness load-score, ranked by the Policy decider. Reasoning Trace JSON rendered live.
+2. **Quiet Group Chat** — paste up to 200 messages (one per line). The CommsAgent surfaces the top 3 actionable, mutes the rest, and reports the Silence Budget tokens spent. "Load 137-msg DBMS scenario" pre-loads the locked example.
+3. **Spend Mirror** — paste 1-30 lines of Indian bank SMS. Six "Load example" buttons for HDFC / SBI / ICICI / Axis / Kotak / PNB. Output: parsed table (merchant, amount, currency, timestamp, category, anomaly_flag), projected end-of-month spend, suggested substitution.
+4. **Load Score Live** — five sliders (HRV, typing entropy, app-switch rate, sleep debt, notification dismiss rate). Real Load Score (0-100) computed by the trained XGBoost regressor when present, else the linear fallback. Driver decomposition bars + intervention recommendation.
+5. **Memory Graph Explorer** — add nodes via the form, search vector + keyword, download the full JSON export, view today's Merkle root.
+6. **Reasoning Trace Library** — three pre-recorded glass-box trace replays (Monday Brief, Stress Spike, Calm Evening). Click a card to open the full Reasoning Trace JSON.
+
+## What this is NOT
+
+This is a CPU-only public showcase. The real Aura product is on-device. The
+production stack runs Gemma 2B + Phi-3-mini via MLX (iOS) or MediaPipe LLM
+Inference (Android) — none of that runs here. This Space exposes the same
+orchestrator, schemas, and reasoning-trace contract; the classifier/embedder
+are swapped for the deterministic lightweight path.
 
 ## Run locally
 
@@ -40,34 +49,6 @@ pip install -r requirements.txt
 python app.py
 # -> http://localhost:7860
 ```
-
-## Deploy to a HuggingFace Space
-
-```bash
-huggingface-cli login
-git clone https://huggingface.co/spaces/Shaurya-Noodle/Caramel_Coin
-cd Caramel_Coin
-cp -R ../aura/hf_space/* .
-# Make sure the agent stack is on the Python path. Two options:
-#   (a) git submodule add the aura/ repo as `aura/` and set PYTHONPATH in app.py
-#   (b) copy the four agent dirs + memory/ + orchestrator/ alongside app.py
-git add .
-git commit -m "Initial Aura showcase Space"
-git push
-```
-
-The Space builds on the free CPU tier — no GPU is required since every model
-call in the showcase is the deterministic reference path (XGBoost / regex /
-hash-bucket embedder). Production swaps these for Gemma 2B Q4 + DistilBERT +
-all-MiniLM-L6-v2 at the on-device call sites.
-
-## Privacy invariants enforced by code
-
-- `CommsAgent` never persists message bodies. Only `(sender_hash, intent, urgency)`.
-- `FinanceAgent.persist()` returns only `(merchant_hash, amount, currency, account_last4, ts, category)`.
-- `MemoryGraph.export_json()` lets a user dump and walk away — fully portable.
-- The audit log's hash chain is tamper-evident; daily Merkle roots make
-  retroactive edits detectable.
 
 ## Visual language
 
@@ -79,16 +60,27 @@ Locked palette per `deck/deck_spec.md §0`:
 | Ink         | #0E0E0E  |
 | Accent      | #FF5B2E  |
 
-Typography: Fraunces (display) + Inter Tight (UI). Linear / Arc aesthetic.
+Typography: Fraunces (display) + Inter Tight (UI), via Google Fonts. The
+Reasoning Trace JSON renders with the locked keys (`chosen`, `rationale`,
+`confirm_required`) highlighted in the accent colour.
 
 ## File map
 
 ```
 hf_space/
-├─ app.py            # Gradio Blocks — 5 tabs, hero, footer
-├─ style.css         # Locked palette + Fraunces / Inter Tight
-├─ requirements.txt  # gradio + pydantic + jsonschema (CPU only)
-├─ Dockerfile        # Optional non-Gradio path for self-host
-├─ .gitattributes    # HF Spaces LFS hints
-└─ README.md         # this file (with the YAML metadata above)
+├─ app.py                    # Gradio Blocks — 6 tabs, hero, footer
+├─ style.css                 # Locked palette, typography, components
+├─ requirements.txt          # gradio, pydantic, jsonschema (CPU only)
+├─ README.md                 # this file
+├─ static/                   # hero image + memory_export download target
+├─ agents/{comms,calendar,finance,wellness,core}/
+├─ memory/                   # MemoryGraph + audit chain
+└─ orchestrator/             # graph + policy + trace + replays/output/
 ```
+
+## Privacy invariants enforced by code
+
+- `CommsAgent` never persists message bodies — only `(sender_hash, intent, urgency)`.
+- `FinanceAgent.persist()` returns only `(merchant_hash, amount, currency, account_last4, ts, category)`.
+- `MemoryGraph.export_json()` lets the user dump and walk away — fully portable.
+- The audit log's hash chain is tamper-evident; daily Merkle roots make retroactive edits detectable.

@@ -261,3 +261,82 @@ def test_suggest_substitution_food():
     agent = FinanceAgent()
     sub = agent.suggest_substitution(Category.FOOD_DELIVERY)
     assert sub is not None and sub.est_savings_inr > 0
+
+
+# ---------------------------------------------------------------------------
+# Per-bank parser accuracy gate (>= 95%) and per-merchant categorisation
+# (>= 90%) on the 300-row synthetic dataset.
+# ---------------------------------------------------------------------------
+
+
+def test_per_bank_parser_accuracy_gate():
+    metrics = FinanceAgent().diagnostic_accuracy()
+    assert "error" not in metrics, metrics.get("error")
+    assert metrics["sms_overall_accuracy"] >= 0.95, metrics
+    for bank, acc in metrics["per_bank"].items():
+        assert acc >= 0.95, f"{bank} parser accuracy {acc:.3f} below 0.95 gate"
+
+
+def test_per_merchant_category_accuracy_gate():
+    metrics = FinanceAgent().diagnostic_accuracy()
+    assert metrics["merchant_overall_accuracy"] >= 0.90, metrics
+
+
+# ---------------------------------------------------------------------------
+# Substitution: the new behaviour-driven contract triggers on 3+ Zomato /
+# Swiggy orders within 7 days and emits a "Cook tomorrow?" nudge.
+# ---------------------------------------------------------------------------
+
+
+def test_substitution_on_food_velocity():
+    agent = FinanceAgent()
+    now = datetime(2026, 5, 7, 21, 0, tzinfo=timezone.utc)
+    history: List[Transaction] = [
+        Transaction(
+            amount=420.0 + i * 10,
+            currency="INR",
+            account_last4="1234",
+            ts=now - timedelta(days=i),
+            merchant_raw="zomato" if i % 2 == 0 else "swiggy",
+            category=Category.FOOD_DELIVERY,
+            direction="debit",
+        )
+        for i in range(4)
+    ]
+    sub = agent.suggest_substitution(history, as_of=now)
+    assert sub is not None
+    assert "Cook" in sub.suggestion
+    assert sub.est_savings_inr > 0
+
+
+def test_substitution_no_food_velocity():
+    agent = FinanceAgent()
+    now = datetime(2026, 5, 7, 21, 0, tzinfo=timezone.utc)
+    # Only 2 food orders -> no nudge
+    history = [
+        Transaction(
+            amount=420.0,
+            currency="INR",
+            account_last4="1234",
+            ts=now - timedelta(days=i),
+            merchant_raw="zomato",
+            category=Category.FOOD_DELIVERY,
+            direction="debit",
+        )
+        for i in range(2)
+    ]
+    assert agent.suggest_substitution(history, as_of=now) is None
+
+
+# ---------------------------------------------------------------------------
+# Refund / fee direction promotion
+# ---------------------------------------------------------------------------
+
+
+def test_hdfc_refund_direction_promotion():
+    agent = FinanceAgent()
+    txn = agent.parse_sms(
+        "Received Rs.150.00 from REFUND-SWIGGY in A/c **1234 via UPI on 07-MAY"
+    )
+    assert txn is not None
+    assert txn.direction == "refund"

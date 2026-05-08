@@ -1,0 +1,117 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://aura.local/schemas/memory_export.json",
+  "title": "Aura Memory Graph Export",
+  "description": "Validates the document returned by MemoryGraph.export_json (technical_spec.md §6.9).",
+  "type": "object",
+  "required": [
+    "export_version",
+    "user_id_local",
+    "exported_at",
+    "redaction_profile",
+    "nodes",
+    "edges",
+    "traces",
+    "merkle_daily"
+  ],
+  "additionalProperties": true,
+  "properties": {
+    "export_version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+$"
+    },
+    "user_id_local": {
+      "type": "string",
+      "minLength": 1
+    },
+    "exported_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "redaction_profile": {
+      "type": "string",
+      "enum": ["raw", "redacted", "minimal"]
+    },
+    "nodes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "type", "data", "ts", "retention_class"],
+        "additionalProperties": false,
+        "properties": {
+          "id": {"type": "string", "pattern": "^n_"},
+          "type": {
+            "type": "string",
+            "enum": [
+              "User",
+              "Event",
+              "App",
+              "Person",
+              "Place",
+              "Transaction",
+              "Conversation",
+              "HealthSnapshot",
+              "Action",
+              "Trace"
+            ]
+          },
+          "data": {"type": "object"},
+          "ts": {"type": "integer", "minimum": 0},
+          "retention_class": {"type": "string"}
+        }
+      }
+    },
+    "edges": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "src", "dst", "type", "weight", "ts"],
+        "additionalProperties": false,
+        "properties": {
+          "id": {"type": "string", "pattern": "^e_"},
+          "src": {"type": "string"},
+          "dst": {"type": "string"},
+          "type": {
+            "type": "string",
+            "enum": [
+              "attended",
+              "sent_to",
+              "located_at",
+              "paid_to",
+              "talked_about",
+              "felt_during",
+              "triggered_by",
+              "confirmed_by_user"
+            ]
+          },
+          "weight": {"type": "number"},
+          "ts": {"type": "integer", "minimum": 0}
+        }
+      }
+    },
+    "traces": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["trace_id", "ts", "outcome"],
+        "properties": {
+          "trace_id": {"type": "string"},
+          "ts": {"type": "string"},
+          "outcome": {"type": "string"}
+        }
+      }
+    },
+    "merkle_daily": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["date", "root"],
+        "additionalProperties": false,
+        "properties": {
+          "date": {"type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}$"},
+          "root": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+        }
+      }
+    }
+  }
+}

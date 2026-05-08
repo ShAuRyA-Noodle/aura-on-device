@@ -270,3 +270,61 @@ footer.aura-footer {
   .grid-2 { grid-template-columns: 1fr; }
   .slider-row { grid-template-columns: 140px 1fr 56px; }
 }
+
+/* ---------------------------------------------------------------------
+   Live Reasoning Trace overlay (WS /ws/trace)
+   --------------------------------------------------------------------- */
+
+.trace-overlay {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  width: 320px;
+  max-height: 360px;
+  overflow-y: auto;
+  background: var(--aura-card);
+  border: 1px solid var(--aura-line);
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+  padding: 12px 14px;
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 12px;
+  z-index: 999;
+}
+
+.trace-overlay header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+  font-family: "Inter Tight", sans-serif;
+  font-size: 13px;
+}
+
+.trace-overlay .status-pill {
+  font-size: 10px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  background: var(--aura-line);
+}
+.trace-overlay .status-pill.live { background: #1f7a1f; color: #fff; }
+.trace-overlay .status-pill.error,
+.trace-overlay .status-pill.retry { background: var(--aura-accent); color: #fff; }
+
+.trace-overlay ol.trace-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.trace-overlay ol.trace-list li {
+  padding: 4px 0;
+  border-bottom: 1px dotted var(--aura-line);
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+}
+.trace-overlay ol.trace-list li:last-child { border-bottom: none; }
+.trace-overlay .evt-type { color: var(--aura-mute); }
+.trace-overlay .evt-detail { color: var(--aura-ink); }

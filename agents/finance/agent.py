@@ -25,12 +25,83 @@ calls would be awaited in production.
 from __future__ import annotations
 
 import hashlib
+import json
+import os
 import re
 import statistics
+from collections import Counter
 from dataclasses import asdict, dataclass, field
 from datetime import datetime, timedelta, timezone
 from enum import Enum
-from typing import Any, Iterable, Optional
+from pathlib import Path
+from typing import Any, Iterable, List, Optional
+
+# Per-bank SMS parsers live in their own module so they are easy to extend
+# without touching the agent. Importing keeps the regex pack hot in memory.
+from .sms_patterns import dispatch as _sms_pattern_dispatch  # noqa: F401
+
+
+# ---------------------------------------------------------------------------
+# Optional on-device LLM extractor for unrecognised SMS.
+#
+# Activated when BOTH:
+#   1. AURA_USE_LLM=1 in the environment.
+#   2. The trained extractor artefact at
+#      models/exports/comms_classifier.pkl exists (we share the gating
+#      file with the Comms agent so the team flips one switch).
+#
+# Behaviour: when the regex pack returns ``None`` we ask Gemma 2B for a
+# JSON extraction. If MLX/llama.cpp is missing or the JSON is invalid,
+# we fall back to the deterministic queue-for-fallback behaviour.
+# ---------------------------------------------------------------------------
+
+
+_FINANCE_LLM_ADAPTER = None
+_FINANCE_LLM_ATTEMPTED = False
+
+
+def _finance_llm_enabled() -> bool:
+    if os.environ.get("AURA_USE_LLM", "0") != "1":
+        return False
+    artefact = (
+        Path(__file__).resolve().parents[2]
+        / "models"
+        / "exports"
+        / "comms_classifier.pkl"
+    )
+    return artefact.exists()
+
+
+def _get_finance_llm():
+    global _FINANCE_LLM_ADAPTER, _FINANCE_LLM_ATTEMPTED
+    if _FINANCE_LLM_ADAPTER is not None or _FINANCE_LLM_ATTEMPTED:
+        return _FINANCE_LLM_ADAPTER
+    _FINANCE_LLM_ATTEMPTED = True
+    try:
+        from models.llm import get_adapter
+
+        _FINANCE_LLM_ADAPTER = get_adapter("gemma-2b-4bit")
+    except Exception:
+        _FINANCE_LLM_ADAPTER = None
+    return _FINANCE_LLM_ADAPTER
+
+
+def _llm_extract_sms(text: str) -> Optional[dict[str, Any]]:
+    adapter = _get_finance_llm()
+    if adapter is None:
+        return None
+    try:
+        from models.llm.prompts import finance_extract_prompt, safe_json_extract
+
+        out = adapter.generate(
+            finance_extract_prompt(text[:480]),
+            max_tokens=128,
+            temperature=0.0,
+            stop=("<end_of_turn>",),
+        )
+    except Exception:
+        return None
+    return safe_json_extract(out)
 
 
 # ---------------------------------------------------------------------------
@@ -358,6 +429,46 @@ class ThreadMeta:
 
 
 # ---------------------------------------------------------------------------
+# Static substitution table (per-category nudges)
+# ---------------------------------------------------------------------------
+
+_STATIC_SUBSTITUTIONS: dict["Category", "Substitution"] = {}
+
+
+def _build_static_substitutions() -> None:
+    _STATIC_SUBSTITUTIONS.update({
+        Category.FOOD_DELIVERY: Substitution(
+            from_category=Category.FOOD_DELIVERY,
+            suggestion="Cook + Blinkit groceries — typical save ₹220/order",
+            est_savings_inr=220.0,
+        ),
+        Category.TRANSPORT: Substitution(
+            from_category=Category.TRANSPORT,
+            suggestion="Metro / shared auto for sub-5km hops",
+            est_savings_inr=80.0,
+        ),
+        Category.SHOPPING: Substitution(
+            from_category=Category.SHOPPING,
+            suggestion="Add to cart, wait 24h, re-evaluate",
+            est_savings_inr=400.0,
+        ),
+        Category.SUBSCRIPTIONS: Substitution(
+            from_category=Category.SUBSCRIPTIONS,
+            suggestion="Audit overlapping streaming subs",
+            est_savings_inr=199.0,
+        ),
+        Category.ENTERTAINMENT: Substitution(
+            from_category=Category.ENTERTAINMENT,
+            suggestion="Weekday matinee pricing on BookMyShow",
+            est_savings_inr=120.0,
+        ),
+    })
+
+
+_build_static_substitutions()
+
+
+# ---------------------------------------------------------------------------
 # Agent
 # ---------------------------------------------------------------------------
 
@@ -376,28 +487,69 @@ class FinanceAgent:
     def parse_sms(self, text: str, fallback_year: int = 2026) -> Optional[Transaction]:
         """Parse a single Indian bank UPI SMS string.
 
-        Returns ``None`` for non-financial / unparseable strings (and pushes
-        them to ``unparsed_log`` for the DistilBERT fallback queue).
+        Tries the regex pack first (fast path). If that misses and the
+        on-device LLM extractor is available (``AURA_USE_LLM=1`` and the
+        classifier artefact present) we ask Gemma 2B for a JSON
+        extraction with the structured-output prompt. Failing that, we
+        push the string into ``unparsed_log`` for the DistilBERT
+        fallback queue and return ``None``.
         """
         text = text.strip()
         hit = self._regex_dispatch(text)
-        if hit is None:
-            self.unparsed_log.append(text)
-            return None
-        ts = _parse_date_loose(hit.date_str, fallback_year)
-        merchant_token = _normalise_merchant_token(hit.merchant)
-        txn = Transaction(
-            amount=hit.amount,
-            currency="INR",
-            account_last4=hit.account_last4,
-            ts=ts,
-            merchant_raw=merchant_token,
-            bank=hit.bank,
-            direction=hit.direction,
-            source="sms",
-        )
-        txn.category = self.categorize(txn)
-        return txn
+        if hit is not None:
+            ts = _parse_date_loose(hit.date_str, fallback_year)
+            merchant_token = _normalise_merchant_token(hit.merchant)
+            txn = Transaction(
+                amount=hit.amount,
+                currency="INR",
+                account_last4=hit.account_last4,
+                ts=ts,
+                merchant_raw=merchant_token,
+                bank=hit.bank,
+                direction=hit.direction,
+                source="sms",
+            )
+            txn.category = self.categorize(txn)
+            return txn
+
+        # Regex miss — try the LLM extractor when enabled.
+        if _finance_llm_enabled():
+            extracted = _llm_extract_sms(text)
+            if extracted and "amount" in extracted:
+                try:
+                    amount = float(extracted.get("amount", 0))
+                except (TypeError, ValueError):
+                    amount = 0.0
+                if amount > 0:
+                    merchant_token = _normalise_merchant_token(
+                        str(extracted.get("merchant", "") or "")
+                    )
+                    last4_raw = str(extracted.get("account_last4", "") or "")
+                    last4 = re.sub(r"[^0-9]", "", last4_raw)[-4:] or "0000"
+                    direction = str(
+                        extracted.get("direction", "debit") or "debit"
+                    ).lower()
+                    if direction not in ("debit", "credit"):
+                        direction = "debit"
+                    txn = Transaction(
+                        amount=amount,
+                        currency=str(
+                            extracted.get("currency", "INR") or "INR"
+                        ).upper(),
+                        account_last4=last4,
+                        ts=datetime.now(timezone.utc).replace(
+                            year=fallback_year
+                        ),
+                        merchant_raw=merchant_token,
+                        bank="LLM",
+                        direction=direction,
+                        source="sms",
+                    )
+                    txn.category = self.categorize(txn)
+                    return txn
+
+        self.unparsed_log.append(text)
+        return None
 
     def parse_gmail_receipt(
         self, thread_meta: ThreadMeta, fallback_year: int = 2026
@@ -555,15 +707,22 @@ class FinanceAgent:
         balance: Balance,
         as_of: Optional[datetime] = None,
     ) -> Projection:
-        """Linear-burn EoM projection.
+        """End-of-month balance projection.
 
-        Phase 1: linear extrapolation of the last 14 days' net debit.
-        Phase 2: drop in 2-layer LSTM trained on personal trace.
-        ``confidence`` is a coarse heuristic based on history depth and
-        variance; never reports >0.85 from this stub.
+        Strategy:
+        1. Linear extrapolation from the last 7 days of net debits (recent
+           behaviour is more predictive than the 14-day average for
+           students whose week-to-week spend swings).
+        2. Add known recurring debits — RENT and any SUBSCRIPTIONS that have
+           hit at least twice in the rolling window — that have not yet
+           landed this calendar month.
+        3. ``confidence`` is a coarse heuristic based on history depth and
+           coefficient of variation; capped at 0.85 because the linear
+           extrapolation never has the precision of the Phase-2 LSTM.
         """
         as_of = as_of or datetime.now(timezone.utc)
-        lookback_start = as_of - timedelta(days=14)
+        lookback_start = as_of - timedelta(days=7)
+
         debits_per_day: dict[str, float] = {}
         for txn in history:
             if txn.ts < lookback_start or txn.direction != "debit":
@@ -587,6 +746,11 @@ class FinanceAgent:
         days_remaining = max(0, (next_month - as_of).days)
 
         projected_burn = burn * days_remaining
+
+        # Add known scheduled debits not yet seen this month.
+        scheduled = self._scheduled_debits_remaining(history, as_of)
+        projected_burn += scheduled
+
         balance_eom = balance.amount - projected_burn
 
         hits_zero: Optional[str] = None
@@ -596,7 +760,7 @@ class FinanceAgent:
                 hits_zero = (as_of + timedelta(days=days_to_zero)).date().isoformat()
 
         # confidence: lower with high coefficient of variation, higher with depth
-        depth_factor = min(1.0, len(daily) / 14.0)
+        depth_factor = min(1.0, len(daily) / 7.0)
         cv_factor = max(0.0, 1.0 - min(1.0, cv))
         confidence = round(0.4 + 0.45 * depth_factor * cv_factor, 2)
         confidence = min(confidence, 0.85)
@@ -613,36 +777,88 @@ class FinanceAgent:
             confidence=confidence,
         )
 
-    def suggest_substitution(self, category: Category) -> Optional[Substitution]:
-        """Return a frugal swap for the given category, or None."""
-        table: dict[Category, Substitution] = {
-            Category.FOOD_DELIVERY: Substitution(
-                from_category=Category.FOOD_DELIVERY,
-                suggestion="Cook + Blinkit groceries — typical save ₹220/order",
-                est_savings_inr=220.0,
+    @staticmethod
+    def _scheduled_debits_remaining(
+        history: list[Transaction], as_of: datetime
+    ) -> float:
+        """Sum of expected RENT + recurring SUBSCRIPTIONS not yet hit
+        this calendar month.
+
+        A subscription is "recurring" if the same merchant has hit at
+        least twice in the past 60 days. RENT is identified by the
+        :class:`Category.RENT` label (set by :meth:`categorize`).
+        """
+        cutoff = as_of - timedelta(days=60)
+        merchant_hits: Counter[str] = Counter()
+        merchant_amount: dict[str, float] = {}
+        for t in history:
+            if t.direction != "debit" or t.ts < cutoff:
+                continue
+            if t.category not in (Category.RENT, Category.SUBSCRIPTIONS):
+                continue
+            key = (t.merchant_hash or t.merchant_raw, t.category)
+            merchant_hits[str(key)] += 1
+            merchant_amount[str(key)] = t.amount
+
+        # Already seen this calendar month?
+        month_start = as_of.replace(day=1, hour=0, minute=0, second=0, microsecond=0)
+        seen_this_month: set[str] = set()
+        for t in history:
+            if t.ts < month_start or t.direction != "debit":
+                continue
+            if t.category not in (Category.RENT, Category.SUBSCRIPTIONS):
+                continue
+            seen_this_month.add(str((t.merchant_hash or t.merchant_raw, t.category)))
+
+        scheduled = 0.0
+        for key, n in merchant_hits.items():
+            if n >= 2 and key not in seen_this_month:
+                scheduled += merchant_amount.get(key, 0.0)
+        return scheduled
+
+    def suggest_substitution(
+        self,
+        category_or_history,
+        as_of: Optional[datetime] = None,
+    ) -> Optional[Substitution]:
+        """Return a frugal swap.
+
+        Two call shapes are accepted for backwards compatibility with the
+        original test suite and the new behaviour-driven contract:
+
+        - ``suggest_substitution(Category.FOOD_DELIVERY)`` returns a
+          deterministic table lookup (legacy path).
+        - ``suggest_substitution(history)`` where ``history`` is a list of
+          :class:`Transaction` triggers the real rule: 3+ Zomato or Swiggy
+          orders within the last 7 days emits the "Cook tomorrow?" nudge
+          with the average single-meal save (~₹400).
+        """
+        if isinstance(category_or_history, Category):
+            return _STATIC_SUBSTITUTIONS.get(category_or_history)
+
+        history: List[Transaction] = list(category_or_history)
+        as_of = as_of or datetime.now(timezone.utc)
+        cutoff = as_of - timedelta(days=7)
+
+        food_orders = [
+            t for t in history
+            if t.ts >= cutoff
+            and t.direction == "debit"
+            and t.category == Category.FOOD_DELIVERY
+            and _normalise_merchant_token(t.merchant_raw) in {"zomato", "swiggy"}
+        ]
+        if len(food_orders) < 3:
+            return None
+        avg_meal = statistics.fmean(t.amount for t in food_orders)
+        save = round(avg_meal, 0) if avg_meal > 0 else 400.0
+        return Substitution(
+            from_category=Category.FOOD_DELIVERY,
+            suggestion=(
+                f"Cook tomorrow? You ordered {len(food_orders)} Zomato/Swiggy meals "
+                f"in 7 days — typical home-cook save ~₹{int(save)}/meal."
             ),
-            Category.TRANSPORT: Substitution(
-                from_category=Category.TRANSPORT,
-                suggestion="Metro / shared auto for sub-5km hops",
-                est_savings_inr=80.0,
-            ),
-            Category.SHOPPING: Substitution(
-                from_category=Category.SHOPPING,
-                suggestion="Add to cart, wait 24h, re-evaluate",
-                est_savings_inr=400.0,
-            ),
-            Category.SUBSCRIPTIONS: Substitution(
-                from_category=Category.SUBSCRIPTIONS,
-                suggestion="Audit overlapping streaming subs",
-                est_savings_inr=199.0,
-            ),
-            Category.ENTERTAINMENT: Substitution(
-                from_category=Category.ENTERTAINMENT,
-                suggestion="Weekday matinee pricing on BookMyShow",
-                est_savings_inr=120.0,
-            ),
-        }
-        return table.get(category)
+            est_savings_inr=float(save),
+        )
 
     # ---- agent entry-point ----------------------------------------------
 
@@ -737,67 +953,119 @@ class FinanceAgent:
         """Return the only fields permitted to land in the memory graph."""
         return txn.to_persisted()
 
+    # ---- diagnostics -----------------------------------------------------
+
+    def diagnostic_accuracy(self) -> dict[str, Any]:
+        """Replay the synthetic dataset through the parser pack and the
+        merchant categoriser, return per-bank, per-merchant and overall
+        accuracy. Used by the diagnostic CLI and by the test suite as the
+        production gate (per-bank ≥0.95, per-merchant ≥0.90).
+        """
+        dataset = (
+            Path(__file__).resolve().parents[2]
+            / "datasets"
+            / "finance"
+            / "finance_train_synthetic.jsonl"
+        )
+        if not dataset.exists():
+            return {"error": f"dataset missing: {dataset}"}
+
+        sms_total: Counter[str] = Counter()
+        sms_ok: Counter[str] = Counter()
+        merchant_total: Counter[str] = Counter()
+        merchant_ok: Counter[str] = Counter()
+        gmail_total = 0
+        gmail_ok = 0
+
+        with dataset.open() as f:
+            for line in f:
+                row = __import__("json").loads(line)
+                if row.get("source") == "sms":
+                    bank = row.get("bank", "?")
+                    sms_total[bank] += 1
+                    txn = self.parse_sms(row["body"])
+                    if (
+                        txn
+                        and txn.account_last4 == row["account_last4"]
+                        and abs(txn.amount - row["amount"]) < 0.01
+                    ):
+                        sms_ok[bank] += 1
+                else:
+                    gmail_total += 1
+                    tm = ThreadMeta(
+                        thread_id=row["thread_id"],
+                        sender=row["sender"],
+                        subject=row.get("subject", ""),
+                        snippet=row.get("snippet", ""),
+                        amount=row.get("amount"),
+                        merchant=row.get("merchant"),
+                        ts=datetime.fromisoformat(row["ts"]) if row.get("ts") else None,
+                    )
+                    txn = self.parse_gmail_receipt(tm)
+                    expected_cat = row.get("category", "")
+                    if (
+                        txn
+                        and txn.category
+                        and txn.category.value == expected_cat
+                        and abs(txn.amount - row["amount"]) < 0.01
+                    ):
+                        gmail_ok += 1
+
+                # per-merchant categorisation accuracy
+                expected_cat = row.get("category", "")
+                merchant_token = _normalise_merchant_token(str(row.get("merchant", "")))
+                if expected_cat and merchant_token:
+                    merchant_total[merchant_token] += 1
+                    fake = Transaction(
+                        amount=float(row.get("amount", 0)),
+                        currency="INR",
+                        account_last4="0000",
+                        ts=datetime.now(timezone.utc),
+                        merchant_raw=merchant_token,
+                    )
+                    cat = self.categorize(fake)
+                    if cat.value == expected_cat:
+                        merchant_ok[merchant_token] += 1
+
+        per_bank = {
+            b: round(sms_ok[b] / max(1, sms_total[b]), 4) for b in sms_total
+        }
+        per_merchant = {
+            m: round(merchant_ok[m] / max(1, merchant_total[m]), 4)
+            for m in merchant_total
+        }
+        sms_overall = sum(sms_ok.values()) / max(1, sum(sms_total.values()))
+        merchant_overall = sum(merchant_ok.values()) / max(1, sum(merchant_total.values()))
+        return {
+            "sms_overall_accuracy": round(sms_overall, 4),
+            "gmail_accuracy": round(gmail_ok / max(1, gmail_total), 4),
+            "merchant_overall_accuracy": round(merchant_overall, 4),
+            "per_bank": per_bank,
+            "per_merchant": per_merchant,
+            "sms_total": sum(sms_total.values()),
+            "gmail_total": gmail_total,
+        }
+
     # ---- internals -------------------------------------------------------
 
     def _regex_dispatch(self, text: str) -> Optional[_ParseHit]:
-        # HDFC — groups: 1=dir, 2=amount, 3=acct, 4=merchant, 5=date.
-        m = _HDFC.search(text)
-        if m:
-            return _ParseHit(
-                amount=_parse_amount(m.group(2)),
-                account_last4=m.group(3),
-                merchant=m.group("m"),
-                bank="HDFC",
-                direction="debit" if m.group("dir").lower().startswith(("sent", "debit")) else "credit",
-                date_str=m.group(5),
-            )
-        # SBI — groups: 1=dir, 2=acct (named), 3=date, 4=merchant.
-        m = _SBI.search(text)
-        if m:
-            am = _SBI_AMOUNT.search(text)
-            if am:
-                return _ParseHit(
-                    amount=_parse_amount(am.group(1)),
-                    account_last4=m.group("acct"),
-                    merchant=m.group("m"),
-                    bank="SBI",
-                    direction="debit" if m.group("dir").lower() == "debited" else "credit",
-                    date_str=m.group(3),
-                )
-        # ICICI card — groups: 1=amount, 2=acct, 3=merchant, 4=date.
-        m = _ICICI.search(text)
-        if m:
-            return _ParseHit(
-                amount=_parse_amount(m.group(1)),
-                account_last4=m.group(2),
-                merchant=m.group("m"),
-                bank="ICICI",
-                direction="debit",
-                date_str=m.group(4),
-            )
-        # ICICI UPI — groups: 1=acct, 2=amount, 3=date, 4=merchant.
-        m = _ICICI_UPI.search(text)
-        if m:
-            return _ParseHit(
-                amount=_parse_amount(m.group(2)),
-                account_last4=m.group(1),
-                merchant=m.group("m"),
-                bank="ICICI",
-                direction="debit",
-                date_str=m.group(3),
-            )
-        # Axis — groups: 1=amount, 2=dir, 3=acct, 4=date, 5=merchant.
-        m = _AXIS.search(text)
-        if m:
-            return _ParseHit(
-                amount=_parse_amount(m.group(1)),
-                account_last4=m.group(3),
-                merchant=m.group("m"),
-                bank="AXIS",
-                direction="debit" if m.group("dir").lower() == "debited" else "credit",
-                date_str=m.group(4),
-            )
-        return None
+        """Dispatch to the per-bank parsers in :mod:`sms_patterns`.
+
+        We keep a thin shim here so external callers can monkeypatch
+        ``_regex_dispatch`` for tests / fault injection without touching
+        the bank-pattern module.
+        """
+        hit = _sms_pattern_dispatch(text)
+        if hit is None:
+            return None
+        return _ParseHit(
+            amount=hit.amount,
+            account_last4=hit.account_last4,
+            merchant=hit.merchant,
+            bank=hit.bank,
+            direction=hit.direction,
+            date_str=hit.date_str,
+        )
 
     @staticmethod
     def _sender_domain(sender: str) -> str:

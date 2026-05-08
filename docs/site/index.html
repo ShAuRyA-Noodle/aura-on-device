@@ -6,6 +6,12 @@
 <title>Aura — Anticipate. Act. Stay quiet.</title>
 <meta name="description" content="An on-device empathetic intelligence layer for Indian Gen Z. Built by Galaxy Brain at Thapar Institute for Samsung EnnovateX 2026." />
 <meta name="theme-color" content="#FAF8F5" />
+<meta property="og:title" content="Aura — Anticipate. Act. Stay quiet." />
+<meta property="og:description" content="On-device empathetic intelligence for Indian Gen Z. Four agents, one Phi-3-mini orchestrator, a glass-box Reasoning Trace, a Silence Budget capped at three a day." />
+<meta property="og:image" content="assets/aura_01_brand_identity_board.png" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary_large_image" />
+<link rel="canonical" href="https://shaurya-noodle.github.io/Combobulating/" />
 <link rel="icon" type="image/svg+xml" href="assets/aura_logo.svg" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -24,9 +30,12 @@
     <a href="#03">why</a>
     <a href="#04">wedges</a>
     <a href="#05">architecture</a>
+    <a href="#06">trace</a>
     <a href="#07">evidence</a>
     <a href="#08">team</a>
-    <a href="#10">links</a>
+    <a href="install.html">install</a>
+    <a href="privacy.html">privacy</a>
+    <a href="about.html">about</a>
   </nav>
 </header>
 
@@ -44,6 +53,9 @@
     </h1>
     <p class="tagline">Anticipate. Act. Stay quiet.</p>
     <p class="lede">Four agents. One orchestrator. One Reasoning Trace. Memory the user owns.</p>
+    <figure class="hero-figure">
+      <img src="assets/aura_01_brand_identity_board.png" alt="Aura brand identity board: warm off-white field, deep ink wordmark, sunset-orange accent rule, four agent tiles, and a sample Reasoning Trace." loading="eager" width="1600" height="900" />
+    </figure>
   </section>
 
   <!-- 02 FRICTION -->
@@ -60,7 +72,7 @@
     <p class="annot-text">the four that mattered</p>
   </section>
 
-  <!-- 03 WHY CURRENT AI FAILS -->
+  <!-- 03 WHY -->
   <section id="03" class="tile tile-why" aria-labelledby="why-title">
     <span class="tile-num">03</span>
     <span class="kicker">why current AI fails</span>
@@ -71,6 +83,10 @@
       group, none parse a UPI SMS, and none expose a step-by-step reasoning trace the
       user can edit or reject. Aura closes that loop on-device.
     </p>
+    <figure>
+      <img src="assets/aura_02_screen_morning_brief.png" alt="Morning Brief screen: a single card naming the four things that matter today, ranked, each with a one-tap action." loading="lazy" width="1080" height="1920" />
+      <figcaption>Morning Brief — the four that mattered, ranked.</figcaption>
+    </figure>
   </section>
 
   <!-- 04 WEDGES -->
@@ -82,22 +98,27 @@
       <li>
         <h3>Indian context</h3>
         <p>UPI, IRCTC, Zomato, Swiggy, Blinkit, BMTC, Gmail. Twelve bank SMS templates on the hot path.</p>
+        <img src="assets/aura_05_screen_spend_mirror.png" alt="Spend Mirror screen: month-to-date totals across UPI, Zomato, Swiggy, Blinkit, IRCTC; an anomaly flag highlighted in sunset orange." loading="lazy" width="1080" height="1920" />
       </li>
       <li>
         <h3>Biometric loop</h3>
         <p>HRV from HealthKit or Health Connect feeds a Load Score that triggers a single quiet intervention.</p>
+        <img src="assets/aura_07_screen_load_score_panel.png" alt="Load Score panel: HRV trend, sleep debt, notification rate, composite Load Score number with a recommended action." loading="lazy" width="1080" height="1920" />
       </li>
       <li>
         <h3>Glass-box trace</h3>
         <p>Every action ships a Reasoning Trace with trigger, signals, candidates, chosen, and rationale.</p>
+        <img src="assets/aura_06_screen_quiet_group_chat.png" alt="Quiet Group Chat screen: a WhatsApp project group muted for 30 minutes with the rationale visible inline." loading="lazy" width="1080" height="1920" />
       </li>
       <li>
         <h3>Silence as feature</h3>
         <p>A daily Silence Budget caps proactive surfaces at three. Useful taps refund a token.</p>
+        <img src="assets/aura_08_screen_silence_budget_state.png" alt="Silence Budget settings: three small dots representing today's tokens, with one consumed and two remaining." loading="lazy" width="1080" height="1920" />
       </li>
       <li>
         <h3>Owned memory</h3>
         <p>SQLite plus sqlite-vss, encrypted at rest. One tap to export, delete, or pause writes.</p>
+        <img src="assets/aura_04_screen_memory_tab.png" alt="Memory tab: a list of recent nodes — events, transactions, conversations — with export and delete-by-time-range affordances." loading="lazy" width="1080" height="1920" />
       </li>
     </ul>
   </section>
@@ -108,12 +129,7 @@
     <span class="kicker">architecture</span>
     <h2 id="arch-title">Three layers. Four agents. One orchestrator.</h2>
     <figure class="arch-figure">
-      <object type="image/svg+xml" data="../architecture/aura_architecture.svg" aria-label="Aura architecture diagram">
-        <div class="arch-placeholder" role="img" aria-label="Architecture diagram placeholder">
-          <p class="mono">[ aura_architecture.svg ]</p>
-          <p>Sense Layer &rarr; Signal Bus &rarr; Intelligence Layer (four agents and the orchestrator) &rarr; Experience Layer. Memory graph and audit log persist on-device.</p>
-        </div>
-      </object>
+      <img src="assets/aura_12_arch_3_layer_diagram.png" alt="Three-layer architecture diagram: Sense layer at the top reading on-device signals, Intelligence layer in the middle running four agents and a Phi-3-mini orchestrator on a state machine, Experience layer at the bottom across phone, watch, earbuds, tablet. A memory graph and audit log persist on-device alongside." loading="lazy" width="1600" height="1200" />
       <figcaption>
         Sense reads signals only on-device. Intelligence runs four agents and a Phi-3-mini
         orchestrator with a seven-state LangGraph machine. Experience is phone, watch,
@@ -127,6 +143,10 @@
     <span class="tile-num">06</span>
     <span class="kicker">a reasoning trace, every action</span>
     <h2 id="trace-title">Glass-box, not black-box.</h2>
+    <figure class="trace-figure">
+      <img src="assets/aura_03_screen_reasoning_trace_drawer.png" alt="Reasoning Trace drawer screen: trigger row, three signal rows, three candidate actions ranked by score, the chosen action highlighted, a short rationale, and a confirm-required toggle." loading="lazy" width="1080" height="1920" />
+      <figcaption>The drawer renders the same trace that ships with every action — trigger, signals, candidates, chosen, rationale, outcome.</figcaption>
+    </figure>
 <pre class="code" aria-label="Sample Reasoning Trace JSON"><code>{
   &quot;trace_id&quot;: &quot;t_2026_05_07_0941_a3f1&quot;,
   &quot;ts&quot;: &quot;2026-05-07T09:41:12+05:30&quot;,
@@ -153,6 +173,10 @@
     <span class="tile-num">07</span>
     <span class="kicker">evidence</span>
     <h2 id="evidence-title">Targets, not claims. Phase 2 publishes raw CSV.</h2>
+    <figure>
+      <img src="assets/aura_15_chart_kpi_baseline_vs_aura.png" alt="KPI bar chart: baseline versus Aura across effort reduction, task completion, autonomy quality, satisfaction, and stress trend, with target thresholds drawn as dashed sunset-orange rules." loading="lazy" width="1600" height="900" />
+      <figcaption>Targets pre-registered before the Phase 2 pilot. Numbers replace this chart at Phase 2 cut.</figcaption>
+    </figure>
     <table class="kpi" aria-describedby="kpi-note">
       <thead>
         <tr><th scope="col">KPI</th><th scope="col">Target</th><th scope="col">Method</th></tr>
@@ -174,6 +198,9 @@
     <span class="tile-num">08</span>
     <span class="kicker">team &mdash; galaxy brain</span>
     <h2 id="team-title">Two undergrads at Thapar. We are the user we design for.</h2>
+    <figure class="team-figure">
+      <img src="assets/aura_22_press_kit_team_portrait.png" alt="Press kit team portrait: Galaxy Brain, two undergraduates at Thapar Institute, framed in the editorial palette." loading="lazy" width="1600" height="1067" />
+    </figure>
     <div class="team-grid">
       <article class="card">
         <h3>Shaurya Punj</h3>
@@ -220,10 +247,16 @@
     <h2 id="links-title">Read the work.</h2>
     <ul class="links">
       <li><a href="https://github.com/ShAuRyA-Noodle/Combobulating">Repository &mdash; github.com/ShAuRyA-Noodle/Combobulating</a></li>
-      <li><a href="../../deck/phase1_blueprint/aura_phase1_blueprint.pdf">Phase 1 deck (PDF, placeholder)</a></li>
+      <li><a href="https://huggingface.co/spaces/Shaurya-Noodle/Caramel_Coin">Live demo &mdash; Caramel_Coin on HuggingFace</a></li>
+      <li><a href="install.html">Install on iPhone with a free Apple ID</a></li>
+      <li><a href="privacy.html">The five privacy promises</a></li>
+      <li><a href="about.html">About Galaxy Brain</a></li>
+      <li><a href="../../deck/phase1_blueprint/">Phase 1 deck source</a></li>
       <li><a href="../architecture.md">Architecture document</a></li>
       <li><a href="../threat_model.md">Threat model</a></li>
       <li><a href="../decisions/">ADR index</a></li>
+      <li><a href="../release_notes/v1.0.0.md">v1.0.0 release notes</a></li>
+      <li><a href="/.well-known/security.txt">Security disclosure (security.txt)</a></li>
       <li><a href="mailto:spunj_be23@thapar.edu">Contact &mdash; spunj_be23@thapar.edu</a></li>
     </ul>
   </section>
@@ -232,7 +265,7 @@
 
 <footer class="foot" role="contentinfo">
   <p>Galaxy Brain &mdash; Thapar Institute of Engineering and Technology, Patiala.</p>
-  <p>Samsung EnnovateX 2026 submission. MIT licensed code. &copy; 2026.</p>
+  <p>Samsung EnnovateX 2026 submission. MIT licensed code. v1.0.0 &middot; &copy; 2026.</p>
 </footer>
 
 </body>

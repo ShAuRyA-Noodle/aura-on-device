@@ -222,3 +222,61 @@ def test_output_round_trip_json():
     rebuilt = AgentOutput.model_validate_json(serialized)
     assert rebuilt.payload["top_suggested_action"] == out.payload["top_suggested_action"]
     assert len(rebuilt.candidates) == len(out.candidates)
+
+
+# ---------------------------------------------------------------------------
+# Hybrid classifier — held-out 20% macro-F1 gate (>=0.85)
+# ---------------------------------------------------------------------------
+
+
+def test_hybrid_classifier_macro_f1_gate():
+    """The hybrid pipeline (regex fast-path + sklearn LR) must hit
+    macro-F1 >= 0.85 on the stratified 20% holdout of the 500-example
+    synthetic dataset. This is the production accuracy gate.
+    """
+    metrics = CommsAgent().diagnostic_accuracy()
+    assert metrics["macro_f1"] >= 0.85, (
+        f"hybrid classifier macro-F1 {metrics['macro_f1']:.3f} below 0.85 gate"
+    )
+    # Per-class sanity: each class should be present in the test split.
+    assert set(metrics["per_class"].keys()) == {"ACTIONABLE", "SOCIAL", "BROADCAST", "SPAM"}
+    # Each class F1 must beat random (random = 0.25 over 4 balanced classes).
+    for label, stats in metrics["per_class"].items():
+        assert stats["f1"] >= 0.5, f"{label} F1 {stats['f1']:.3f} too low"
+
+
+# ---------------------------------------------------------------------------
+# Batch summarize and triage_inbox shape
+# ---------------------------------------------------------------------------
+
+
+def test_batch_summarize_shape():
+    _, rows = _load_jsonl("storm_47.jsonl")
+    out = CommsAgent().batch_summarize(rows)
+    assert "actionable" in out and "muted_count" in out and "digest" in out
+    assert out["total"] == 47
+    # Top 3 actionable rule
+    assert len(out["actionable"]) <= 3
+    assert out["muted_count"] == 47 - len(out["actionable"])
+
+
+def test_triage_inbox_shape():
+    _, rows = _load_jsonl("slack_thread.jsonl")
+    out = CommsAgent().triage_inbox(scope="unread_24h", notif_events=rows)
+    # AgentOutput payload contract from agents/core/types.py
+    assert set(out.keys()) == {"scope", "urgent", "drafts", "muted_count", "top_suggested_action"}
+    assert out["top_suggested_action"] in {"SHOW_BRIEF", "BATCH_DIGEST", "DO_NOTHING"}
+    assert isinstance(out["urgent"], list)
+    # The slack fixture has exactly one @you mention -> 1 urgent
+    assert len(out["urgent"]) == 1
+
+
+def test_drafter_uses_sender_name():
+    """Deterministic drafter must include the sender name in the opener."""
+    draft = CommsAgent._template_draft(
+        "@you can you push the merge tonight, deadline tomorrow",
+        sender_name="Anu",
+    )
+    assert "Anu" in draft
+    # 1-2 sentence guarantee
+    assert draft.count(".") <= 4 and len(draft) <= 200

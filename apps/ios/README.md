@@ -18,6 +18,9 @@ The same `Sources/Aura/` tree feeds both. Do not duplicate sources.
 
 ```
 apps/ios/
+├── BUILD.md                              # exact xcodegen + xcodebuild commands
+├── README.md
+├── SCREENS.md
 └── Aura/
     ├── project.yml                       # xcodegen spec — generates Aura.xcodeproj
     ├── Package.swift                     # SPM manifest for CLI builds
@@ -28,11 +31,12 @@ apps/ios/
     │   │   ├── AuraApp.swift             # SwiftUI App struct (no @main; library-safe)
     │   │   ├── AuraMain.swift            # @main entry — Xcode-only (excluded from SPM)
     │   │   ├── AuraConfig.xcconfig       # shared build settings
-    │   │   ├── Views/                    # MorningBriefView, ReasoningTraceView, MemoryView
+    │   │   ├── Views/                    # Brief, Trace, Memory, Silence, Onboarding
     │   │   ├── Models/                   # Trace + AnyCodable
-    │   │   ├── Services/                 # HealthKit, EventKit, Gmail, SilenceBudget
+    │   │   ├── Services/                 # HealthKit, EventKit, Gmail, Memory, Bridge, SilenceBudget
     │   │   └── Resources/
     │   │       ├── Info.plist            # source of truth for usage descriptions
+    │   │       ├── Aura.entitlements     # HealthKit, BackgroundModes, KeychainSharing, iCloud KVS
     │   │       └── Assets.xcassets/      # AccentColor, AppIcon (placeholder)
     │   └── AuraDev/main.swift            # `swift run AuraDev` smoke test
     └── Tests/AuraTests/                  # XCTest target
@@ -44,11 +48,42 @@ apps/ios/
 | ----------------- | ----------------------------------------------- |
 | Bundle ID         | `com.galaxybrain.aura`                          |
 | Product name      | Aura                                            |
-| iOS minimum       | 17.0                                            |
+| iOS minimum       | 18.0                                            |
 | Swift toolchain   | 5.10 (Xcode 16)                                 |
-| Frameworks        | HealthKit, EventKit, MessageUI, BackgroundTasks, MultipeerConnectivity, AVFoundation |
-| SwiftPM deps      | `GoogleSignIn-iOS` (>= 7.0.0), `KeychainAccess` (>= 4.2.0) |
+| Frameworks        | HealthKit, EventKit, MapKit, MessageUI, BackgroundTasks, MultipeerConnectivity, AVFoundation, UserNotifications |
+| SwiftPM deps      | `GoogleSignIn-iOS` (>= 7.1.0), `KeychainAccess` (>= 4.2.2), `GRDB.swift` (>= 6.29.0) |
 | Distribution      | TestFlight via Apple Developer account ($99/yr) |
+
+## What is wired
+
+The Phase 1 build is end-to-end live on a device. See `SCREENS.md` for the
+full checklist.
+
+* **HealthKit**: `HealthService` reads HRV (SDNN), heart rate, sleep, and
+  step count via `HKQuantityType` / `HKCategoryType`. Permissions go
+  through `HKHealthStore.requestAuthorization`. Public API is async/await.
+* **EventKit + MapKit**: `CalendarService` pulls events for the next 24 h,
+  detects overlaps, and uses `MKDirections.calculateETA` to compute a
+  leave-by suggestion for the next event.
+* **Gmail**: `GmailService` runs a real Google OAuth via
+  `GoogleSignIn-iOS`, fetches receipt-bearing threads with
+  `gmail.readonly`, and parses amounts with regex.
+* **FastAPI bridge**: `AuraBridge` opens a `URLSessionWebSocketTask` to
+  `ws://localhost:8000/ws/traces` and renders every emitted Trace into
+  the Reasoning Trace drawer in real time. `chosen`, `rationale`, and
+  `confirm_required` are highlighted in sunset orange `#FF5B2E`.
+* **Memory**: `MemoryService` opens a GRDB SQLite database, applies the
+  schema from `aura/memory/schema.sql`, and exposes `insertNode`,
+  `insertTrace`, `deleteRange`, `auditEntries`, `exportJSON`. Audit log is
+  append-only with a SHA-256 hash chain.
+* **Silence Budget**: real persistence to `UserDefaults` and
+  `NSUbiquitousKeyValueStore` (iCloud KVS) for cross-device sync. Daily
+  rollover via `UNCalendarNotificationTrigger` plus `BGAppRefreshTask`.
+* **Background**: `BGAppRefreshTaskRequest` and `BGProcessingTaskRequest`
+  are registered at launch with the identifiers
+  `com.galaxybrain.aura.refresh` and `com.galaxybrain.aura.processing`.
+* **Onboarding**: `PermissionFlow` shows a per-permission rationale
+  before the system prompt is invoked.
 
 ## Generate the Xcode project
 
@@ -63,29 +98,54 @@ xcodebuild -list -project Aura.xcodeproj   # sanity-check schemes
 open Aura.xcodeproj
 ```
 
+`apps/ios/BUILD.md` documents the exact `xcodebuild` invocations the team
+runs on Mac to build for the iPhone 17 / iOS 18 simulator and to archive
+for TestFlight.
+
 ## Open in Xcode 16 — first run checklist
 
 1. Open `apps/ios/Aura/Aura.xcodeproj`.
 2. Select the `Aura` target → **Signing & Capabilities**:
    - **Team**: set to your Apple Developer team. The placeholder
      `DEVELOPMENT_TEAM` in `project.yml` is intentionally empty.
-   - **Capabilities → +**:
+   - **Capabilities → +** (already declared in
+     `Sources/Aura/Resources/Aura.entitlements`):
      - HealthKit
-     - Background Modes → tick **Background fetch** and **Background
-       processing**
-     - Push Notifications (for the local notification surface)
+     - Background Modes → **Background fetch**, **Background processing**,
+       **Remote notifications**
+     - iCloud → **Key-value storage**
+     - Keychain Sharing → group `com.galaxybrain.aura`
+     - App Groups → `group.com.galaxybrain.aura`
 3. Confirm the **Info** tab shows usage descriptions for HealthKit
    (`NSHealthShareUsageDescription`), Calendar
    (`NSCalendarsFullAccessUsageDescription`), Notifications
-   (`NSUserNotificationsUsageDescription`), Contacts, and Local Network.
-   These come from `Sources/Aura/Resources/Info.plist`.
+   (`NSUserNotificationsUsageDescription`), Contacts, Local Network,
+   Location-when-in-use, and User Tracking. These come from
+   `Sources/Aura/Resources/Info.plist`.
 4. Confirm the BG task identifiers match the ones the agents register at
    runtime: `com.galaxybrain.aura.refresh`,
    `com.galaxybrain.aura.processing`.
 5. Drop your `GoogleService-Info.plist` next to the project.
    `GoogleService-Info.plist` is git-ignored — never commit it.
-6. **Build & Run** on iPhone 14 / 15 / 16 simulator (iOS 17.0+) or on a
-   physical device. Watch HRV requires a real iPhone + Apple Watch.
+6. **Build & Run** on iPhone 17 simulator (iOS 18.0+) or on a physical
+   device. HealthKit reads on simulator are seeded via Health.app on the
+   simulator. Live HRV requires a real iPhone + Apple Watch.
+
+## Personal Team sideload
+
+You do not need an Apple Developer Program membership to install Aura on
+your own phone for testing.
+
+1. Sign into Xcode → Settings → Accounts with a free Apple ID.
+2. Target → Signing & Capabilities → Team → "Your Name (Personal Team)".
+3. Connect the iPhone, trust the host.
+4. Cmd-R. Xcode signs with a 7-day-expiring profile and installs.
+5. On the iPhone: Settings → General → VPN & Device Management → trust
+   the developer certificate.
+
+This path does not let you publish entitlements that require paid review
+(notably Push Notifications in production mode and HealthKit in App Store
+Connect's strict sense). It works for everything else.
 
 ## Distribute via TestFlight
 
@@ -99,44 +159,29 @@ open Aura.xcodeproj
 
 ## Smoke-test from the command line
 
-The Swift Package target lets the team validate Codable round-trips and
-business logic without launching Xcode:
-
 ```bash
 cd apps/ios/Aura
-swift build
-swift run AuraDev          # encodes the sample Reasoning Trace and prints it
-swift test                 # XCTest target
+swift build               # builds the Aura library on macOS (best-effort, see Notes)
+swift run AuraDev         # encodes the sample Reasoning Trace and prints it
+swift test                # XCTest target
 ```
 
-`AuraMain.swift` and `AuraConfig.xcconfig` are excluded from the SPM build
-because library targets cannot declare `@main`.
+`AuraMain.swift`, `AuraConfig.xcconfig`, and `Resources/Aura.entitlements`
+are excluded from the SPM build because the SPM target ships as a library
+and libraries cannot declare `@main`.
+
+> **Note on macOS SPM builds**: `HealthKit` and `EventKit` resolve only on
+> iOS, and `MapKit.MKDirections` is iOS-only as well. The
+> `#if canImport(HealthKit)` / `#if canImport(EventKit)` guards in
+> `Services/` allow SPM `swift build` on macOS to compile a stripped-down
+> shape of the library so Codable round-trip tests still run. The full
+> behaviour is exercised inside the iOS Xcode build.
 
 ## Build verification
 
 The xcodegen-generated project was sanity-checked locally with
-`xcodegen generate` (project file emitted under `Aura.xcodeproj/`).
-
-`xcodebuild -list -project Aura.xcodeproj` and a full build were **not run
-in the agent sandbox** because only Apple Command Line Tools were
-available — full Xcode 16 is required for `xcodebuild` against an iOS
-SDK. Run the verification locally:
-
-```bash
-cd apps/ios/Aura
-xcodebuild -list -project Aura.xcodeproj
-xcodebuild \
-  -project Aura.xcodeproj \
-  -scheme Aura \
-  -destination 'generic/platform=iOS Simulator' \
-  -configuration Debug \
-  build \
-  CODE_SIGNING_ALLOWED=NO
-```
-
-If the build fails on entitlements / signing in CI, set `DEVELOPMENT_TEAM`
-in `project.yml` (or via an Xcode build setting override) and re-run
-`xcodegen generate`.
+`xcodegen generate` (project file emitted under `Aura.xcodeproj/`). See
+`apps/ios/BUILD.md` for the exact `xcodebuild` invocations.
 
 ## Placeholder app icon
 
@@ -153,6 +198,9 @@ TestFlight build; replace this PNG and re-run `xcodegen generate`.
   section it implements (`technical_spec.md §10.1`, etc.).
 - Services are `actor`s. UI state is on the main actor.
 - `@available(iOS 17.0, macOS 14.0, *)` on every SwiftUI type so SPM
-  builds on macOS for tests.
+  builds on macOS for tests. (Targeting iOS 18 at runtime.)
+- Async/await throughout; no completion-handler-style callbacks at the
+  public surface.
+- No force-unwraps in production code.
 - Bundle identifier `com.galaxybrain.aura` is locked. Changes require an
   ADR.

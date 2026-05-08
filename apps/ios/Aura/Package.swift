@@ -1,10 +1,11 @@
 // swift-tools-version:5.10
 // Package.swift — Aura iOS reference build.
 //
-// This package declares the Aura library and a thin executable target so that
-// the team can develop the agent and view code outside of Xcode (via
-// `swift build` on macOS) and drop the same `Sources/Aura/` tree into a fresh
-// Xcode 16 multiplatform App project for device builds. See README.md.
+// This package declares the Aura library and a thin executable target so the
+// team can develop the agent and view code outside of Xcode (via
+// `swift build` on macOS) and drop the same `Sources/Aura/` tree into a
+// fresh Xcode 16 multiplatform App project for device builds. See
+// README.md.
 import PackageDescription
 
 let package = Package(
@@ -35,6 +36,10 @@ let package = Package(
 		.package(
 			url: "https://github.com/kishikawakatsumi/KeychainAccess",
 			from: "4.2.2"
+		),
+		.package(
+			url: "https://github.com/groue/GRDB.swift",
+			from: "6.29.0"
 		)
 	],
 	targets: [
@@ -44,11 +49,13 @@ let package = Package(
 				.product(name: "GoogleSignIn", package: "GoogleSignIn-iOS"),
 				.product(name: "GoogleSignInSwift", package: "GoogleSignIn-iOS"),
 				.product(name: "Collections", package: "swift-collections"),
-				.product(name: "KeychainAccess", package: "KeychainAccess")
+				.product(name: "KeychainAccess", package: "KeychainAccess"),
+				.product(name: "GRDB", package: "GRDB.swift")
 			],
 			path: "Sources/Aura",
 			exclude: [
 				"Resources/Info.plist",
+				"Resources/Aura.entitlements",
 				"AuraMain.swift",
 				"AuraConfig.xcconfig"
 			],

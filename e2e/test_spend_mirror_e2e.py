@@ -117,6 +117,40 @@ def test_spend_mirror_anomaly_on_11th_sms(
     assert "high" in severities or "medium" in severities, severities
 
 
+def test_spend_mirror_replay_matches_canonical_trace(canonical_traces_dir) -> None:
+    """Replay through the orchestrator must produce a trace structurally
+    identical to ``orchestrator/replays/output/spend_mirror_trace.json``."""
+    import json
+
+    from deepdiff import DeepDiff
+    from orchestrator.replay import run_replay
+
+    canonical = json.loads(
+        (canonical_traces_dir / "spend_mirror_trace.json").read_text()
+    )
+    out = run_replay("spend_mirror", write_output=False)
+    diff = DeepDiff(
+        canonical,
+        out["trace"],
+        exclude_paths=["root['ts']"],
+        ignore_order=False,
+    )
+    assert not diff, f"trace drift vs canonical: {diff}"
+
+
+def test_spend_mirror_replay_chooses_surface_anomaly(spend_mirror_replay) -> None:
+    """Spend Mirror replay surfaces a real anomaly + 'Cook tomorrow?' copy."""
+    from agents.core.types import UserState
+    from orchestrator.replay import run_replay
+
+    out = run_replay("spend_mirror", write_output=False)
+    assert out["chosen_kind"] in spend_mirror_replay["expected"]["chosen_in"]
+    surface_anom = next(
+        c for c in out["trace"]["candidates"] if c["kind"] == "SURFACE_ANOMALY"
+    )
+    assert surface_anom["score"] >= 0.45
+
+
 def test_spend_mirror_persisted_record_is_pii_free(
     finance_agent: FinanceAgent,
     memory_graph: MemoryGraph,

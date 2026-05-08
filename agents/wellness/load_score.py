@@ -10,19 +10,42 @@ Why two models in one file:
 
 Runtime invariants:
 - Predict latency p50 25 ms, p95 60 ms (spec §3.4).
-- Falls back to a deterministic, transparent linear model if XGBoost is not
-  installed (e.g., during unit tests on a clean venv). The shape is identical
-  so the orchestrator's contract is preserved.
+- Falls back to a deterministic, transparent linear model if either:
+  (a) the trained XGBoost artefact is missing on disk, or
+  (b) the ``xgboost`` package is not installed (clean venv).
+  The fallback shape is the same monotonic sign as the trained model so the
+  orchestrator's contract holds.
 - Output is clipped to [0, 100]. When ``rmssd_ms`` is NaN for >24h the model
   narrows output to [0, 70] and flags ``hrv_unavailable=true`` (§7.6).
+
+Trained-artefact path
+---------------------
+The class method :py:meth:`LoadScoreModel.load_default` looks for
+``aura/models/exports/load_score.json`` (XGBoost native) and the side-car
+``load_score_meta.json`` carrying the fitted Platt parameters. If both exist
+they are loaded; otherwise we surface the linear fallback with a clear log
+warning so the orchestrator never silently degrades.
 """
 
 from __future__ import annotations
 
+import json
+import logging
 import math
 import statistics
 from dataclasses import dataclass, field
+from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple
+
+
+logger = logging.getLogger(__name__)
+
+
+# Repo path used to resolve trained artefacts.
+_THIS = Path(__file__).resolve()
+_AURA_ROOT = _THIS.parents[2]
+_MODEL_JSON = _AURA_ROOT / "models" / "exports" / "load_score.json"
+_MODEL_META = _AURA_ROOT / "models" / "exports" / "load_score_meta.json"
 
 
 # ---------------------------------------------------------------------------
@@ -163,18 +186,67 @@ class _LinearFallback:
 class LoadScoreModel:
     """XGBoost regressor with Platt-scaling stress calibrator (spec §7).
 
-    Until a trained model artefact ships, the model uses ``_LinearFallback``
-    for prediction. The calibrator is fit lazily from paired
-    ``(score, self_rated_stress)`` samples — see :meth:`fit_calibrator`.
+    Two construction paths:
+
+    * :py:meth:`load_default` returns a model backed by the shipped
+      ``models/exports/load_score.json`` artefact (XGBoost native format).
+      Used in production and benchmarks.
+    * Default ``LoadScoreModel()`` returns the deterministic linear-fallback
+      model. Used in unit tests where loading the booster would slow the
+      suite down or where the artefact is intentionally absent.
+
+    Both expose the identical ``predict_score`` / ``calibrate_to_stress`` /
+    ``driver_breakdown`` API.
     """
 
-    booster: Any = None  # xgboost.Booster when available
+    booster: Any = None  # xgboost.Booster when loaded
     fallback: _LinearFallback = field(default_factory=_LinearFallback)
-    # Platt parameters — sigmoid maps load_score in [0,100] to expected
-    # stress in [1,5]. Defaults are sensible cold-start values; refit after 14d.
+    # Platt parameters — sigmoid(a * load + b) -> P(stress >= 3); the runtime
+    # rescales p in [0,1] to a 1-5 stress estimate via 1 + 4 * p. Defaults are
+    # cold-start values; the trained meta JSON overwrites them on load.
     platt_a: float = 0.08
     platt_b: float = -3.5
     calibrator_fitted: bool = False
+    artefact_path: Optional[str] = None
+
+    # ----- factory --------------------------------------------------------
+
+    @classmethod
+    def load_default(
+        cls, model_json: Path = _MODEL_JSON, meta_json: Path = _MODEL_META
+    ) -> "LoadScoreModel":
+        """Load the shipped trained model from disk; fall back to linear if missing.
+
+        The fallback path is announced via a single :mod:`logging` warning so
+        callers can tell whether the orchestrator is running on the trained
+        booster or the transparent linear baseline.
+        """
+
+        if not (model_json.exists() and meta_json.exists()):
+            logger.warning(
+                "Wellness trained model not found at %s — using linear fallback.",
+                model_json,
+            )
+            return cls()
+        try:  # pragma: no cover - exercised at runtime
+            import xgboost as xgb  # type: ignore
+
+            booster = xgb.Booster()
+            booster.load_model(str(model_json))
+            with meta_json.open() as f:
+                meta = json.load(f)
+            return cls(
+                booster=booster,
+                platt_a=float(meta.get("platt_a", 0.08)),
+                platt_b=float(meta.get("platt_b", -3.5)),
+                calibrator_fitted=True,
+                artefact_path=str(model_json),
+            )
+        except Exception as exc:  # pragma: no cover - defensive
+            logger.warning(
+                "Failed to load trained Wellness model (%s); using linear fallback.", exc
+            )
+            return cls()
 
     # ----- predict --------------------------------------------------------
 
@@ -267,6 +339,87 @@ class LoadScoreModel:
         z = self.platt_a * score + self.platt_b
         p = 1.0 / (1.0 + math.exp(-z))
         return 1.0 + 4.0 * p
+
+    # ----- Intervention utility selector (§3.4) ---------------------------
+
+    @staticmethod
+    def select_intervention(
+        load_score: float,
+        *,
+        in_focus_block: bool = False,
+        active_channel: Optional[str] = None,
+        sleep_min_last_night: Optional[float] = None,
+        recent_drop: float = 0.0,
+        calendar_busy: bool = False,
+    ) -> Dict[str, Any]:
+        """Pick one of {DO_NOTHING, BREATHE_478, MUTE_GROUP_30, NAP_15,
+        PERMIT_LEISURE} via a documented additive utility.
+
+        Each kind k gets a utility ``U_k = baseline_k + sum(b_i * f_i)`` where
+        ``f_i`` are bounded indicator/scaled features. We then take ``argmax``;
+        ties are broken by the deterministic order MUTE > BREATHE > NAP >
+        PERMIT > DO_NOTHING (safety class first). No randomness. The function
+        is pure — easy to unit-test and replay in traces.
+
+        Coefficients are tuned by hand from the spec §3.4 worked examples
+        (Mira spike, Anu ping, Kabir's nap, Riya's recovery).
+        """
+
+        # Normalised features in [0, 1].
+        load_norm = max(0.0, min(1.0, load_score / 100.0))
+        spike = 1.0 if load_score >= 70 else 0.0
+        moderate = 1.0 if 60 <= load_score < 70 else 0.0
+        low = 1.0 if load_score < 50 else 0.0
+        sleep_short = 0.0
+        if sleep_min_last_night is not None and sleep_min_last_night < 360:
+            sleep_short = min(1.0, (360.0 - float(sleep_min_last_night)) / 120.0)
+        has_channel = 1.0 if active_channel else 0.0
+        focus = 1.0 if in_focus_block else 0.0
+        busy = 1.0 if calendar_busy else 0.0
+        recovering = 1.0 if recent_drop >= 10.0 and load_score < 60 else 0.0
+
+        utilities: Dict[str, float] = {
+            # MUTE_GROUP_30: only when there's a channel target AND a spike.
+            "MUTE_GROUP_30": (
+                -1.0
+                + 1.6 * spike
+                + 1.4 * has_channel * spike
+                - 0.6 * (1.0 - has_channel)
+            ),
+            # BREATHE_478: works even mid-focus, but capped during meetings.
+            "BREATHE_478": (
+                -0.5
+                + 1.3 * spike
+                + 0.4 * load_norm
+                - 0.7 * busy
+                + 0.2 * focus
+            ),
+            # NAP_15: moderate load + visible sleep debt + outside focus.
+            "NAP_15": (
+                -1.2
+                + 1.1 * moderate
+                + 1.0 * sleep_short
+                - 1.5 * focus
+                - 1.5 * busy
+            ),
+            # PERMIT_LEISURE: low load with a recent recovery drop.
+            "PERMIT_LEISURE": (
+                -1.0
+                + 1.4 * recovering
+                + 0.5 * low
+                - 0.3 * busy
+            ),
+            # DO_NOTHING: default fallback if nothing else clears 0.
+            "DO_NOTHING": 0.0,
+        }
+
+        order = ("MUTE_GROUP_30", "BREATHE_478", "NAP_15", "PERMIT_LEISURE", "DO_NOTHING")
+        best = max(order, key=lambda k: (utilities[k], -order.index(k)))
+        return {
+            "kind": best,
+            "utility": round(utilities[best], 3),
+            "scores": {k: round(v, 3) for k, v in utilities.items()},
+        }
 
     # ----- Spearman correlation (§7.4) -----------------------------------
 

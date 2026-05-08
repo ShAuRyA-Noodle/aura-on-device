@@ -1,0 +1,62 @@
+{
+  "fixture_version": "1.0",
+  "name": "spend_mirror",
+  "description": "plan §7 Journey D — Kabir's Spend Mirror. 14 UPI SMS (HDFC, SBI, ICICI, Axis) including a today-anomaly Zomato Rs.4500. FinanceAgent surfaces SURFACE_ANOMALY + 'Cook tomorrow?' suggestion.",
+  "tick_ts": "2026-05-07T20:00:00+05:30",
+  "trigger": {"source": "finance_anomaly", "value": {"reason": "velocity_3x"}},
+  "user_state": {
+    "load_score": 48,
+    "wellness_state": "BASELINE",
+    "in_focus_block": false,
+    "dnd_active": false,
+    "open_app": "com.android.systemui",
+    "local_time": "2026-05-07T20:00:00+05:30",
+    "surfaces_today": 0
+  },
+  "agent_payloads": {
+    "comms": {
+      "notif_events": [],
+      "gmail_threads": []
+    },
+    "calendar": {
+      "events_today": []
+    },
+    "finance": {
+      "sms_unprocessed": [
+        {"id": "s_001", "from": "VK-HDFCBK", "body": "Sent Rs.350.00 from A/c **1234 to ZOMATO via UPI on 25-04-26", "ts": "2026-04-25T13:12:00+05:30"},
+        {"id": "s_002", "from": "VK-HDFCBK", "body": "Sent Rs.420.00 from A/c **1234 to SWIGGY via UPI on 26-04-26", "ts": "2026-04-26T20:42:00+05:30"},
+        {"id": "s_003", "from": "VK-HDFCBK", "body": "Sent Rs.180.00 from A/c **1234 to UBER via UPI on 27-04-26", "ts": "2026-04-27T08:15:00+05:30"},
+        {"id": "s_004", "from": "VK-HDFCBK", "body": "Sent Rs.299.00 from A/c **1234 to BLINKIT via UPI on 28-04-26", "ts": "2026-04-28T19:01:00+05:30"},
+        {"id": "s_005", "from": "VK-HDFCBK", "body": "Sent Rs.150.00 from A/c **1234 to ZOMATO via UPI on 29-04-26", "ts": "2026-04-29T13:00:00+05:30"},
+        {"id": "s_006", "from": "AX-SBIINB", "body": "Dear Customer, Rs.220.00 debited from A/c X1234 on 30-04-26 to VPA swiggy@oksbi Ref 412211. -SBI", "ts": "2026-04-30T22:18:00+05:30"},
+        {"id": "s_007", "from": "AX-SBIINB", "body": "Dear Customer, Rs.310.00 debited from A/c X1234 on 01-05-26 to VPA uber@oksbi Ref 412401. -SBI", "ts": "2026-05-01T08:11:00+05:30"},
+        {"id": "s_008", "from": "AX-SBIINB", "body": "Dear Customer, Rs.275.00 debited from A/c X1234 on 02-05-26 to VPA bigbasket@oksbi Ref 412505. -SBI", "ts": "2026-05-02T11:30:00+05:30"},
+        {"id": "s_009", "from": "VK-ICICIB", "body": "INR 199.00 spent on ICICI Bank Card XX1234 at NETFLIX on 03-May-26", "ts": "2026-05-03T11:00:00+05:30"},
+        {"id": "s_010", "from": "VK-ICICIB", "body": "INR 180.00 spent on ICICI Bank Card XX1234 at ZOMATO on 04-May-26", "ts": "2026-05-04T13:42:00+05:30"},
+        {"id": "s_011", "from": "VM-AXISBK", "body": "INR 240 debited A/c no. XX1234 05-05-26 12:00 UPI/P2A/swiggy@axis/Swiggy", "ts": "2026-05-05T12:00:00+05:30"},
+        {"id": "s_012", "from": "VM-AXISBK", "body": "INR 165 debited A/c no. XX1234 06-05-26 09:30 UPI/P2A/uber@axis/Uber", "ts": "2026-05-06T09:30:00+05:30"},
+        {"id": "s_013", "from": "VK-HDFCBK", "body": "Sent Rs.295.00 from A/c **1234 to ZOMATO via UPI on 07-MAY", "ts": "2026-05-07T13:15:00+05:30"},
+        {"id": "s_014", "from": "VK-HDFCBK", "body": "Sent Rs.4500.00 from A/c **1234 to ZOMATO via UPI on 07-MAY", "ts": "2026-05-07T19:55:00+05:30"}
+      ],
+      "gmail_receipts": [],
+      "balance_seed": {"account_hash": "a_hdfc_1234", "amount": 85000, "as_of": "2026-05-07T08:00:00+05:30"}
+    },
+    "wellness": {
+      "hrv_window": {"rmssd_ms": 36.4, "samples": 12, "window_min": 5},
+      "sleep_last_night": {"asleep_min": 410, "rem_min": 80, "deep_min": 60, "efficiency": 0.91},
+      "typing_entropy_60s": 3.4,
+      "app_switch_rate_60s": 5,
+      "notif_dismiss_rate_60m": 0.3,
+      "screen_on_min_60m": 18,
+      "personal_baseline": {"rmssd_p50": 38.2, "rmssd_p10": 22.1, "switch_p50": 6}
+    }
+  },
+  "expected": {
+    "trace_count_min": 1,
+    "chosen_in": ["SURFACE_ANOMALY", "PROJECT_BALANCE", "do_nothing"],
+    "must_not_choose": ["MUTE_GROUP_30", "BREATHE_478"],
+    "min_candidates": 1,
+    "anomaly_required": true,
+    "expected_save_amount_inr": 220
+  }
+}

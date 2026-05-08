@@ -1,0 +1,57 @@
+cff-version: 1.2.0
+title: "Aura: An On-Device Empathetic Intelligence Layer for Indian Gen Z"
+message: "If you reference Aura in academic or technical work, please cite it using the metadata below."
+type: software
+version: "1.0.0"
+date-released: "2026-05-07"
+license: MIT
+repository-code: "https://github.com/ShAuRyA-Noodle/Combobulating"
+url: "https://shaurya-noodle.github.io/Combobulating"
+abstract: >-
+  Aura is a multi-agent on-device empathetic intelligence layer for Indian
+  Gen Z and Gen Alpha smartphone users. Four specialist agents — Communications,
+  Calendar, Finance, Wellness — are coordinated by a Phi-3-mini orchestrator
+  running on a deterministic seven-state LangGraph state machine. Every action
+  emits a glass-box Reasoning Trace. A daily Silence Budget caps proactive
+  surfaces at three per local day. A user-owned, encrypted SQLite memory graph
+  with a hash-chained audit log persists context on-device. Built for the
+  Samsung EnnovateX 2026 hackathon by a two-person undergraduate team on a
+  total budget of ₹2,000.
+keywords:
+  - on-device-ai
+  - empathetic-intelligence
+  - indian-context
+  - upi
+  - health-kit
+  - health-connect
+  - phi-3-mini
+  - lora
+  - reasoning-trace
+  - silence-budget
+  - privacy-preserving
+authors:
+  - family-names: Punj
+    given-names: Shaurya
+    affiliation: "Thapar Institute of Engineering and Technology, Patiala"
+    email: spunj_be23@thapar.edu
+  - family-names: Gupta
+    given-names: Shorya
+    affiliation: "Thapar Institute of Engineering and Technology, Patiala"
+    email: sgupta9_be24@thapar.edu
+identifiers:
+  - description: "DOI placeholder — to be assigned by the Phase 2 archival cut."
+    type: doi
+    value: "10.5281/zenodo.0000000"
+preferred-citation:
+  type: software
+  title: "Aura: An On-Device Empathetic Intelligence Layer for Indian Gen Z"
+  authors:
+    - family-names: Punj
+      given-names: Shaurya
+    - family-names: Gupta
+      given-names: Shorya
+  version: "1.0.0"
+  year: 2026
+  url: "https://github.com/ShAuRyA-Noodle/Combobulating"
+  license: MIT
+  notes: "Samsung EnnovateX 2026. Galaxy Brain, Thapar Institute of Engineering and Technology."

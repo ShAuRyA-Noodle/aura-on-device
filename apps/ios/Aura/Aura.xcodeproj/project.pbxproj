@@ -7,12 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		207A235D6CD59B740D8FB6CB /* SilenceBudgetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 547BC88F1326A6C98EAB0C6B /* SilenceBudgetView.swift */; };
 		24661B6BC1CB4EF69C0C5536 /* ReasoningTraceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD194E1B7D09F0A7CEE3BB26 /* ReasoningTraceView.swift */; };
 		24E8520525DDC72B51160170 /* Trace.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09987432F406BAD9B2DBF881 /* Trace.swift */; };
 		25BAA80B1A7C09A888CC9F78 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = CBE981EF93B08BE8E123C2B7 /* GoogleSignIn */; };
+		343FF6A95ED21801BA8AB5D0 /* AuraBridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6340DDFBFD1C9680BD6BDEB7 /* AuraBridge.swift */; };
+		393E3EB32C240EEAB44C1289 /* GRDB in Frameworks */ = {isa = PBXBuildFile; productRef = 3D4A197952EB421033671A0E /* GRDB */; };
 		400F1692D142834ED3F1EE23 /* AuraApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 105CBCDAB19933FC361FE647 /* AuraApp.swift */; };
 		4D64657E2E33478527942CBF /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = 2989A6C11EE48EAC9514C940 /* KeychainAccess */; };
 		5290CF43736A4FD1E152FC87 /* CalendarService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B5D94E9A8F2C839D9623C78 /* CalendarService.swift */; };
+		58ECD1A6419F7B7104B5825C /* PermissionFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E4896CEB71F8BC165B54A76 /* PermissionFlow.swift */; };
 		7599867D4AF939F25E4393A2 /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = C0288BA9C6434084E8A7C5CD /* GoogleSignInSwift */; };
 		9E432826241CCE2AFBD2ED17 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EB08F6306B59898ED8A6F2B9 /* Assets.xcassets */; };
 		AABA7164FEC7D9C834F003CB /* GmailService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C506A960A346641AF09ED7BA /* GmailService.swift */; };
@@ -22,6 +26,7 @@
 		E97338F353143039B3EDAFDA /* SilenceBudget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EB8BB9CD255C0C0AFE689A9 /* SilenceBudget.swift */; };
 		EFD4DBD41445A502F8F4374E /* AuraMain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C71B91F2E9F9085DA19C333 /* AuraMain.swift */; };
 		F394041FC9AA3CA887AFDBE1 /* TraceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D11A218DB27ED8D2D028E0 /* TraceTests.swift */; };
+		FA83AD0D005A4F6ED19B2841 /* MemoryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77DC0A9CE3A128103D1769E1 /* MemoryService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,9 +45,13 @@
 		2B0F809022A959AE8C369329 /* HealthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthService.swift; sourceTree = "<group>"; };
 		3E5F05F8662FB804AD0FFDF5 /* MemoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryView.swift; sourceTree = "<group>"; };
 		4A9E59AC258B2C2BA91E5EF7 /* Aura.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = Aura.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		4E4896CEB71F8BC165B54A76 /* PermissionFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionFlow.swift; sourceTree = "<group>"; };
 		4EB8BB9CD255C0C0AFE689A9 /* SilenceBudget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SilenceBudget.swift; sourceTree = "<group>"; };
+		547BC88F1326A6C98EAB0C6B /* SilenceBudgetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SilenceBudgetView.swift; sourceTree = "<group>"; };
 		5758EEDE13ECF209375B8158 /* AuraConfig.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = AuraConfig.xcconfig; sourceTree = "<group>"; };
 		5B5D94E9A8F2C839D9623C78 /* CalendarService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarService.swift; sourceTree = "<group>"; };
+		6340DDFBFD1C9680BD6BDEB7 /* AuraBridge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuraBridge.swift; sourceTree = "<group>"; };
+		77DC0A9CE3A128103D1769E1 /* MemoryService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryService.swift; sourceTree = "<group>"; };
 		8C71B91F2E9F9085DA19C333 /* AuraMain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuraMain.swift; sourceTree = "<group>"; };
 		C4D11A218DB27ED8D2D028E0 /* TraceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TraceTests.swift; sourceTree = "<group>"; };
 		C506A960A346641AF09ED7BA /* GmailService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GmailService.swift; sourceTree = "<group>"; };
@@ -60,6 +69,7 @@
 				25BAA80B1A7C09A888CC9F78 /* GoogleSignIn in Frameworks */,
 				7599867D4AF939F25E4393A2 /* GoogleSignInSwift in Frameworks */,
 				4D64657E2E33478527942CBF /* KeychainAccess in Frameworks */,
+				393E3EB32C240EEAB44C1289 /* GRDB in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -110,9 +120,11 @@
 		7AA2308F30A65160810047DC /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				F2BE4160EE58D4A720EE4C45 /* Onboarding */,
 				3E5F05F8662FB804AD0FFDF5 /* MemoryView.swift */,
 				F5E547B71893E8D98CBFB37F /* MorningBriefView.swift */,
 				CD194E1B7D09F0A7CEE3BB26 /* ReasoningTraceView.swift */,
+				547BC88F1326A6C98EAB0C6B /* SilenceBudgetView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -120,9 +132,11 @@
 		A56E2B85B7BA3BC0EAA0A031 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				6340DDFBFD1C9680BD6BDEB7 /* AuraBridge.swift */,
 				5B5D94E9A8F2C839D9623C78 /* CalendarService.swift */,
 				C506A960A346641AF09ED7BA /* GmailService.swift */,
 				2B0F809022A959AE8C369329 /* HealthService.swift */,
+				77DC0A9CE3A128103D1769E1 /* MemoryService.swift */,
 				4EB8BB9CD255C0C0AFE689A9 /* SilenceBudget.swift */,
 			);
 			path = Services;
@@ -148,6 +162,14 @@
 				8C71B91F2E9F9085DA19C333 /* AuraMain.swift */,
 			);
 			path = Aura;
+			sourceTree = "<group>";
+		};
+		F2BE4160EE58D4A720EE4C45 /* Onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				4E4896CEB71F8BC165B54A76 /* PermissionFlow.swift */,
+			);
+			path = Onboarding;
 			sourceTree = "<group>";
 		};
 		FF88EA15285C2C6E8FC84561 /* Products */ = {
@@ -179,6 +201,7 @@
 				CBE981EF93B08BE8E123C2B7 /* GoogleSignIn */,
 				C0288BA9C6434084E8A7C5CD /* GoogleSignInSwift */,
 				2989A6C11EE48EAC9514C940 /* KeychainAccess */,
+				3D4A197952EB421033671A0E /* GRDB */,
 			);
 			productName = Aura;
 			productReference = 4A9E59AC258B2C2BA91E5EF7 /* Aura.app */;
@@ -230,6 +253,7 @@
 			mainGroup = 1A691351EBE1DD7961333418;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
+				EDBF98BF3487C5D11227B0DD /* XCRemoteSwiftPackageReference "GRDB.swift" */,
 				B74BA44F0045043636574BC4 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
 				08C4612D58893822CE530ED9 /* XCRemoteSwiftPackageReference "KeychainAccess" */,
 			);
@@ -261,14 +285,18 @@
 			buildActionMask = 2147483647;
 			files = (
 				400F1692D142834ED3F1EE23 /* AuraApp.swift in Sources */,
+				343FF6A95ED21801BA8AB5D0 /* AuraBridge.swift in Sources */,
 				EFD4DBD41445A502F8F4374E /* AuraMain.swift in Sources */,
 				5290CF43736A4FD1E152FC87 /* CalendarService.swift in Sources */,
 				AABA7164FEC7D9C834F003CB /* GmailService.swift in Sources */,
 				CCD3DA1DA39DE5B2EE2BE0E1 /* HealthService.swift in Sources */,
+				FA83AD0D005A4F6ED19B2841 /* MemoryService.swift in Sources */,
 				C730E5CD606D3E22B3BA2825 /* MemoryView.swift in Sources */,
 				C27A04128546B945DAB43859 /* MorningBriefView.swift in Sources */,
+				58ECD1A6419F7B7104B5825C /* PermissionFlow.swift in Sources */,
 				24661B6BC1CB4EF69C0C5536 /* ReasoningTraceView.swift in Sources */,
 				E97338F353143039B3EDAFDA /* SilenceBudget.swift in Sources */,
+				207A235D6CD59B740D8FB6CB /* SilenceBudgetView.swift in Sources */,
 				24E8520525DDC72B51160170 /* Trace.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -298,6 +326,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Sources/Aura/Resources/Aura.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -326,6 +355,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Sources/Aura/Resources/Aura.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -352,7 +382,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -412,7 +442,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -478,7 +508,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -496,7 +526,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -547,7 +577,7 @@
 			repositoryURL = "https://github.com/kishikawakatsumi/KeychainAccess";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 4.2.0;
+				minimumVersion = 4.2.2;
 			};
 		};
 		B74BA44F0045043636574BC4 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */ = {
@@ -555,7 +585,15 @@
 			repositoryURL = "https://github.com/google/GoogleSignIn-iOS";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 7.0.0;
+				minimumVersion = 7.1.0;
+			};
+		};
+		EDBF98BF3487C5D11227B0DD /* XCRemoteSwiftPackageReference "GRDB.swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/groue/GRDB.swift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 6.29.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
@@ -565,6 +603,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 08C4612D58893822CE530ED9 /* XCRemoteSwiftPackageReference "KeychainAccess" */;
 			productName = KeychainAccess;
+		};
+		3D4A197952EB421033671A0E /* GRDB */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = EDBF98BF3487C5D11227B0DD /* XCRemoteSwiftPackageReference "GRDB.swift" */;
+			productName = GRDB;
 		};
 		C0288BA9C6434084E8A7C5CD /* GoogleSignInSwift */ = {
 			isa = XCSwiftPackageProductDependency;

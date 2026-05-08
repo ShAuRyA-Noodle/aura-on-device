@@ -1,2 +1,4 @@
 User-agent: *
 Allow: /
+
+Sitemap: https://shaurya-noodle.github.io/Combobulating/sitemap.xml

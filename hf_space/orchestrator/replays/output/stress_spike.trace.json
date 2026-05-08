@@ -1,0 +1,42 @@
+{
+  "trace_id": "tr_15d4030271ff",
+  "ts": "2026-05-08T12:43:29.418389+00:00",
+  "trigger": {
+    "source": "replay",
+    "value": "stress_spike"
+  },
+  "signals": [
+    {
+      "agent": "comms",
+      "decision": "do_nothing",
+      "drivers": [
+        "volume_8",
+        "actionable_0",
+        "load_score_50"
+      ]
+    },
+    {
+      "agent": "calendar",
+      "decision": "do_nothing",
+      "drivers": [
+        "no_events"
+      ]
+    },
+    {
+      "agent": "wellness",
+      "decision": "do_nothing",
+      "drivers": [
+        "rmssd_z=0.0",
+        "sleep_debt_min=0.0",
+        "typing_entropy=3.0"
+      ]
+    }
+  ],
+  "candidates": [],
+  "chosen": "do_nothing",
+  "rationale": "Top drivers: volume_8, actionable_0, load_score_50.",
+  "rationale_source": "template",
+  "confirm_required": false,
+  "outcome": "pending",
+  "redactions": []
+}

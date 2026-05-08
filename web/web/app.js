@@ -12,9 +12,20 @@
   "use strict";
 
   const html = window.htm.bind(React.createElement);
-  const { useState, useEffect, useCallback } = React;
+  const { useState, useEffect, useCallback, useRef } = React;
 
-  const API = (window.AURA_API_BASE || "http://localhost:8000") + "/api";
+  // Pick up ?api= and ?token= query string injected by run_local.sh so the
+  // browser inherits the same per-session token the iOS app reads from the
+  // QR code. Falls back to localhost:8000 with no token (dev mode).
+  const _qs = new URLSearchParams(window.location.search);
+  const API_BASE = _qs.get("api") || window.AURA_API_BASE || "http://localhost:8000";
+  const AUTH_TOKEN = _qs.get("token") || window.AURA_TOKEN || "";
+  const API = API_BASE + "/api";
+  const WS_TRACE = (
+    API_BASE.replace(/^http/, "ws") +
+    "/ws/trace" +
+    (AUTH_TOKEN ? "?token=" + encodeURIComponent(AUTH_TOKEN) : "")
+  );
 
   // ---------------------------------------------------------------------
   // Synthetic fixtures (mirror the Gradio Space's defaults).
@@ -52,10 +63,16 @@
     return "low";
   }
 
+  function _authHeaders() {
+    const h = { "Content-Type": "application/json" };
+    if (AUTH_TOKEN) h.Authorization = "Bearer " + AUTH_TOKEN;
+    return h;
+  }
+
   async function postJSON(path, body) {
     const res = await fetch(API + path, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: _authHeaders(),
       body: JSON.stringify(body || {}),
     });
     if (!res.ok) throw new Error("HTTP " + res.status + " " + res.statusText);
@@ -64,11 +81,84 @@
 
   async function ping() {
     try {
-      const res = await fetch(API + "/health");
+      // /health is on the root, not /api.
+      const res = await fetch(API_BASE + "/health");
       return res.ok;
     } catch (_) {
       return false;
     }
+  }
+
+  // ---------------------------------------------------------------------
+  // Live trace overlay — subscribes to /ws/trace and renders the last
+  // 12 events. During a live demo the team can flip from the iPhone to
+  // the laptop browser and see the same Reasoning Trace stream.
+  // ---------------------------------------------------------------------
+
+  function TraceOverlay() {
+    const [events, setEvents] = useState([]);
+    const [status, setStatus] = useState("connecting");
+    const wsRef = useRef(null);
+
+    useEffect(() => {
+      let cancelled = false;
+      let retryTimer = null;
+      function connect() {
+        try {
+          const ws = new WebSocket(WS_TRACE);
+          wsRef.current = ws;
+          ws.onopen = () => !cancelled && setStatus("live");
+          ws.onmessage = (msg) => {
+            if (cancelled) return;
+            try {
+              const evt = JSON.parse(msg.data);
+              if (evt.type === "heartbeat") return;
+              setEvents((prev) => prev.concat([evt]).slice(-12));
+            } catch (_) { /* ignore */ }
+          };
+          ws.onerror = () => !cancelled && setStatus("error");
+          ws.onclose = () => {
+            if (cancelled) return;
+            setStatus("retry");
+            retryTimer = setTimeout(connect, 2000);
+          };
+        } catch (_) {
+          setStatus("error");
+        }
+      }
+      connect();
+      return () => {
+        cancelled = true;
+        if (retryTimer) clearTimeout(retryTimer);
+        if (wsRef.current) try { wsRef.current.close(); } catch (_) { /* */ }
+      };
+    }, []);
+
+    return html`
+      <aside class="trace-overlay" data-status=${status}>
+        <header>
+          <strong>Reasoning Trace</strong>
+          <span class="status-pill ${status}">${status}</span>
+        </header>
+        <ol class="trace-list">
+          ${events.length === 0
+            ? html`<li class="muted">Waiting for the next tick…</li>`
+            : events.map((e, i) => html`
+                <li key=${i}>
+                  <span class="evt-type">${e.type || "?"}</span>
+                  <span class="evt-detail">
+                    ${e.type === "trace.emitted"
+                      ? (e.trace && e.trace.chosen) || ""
+                      : e.type === "agent.output"
+                        ? (e.agent || "")
+                        : e.type === "policy.decision"
+                          ? (e.chosen_kind || "")
+                          : ""}
+                  </span>
+                </li>`)}
+        </ol>
+      </aside>
+    `;
   }
 
   // ---------------------------------------------------------------------
@@ -462,6 +552,7 @@
         <article>
           ${TABS.find(t => t.id === tab).el}
         </article>
+        <${TraceOverlay} />
       </main>
       <footer class="aura-footer">
         Aura is on-device. This local demo runs on your Mac with zero internet egress.

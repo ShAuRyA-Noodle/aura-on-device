@@ -1,0 +1,55 @@
+{
+  "trace_id": "tr_0f097521352c",
+  "ts": "2026-05-08T12:43:29.411821+00:00",
+  "trigger": {
+    "source": "replay",
+    "value": "monday_brief"
+  },
+  "signals": [
+    {
+      "agent": "comms",
+      "decision": "show_brief",
+      "drivers": [
+        "volume_2",
+        "actionable_1",
+        "load_score_50"
+      ]
+    },
+    {
+      "agent": "calendar",
+      "decision": "leave_by_alert",
+      "drivers": [
+        "travel_0min",
+        "buffer_15min"
+      ]
+    },
+    {
+      "agent": "wellness",
+      "decision": "do_nothing",
+      "drivers": [
+        "rmssd_z=0.0",
+        "sleep_debt_min=0.0",
+        "typing_entropy=3.0"
+      ]
+    }
+  ],
+  "candidates": [
+    {
+      "kind": "SHOW_BRIEF",
+      "score": 0.192,
+      "components": {
+        "util": 0.392,
+        "cost": 0.2,
+        "recent": 0.0,
+        "dnd": 0.0
+      },
+      "confirm_required": false
+    }
+  ],
+  "chosen": "do_nothing",
+  "rationale": "Top drivers: volume_2, actionable_1, load_score_50.",
+  "rationale_source": "template",
+  "confirm_required": false,
+  "outcome": "pending",
+  "redactions": []
+}

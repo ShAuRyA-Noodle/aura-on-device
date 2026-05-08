@@ -1,0 +1,197 @@
+/* Aura Reasoning Trace — locked palette (deck slide 8a).
+ *
+ * Used by orchestrator.trace.pretty_render_html(). Same file is shipped to
+ * the iOS Memory tab WebView and to the HF Space Gradio HTML component so
+ * the rendering is byte-identical across surfaces.
+ */
+
+:root {
+  --aura-bg: #0F1115;
+  --aura-surface: #161A21;
+  --aura-surface-2: #1E232C;
+  --aura-text: #F4F4F5;
+  --aura-text-muted: #9CA3AF;
+  --aura-accent: #B8FF5C;       /* signature limey-green */
+  --aura-accent-soft: #5C7A2E;
+  --aura-warn: #FFB74D;
+  --aura-confirm: #FF9F1C;
+  --aura-auto: #B8FF5C;
+  --aura-divider: #2A2F38;
+  --aura-radius: 12px;
+}
+
+* { box-sizing: border-box; }
+
+body.aura-trace {
+  margin: 0;
+  padding: 24px;
+  background: var(--aura-bg);
+  color: var(--aura-text);
+  font-family: -apple-system, "SF Pro Text", "Inter", "Helvetica Neue", Arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.aura-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  border-bottom: 1px solid var(--aura-divider);
+  padding-bottom: 8px;
+  margin-bottom: 18px;
+}
+
+.aura-trace-id {
+  font-family: "SF Mono", "JetBrains Mono", Menlo, monospace;
+  font-size: 12px;
+  color: var(--aura-accent);
+  letter-spacing: 0.04em;
+}
+
+.aura-ts {
+  font-family: "SF Mono", "JetBrains Mono", Menlo, monospace;
+  font-size: 12px;
+  color: var(--aura-text-muted);
+}
+
+.aura-section {
+  background: var(--aura-surface);
+  border-radius: var(--aura-radius);
+  padding: 16px 18px;
+  margin-bottom: 14px;
+}
+
+.aura-section h2 {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--aura-text-muted);
+  margin: 0 0 10px;
+  font-weight: 600;
+}
+
+.aura-section--why p {
+  margin: 0;
+  font-size: 16px;
+}
+
+.aura-section--why .aura-key {
+  color: var(--aura-accent);
+  font-weight: 600;
+}
+
+.aura-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.aura-table th {
+  text-align: left;
+  font-weight: 500;
+  color: var(--aura-text-muted);
+  padding: 6px 8px;
+  border-bottom: 1px solid var(--aura-divider);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.aura-table td {
+  padding: 8px;
+  border-bottom: 1px solid var(--aura-divider);
+  vertical-align: top;
+}
+
+.aura-table tr:last-child td { border-bottom: none; }
+
+.aura-key {
+  color: var(--aura-accent);
+  font-weight: 600;
+}
+
+.aura-kind {
+  font-family: "SF Mono", "JetBrains Mono", Menlo, monospace;
+  font-size: 12px;
+  color: var(--aura-text);
+}
+
+.aura-kind--chosen {
+  background: var(--aura-accent);
+  color: #000;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-weight: 700;
+}
+
+.aura-score {
+  font-family: "SF Mono", "JetBrains Mono", Menlo, monospace;
+  color: var(--aura-accent);
+  font-weight: 600;
+  width: 80px;
+}
+
+.aura-comp {
+  font-family: "SF Mono", "JetBrains Mono", Menlo, monospace;
+  font-size: 11px;
+  color: var(--aura-text-muted);
+}
+
+.aura-drivers {
+  font-family: "SF Mono", "JetBrains Mono", Menlo, monospace;
+  font-size: 11px;
+  color: var(--aura-text-muted);
+}
+
+.aura-badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 600;
+  margin-left: 6px;
+}
+
+.aura-badge--confirm {
+  background: rgba(255, 159, 28, 0.18);
+  color: var(--aura-confirm);
+}
+
+.aura-badge--auto {
+  background: rgba(184, 255, 92, 0.18);
+  color: var(--aura-accent);
+}
+
+.aura-badge--warn {
+  background: rgba(255, 183, 77, 0.18);
+  color: var(--aura-warn);
+}
+
+.aura-chosen {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 8px;
+}
+
+.aura-outcome {
+  font-family: "SF Mono", "JetBrains Mono", Menlo, monospace;
+  color: var(--aura-text-muted);
+  font-size: 11px;
+}
+
+.aura-rationale {
+  margin: 8px 0 0;
+  color: var(--aura-text);
+  font-size: 14px;
+  line-height: 1.55;
+}
+
+.aura-redactions {
+  margin-top: 10px;
+  font-size: 11px;
+  color: var(--aura-warn);
+  font-family: "SF Mono", "JetBrains Mono", Menlo, monospace;
+}

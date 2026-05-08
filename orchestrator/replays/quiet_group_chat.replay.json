@@ -1,0 +1,53 @@
+{
+  "fixture_version": "1.0",
+  "name": "quiet_group_chat",
+  "description": "plan §7 Journey B — Mira's WhatsApp project group flooded with 137 messages while she's working. CommsAgent classifies, WellnessAgent reaches STRESSED, MUTE_GROUP_30 wins.",
+  "tick_ts": "2026-05-07T22:31:47+05:30",
+  "trigger": {"source": "comms_burst", "value": {"count": 137, "channel": "group:Thapar-DSA-Project", "window_min": 8}},
+  "user_state": {
+    "load_score": 78,
+    "wellness_state": "STRESSED",
+    "in_focus_block": false,
+    "dnd_active": false,
+    "open_app": "com.whatsapp",
+    "local_time": "2026-05-07T22:31:47+05:30",
+    "surfaces_today": 0
+  },
+  "agent_payloads": {
+    "comms": {
+      "notif_events": [
+        {"id": "n_act_001", "app_pkg": "com.whatsapp", "channel": "group:Thapar-DSA-Project", "sender_hash": "h_anu", "preview": "@you can you confirm the schema diagram for tomorrow's quiz", "ts": "2026-05-07T22:31:00+05:30"},
+        {"id": "n_act_002", "app_pkg": "com.whatsapp", "channel": "group:Thapar-DSA-Project", "sender_hash": "h_kabir", "preview": "deadline is tonight 11pm for the DBMS submission please review", "ts": "2026-05-07T22:31:10+05:30"},
+        {"id": "n_act_003", "app_pkg": "com.whatsapp", "channel": "group:Thapar-DSA-Project", "sender_hash": "h_riya", "preview": "need help merging the migration file before we deploy", "ts": "2026-05-07T22:31:20+05:30"}
+      ],
+      "_burst_tail_count": 134,
+      "_burst_phrases": ["lol", "haha", "lmao", "gn", "gm", "brb", "nice", "cool", "ok", "okay", "thanks", "thx", "ty", "np", "same", "fr", "true", "bruh", "btw", "idk", "tbh", "ngl"],
+      "gmail_threads": []
+    },
+    "calendar": {
+      "events_today": []
+    },
+    "finance": {
+      "sms_unprocessed": [],
+      "gmail_receipts": [],
+      "balance_seed": null
+    },
+    "wellness": {
+      "hrv_window": {"rmssd_ms": 24.1, "samples": 12, "window_min": 5},
+      "sleep_last_night": {"asleep_min": 312, "rem_min": 41, "deep_min": 33, "efficiency": 0.78},
+      "typing_entropy_60s": 4.92,
+      "app_switch_rate_60s": 16,
+      "notif_dismiss_rate_60m": 0.81,
+      "screen_on_min_60m": 47,
+      "personal_baseline": {"rmssd_p50": 38.2, "rmssd_p10": 22.1, "switch_p50": 6},
+      "active_channel": "group:Thapar-DSA-Project"
+    }
+  },
+  "expected": {
+    "trace_count_min": 1,
+    "chosen_in": ["MUTE_GROUP_30", "BATCH_DIGEST"],
+    "must_not_choose": ["SHOW_BRIEF"],
+    "min_candidates": 2,
+    "wellness_state": "STRESSED"
+  }
+}

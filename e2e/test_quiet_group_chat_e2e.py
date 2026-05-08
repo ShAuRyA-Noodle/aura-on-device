@@ -132,6 +132,37 @@ def test_quiet_group_chat_e2e_full_run(orchestrator: Orchestrator) -> None:
     assert res.chosen_kind in ("MUTE_GROUP_30", "BATCH_DIGEST"), res.chosen_kind
 
 
+def test_quiet_group_chat_matches_canonical_trace(canonical_traces_dir) -> None:
+    """Trace JSON must structurally match the frozen canonical artifact."""
+    import json
+
+    from deepdiff import DeepDiff
+    from orchestrator.replay import run_replay
+
+    canonical = json.loads(
+        (canonical_traces_dir / "quiet_group_chat_trace.json").read_text()
+    )
+    out = run_replay("quiet_group_chat", write_output=False)
+    diff = DeepDiff(
+        canonical,
+        out["trace"],
+        exclude_paths=["root['ts']"],
+        ignore_order=False,
+    )
+    assert not diff, f"trace drift vs canonical: {diff}"
+
+
+def test_quiet_group_chat_replay_137_messages(quiet_group_chat_replay) -> None:
+    """The replay JSON expands to exactly 137 notifications (3 actionable
+    + 134 social) before reaching the orchestrator."""
+    notif = quiet_group_chat_replay["agent_payloads"]["comms"]["notif_events"]
+    assert len(notif) == 137, len(notif)
+    actionable = [n for n in notif if n["id"].startswith("n_act_")]
+    social = [n for n in notif if n["id"].startswith("n_soc_")]
+    assert len(actionable) == 3
+    assert len(social) == 134
+
+
 def test_quiet_group_chat_no_pii_in_trace(orchestrator: Orchestrator) -> None:
     notif = _build_137_message_burst()
     user_state = UserState(load_score=78, wellness_state=WellnessState.STRESSED)

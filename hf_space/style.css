@@ -1,4 +1,4 @@
-/* Aura — HuggingFace Space CSS.
+/* Aura — HuggingFace Space interactive demo CSS.
  *
  * Locked palette per deck_spec.md §0:
  *   parchment  #FAF8F5
@@ -6,19 +6,24 @@
  *   accent     #FF5B2E
  *
  * Typography:
- *   Fraunces (display) for h1 / hero only.
+ *   Fraunces (display) for h1 / hero.
  *   Inter Tight (UI) for everything else.
+ *   JetBrains Mono for the Reasoning Trace JSON viewer.
  */
 
-@import url("https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=Inter+Tight:wght@400;500;600&family=JetBrains+Mono&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Inter+Tight:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap");
 
 :root {
   --aura-bg: #FAF8F5;
   --aura-ink: #0E0E0E;
   --aura-accent: #FF5B2E;
+  --aura-accent-soft: rgba(255, 91, 46, 0.08);
   --aura-line: #E8E2D8;
   --aura-mute: #6F6A63;
   --aura-card: #FFFFFF;
+  --aura-warm: #FCEBD7;
+  --aura-cool: #4A6B4F;
+  --aura-amber: #C8A95B;
 }
 
 /* Page chrome ------------------------------------------------------------ */
@@ -29,46 +34,91 @@ body, .gradio-container {
 }
 
 .gradio-container {
-  max-width: 1180px !important;
+  max-width: 1200px !important;
   margin: 0 auto !important;
 }
 
 /* Hero ------------------------------------------------------------------- */
 .aura-hero {
-  padding: 32px 8px 16px;
+  padding: 36px 8px 12px;
   border-bottom: 1px solid var(--aura-line);
   margin-bottom: 16px;
 }
 .aura-hero-row {
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 16px;
+  flex-wrap: wrap;
 }
 .aura-hero h1 {
   font-family: "Fraunces", serif;
   font-weight: 600;
-  font-size: 40px;
+  font-size: 44px;
   margin: 0;
   letter-spacing: -0.02em;
   color: var(--aura-ink);
 }
 .aura-tagline {
-  margin: 2px 0 0;
+  margin: 4px 0 0;
   color: var(--aura-mute);
-  font-size: 15px;
+  font-size: 16px;
   letter-spacing: 0.01em;
 }
-.aura-disclaimer {
+.aura-hero-image {
+  margin: 16px 0 0;
+  width: 100%;
+  max-height: 240px;
+  object-fit: cover;
+  border-radius: 12px;
+  border: 1px solid var(--aura-line);
+}
+.aura-privacy {
   margin: 14px 0 0;
-  padding: 8px 12px;
+  padding: 10px 14px;
   border: 1px solid var(--aura-accent);
-  background: rgba(255, 91, 46, 0.06);
+  background: var(--aura-accent-soft);
   color: var(--aura-accent);
   font-size: 12px;
   font-weight: 600;
   letter-spacing: 0.04em;
   text-transform: uppercase;
-  border-radius: 6px;
+  border-radius: 8px;
+  line-height: 1.55;
+}
+.aura-privacy a {
+  color: var(--aura-accent);
+  text-decoration: underline;
+}
+.aura-not-callout {
+  margin: 12px 0 0;
+  padding: 12px 16px;
+  border: 1px dashed var(--aura-line);
+  background: var(--aura-warm);
+  color: var(--aura-ink);
+  border-radius: 8px;
+  font-size: 13px;
+  line-height: 1.55;
+}
+.aura-not-callout strong {
+  display: block;
+  margin-bottom: 4px;
+  letter-spacing: 0.04em;
+  font-size: 11px;
+  text-transform: uppercase;
+  color: var(--aura-mute);
+}
+.aura-lite-badge {
+  display: inline-block;
+  padding: 3px 8px;
+  background: var(--aura-amber);
+  color: #fff;
+  border-radius: 999px;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-left: 6px;
+  vertical-align: middle;
 }
 
 /* Cards ------------------------------------------------------------------ */
@@ -76,18 +126,19 @@ body, .gradio-container {
   background: var(--aura-card);
   border: 1px solid var(--aura-line);
   border-radius: 12px;
-  padding: 18px 20px;
+  padding: 20px 22px;
   margin: 12px 0;
 }
 .aura-card.error {
   border-color: var(--aura-accent);
-  background: rgba(255, 91, 46, 0.05);
+  background: var(--aura-accent-soft);
 }
 
 .card-head {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 12px;
   margin-bottom: 10px;
 }
 .card-eyebrow {
@@ -108,8 +159,8 @@ body, .gradio-container {
   text-transform: uppercase;
 }
 .card-pill.score-high { background: var(--aura-accent); }
-.card-pill.score-mid  { background: #C8A95B; }
-.card-pill.score-low  { background: #4A6B4F; }
+.card-pill.score-mid  { background: var(--aura-amber); }
+.card-pill.score-low  { background: var(--aura-cool); }
 
 .card-grid {
   display: grid;
@@ -145,8 +196,72 @@ body, .gradio-container {
   padding: 6px 0;
   border-bottom: 1px dashed var(--aura-line);
   font-size: 13px;
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
 }
 .card-list li.muted { color: var(--aura-mute); font-style: italic; }
+.card-list li code {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 12px;
+  color: var(--aura-accent);
+}
+
+/* Silence-budget meter --------------------------------------------------- */
+.silence-meter {
+  margin: 14px 0 0;
+}
+.silence-meter-track {
+  height: 10px;
+  background: var(--aura-line);
+  border-radius: 999px;
+  overflow: hidden;
+  position: relative;
+}
+.silence-meter-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--aura-cool), var(--aura-amber), var(--aura-accent));
+  transition: width 240ms ease-out;
+}
+.silence-meter-label {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  color: var(--aura-mute);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 4px;
+}
+
+/* Driver bars ------------------------------------------------------------ */
+.driver-bars {
+  margin: 12px 0 0;
+}
+.driver-bar {
+  display: grid;
+  grid-template-columns: 140px 1fr 60px;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 6px;
+  font-size: 12px;
+}
+.driver-bar .driver-name { color: var(--aura-mute); }
+.driver-bar .driver-track {
+  height: 8px;
+  background: var(--aura-line);
+  border-radius: 999px;
+  overflow: hidden;
+}
+.driver-bar .driver-fill {
+  height: 100%;
+  background: var(--aura-accent);
+  border-radius: 999px;
+}
+.driver-bar .driver-val {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+}
 
 /* Tables ----------------------------------------------------------------- */
 .aura-table {
@@ -161,7 +276,7 @@ body, .gradio-container {
   text-transform: uppercase;
   letter-spacing: 0.08em;
   color: var(--aura-mute);
-  padding: 6px 8px;
+  padding: 8px;
   border-bottom: 1px solid var(--aura-line);
 }
 .aura-table td {
@@ -171,18 +286,108 @@ body, .gradio-container {
 }
 .aura-table td.right, .aura-table th.right { text-align: right; }
 .aura-table td.muted { color: var(--aura-mute); font-style: italic; }
+.aura-table td.flag-anom {
+  color: var(--aura-accent);
+  font-weight: 600;
+}
 .aura-table code {
   font-family: "JetBrains Mono", monospace;
   font-size: 12px;
 }
 
+/* Reasoning Trace JSON --------------------------------------------------- */
+.aura-trace-frame {
+  background: #FBF8F2;
+  border: 1px solid var(--aura-line);
+  border-radius: 12px;
+  padding: 16px 18px;
+  margin: 12px 0;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 12.5px;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  word-break: break-word;
+  color: var(--aura-ink);
+  overflow-x: auto;
+}
+.aura-trace-frame .key-chosen,
+.aura-trace-frame .key-rationale,
+.aura-trace-frame .key-confirm {
+  color: var(--aura-accent);
+  font-weight: 600;
+}
+.aura-trace-frame .json-str { color: #4A6B4F; }
+.aura-trace-frame .json-num { color: #B6391A; }
+.aura-trace-frame .json-bool { color: var(--aura-accent); font-weight: 600; }
+.aura-trace-frame .json-key { color: var(--aura-mute); }
+
+/* Replay cards (Tab 6) --------------------------------------------------- */
+.replay-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 12px;
+  margin: 12px 0;
+}
+.replay-card {
+  border: 1px solid var(--aura-line);
+  border-radius: 12px;
+  padding: 14px 16px;
+  background: var(--aura-card);
+}
+.replay-card h3 {
+  font-family: "Fraunces", serif;
+  font-size: 18px;
+  margin: 4px 0 6px;
+  color: var(--aura-ink);
+}
+.replay-card p {
+  margin: 0 0 8px;
+  color: var(--aura-mute);
+  font-size: 13px;
+  line-height: 1.45;
+}
+.replay-card .replay-meta {
+  display: flex;
+  gap: 8px;
+  font-size: 11px;
+  color: var(--aura-mute);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
 /* Footer ----------------------------------------------------------------- */
 .aura-footer {
-  margin: 36px 0 12px;
-  padding-top: 14px;
+  margin: 36px 0 18px;
+  padding-top: 18px;
   border-top: 1px solid var(--aura-line);
   font-size: 12px;
   color: var(--aura-mute);
   text-align: center;
   letter-spacing: 0.02em;
+  line-height: 1.7;
+}
+.aura-footer a {
+  color: var(--aura-accent);
+  text-decoration: none;
+  margin: 0 8px;
+}
+.aura-footer a:hover { text-decoration: underline; }
+
+/* Buttons / inputs accent ------------------------------------------------ */
+button.primary, .gradio-container button.primary {
+  background: var(--aura-accent) !important;
+  color: #FFFFFF !important;
+  border: 1px solid var(--aura-accent) !important;
+  font-weight: 600 !important;
+}
+button.secondary, .gradio-container button.secondary {
+  background: var(--aura-card) !important;
+  color: var(--aura-ink) !important;
+  border: 1px solid var(--aura-line) !important;
+}
+
+/* Tabs styling ----------------------------------------------------------- */
+.gradio-container .tab-nav button {
+  font-weight: 600 !important;
+  letter-spacing: 0.02em !important;
 }

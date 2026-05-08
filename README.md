@@ -1,127 +1,174 @@
+<div align="center">
+
 # Aura
 
 **Anticipate. Act. Stay quiet.**
 
-Galaxy Brain — Shaurya Punj, Shorya Gupta. Thapar Institute of Engineering and Technology.
-Samsung EnnovateX 2026 submission.
+An on-device empathetic intelligence layer for Indian Gen Z and Gen Alpha. Four specialist agents, one Phi-3-mini orchestrator, a glass-box Reasoning Trace, and a memory graph the user owns.
 
-[![Free-tier-only — Total Cost ₹2,000](https://img.shields.io/badge/Build-%E2%82%B92%2C000%20total-FF5B2E)](docs/decisions/ADR-0011-no-apple-developer-program.md)
-[![Live Demo — Caramel Coin](https://img.shields.io/badge/Live%20Demo-Caramel__Coin-FF5B2E)](https://huggingface.co/spaces/Shaurya-Noodle/Caramel_Coin)
-[![Audit — AUDIT_REPORT.md](https://img.shields.io/badge/Audit-AUDIT__REPORT.md-green)](AUDIT_REPORT.md)
-[![Audit — PLAN_COMPLETION_AUDIT.md](https://img.shields.io/badge/Audit-PLAN__COMPLETION__AUDIT.md-green)](../PLAN_COMPLETION_AUDIT.md)
+[![build](https://img.shields.io/github/actions/workflow/status/ShAuRyA-Noodle/Combobulating/ci.yml?branch=main&label=build)](https://github.com/ShAuRyA-Noodle/Combobulating/actions)
+[![hf space](https://img.shields.io/badge/%F0%9F%A4%97%20space-Caramel__Coin-FF5B2E)](https://huggingface.co/spaces/Shaurya-Noodle/Caramel_Coin)
+[![pages](https://img.shields.io/github/deployments/ShAuRyA-Noodle/Combobulating/github-pages?label=pages)](https://shaurya-noodle.github.io/Combobulating/)
+[![license](https://img.shields.io/github/license/ShAuRyA-Noodle/Combobulating)](LICENSE)
+[![last commit](https://img.shields.io/github/last-commit/ShAuRyA-Noodle/Combobulating)](https://github.com/ShAuRyA-Noodle/Combobulating/commits/main)
+[![contributors](https://img.shields.io/github/contributors/ShAuRyA-Noodle/Combobulating)](https://github.com/ShAuRyA-Noodle/Combobulating/graphs/contributors)
+[![release](https://img.shields.io/github/v/release/ShAuRyA-Noodle/Combobulating?include_prereleases)](https://github.com/ShAuRyA-Noodle/Combobulating/releases)
 
-> Live Demo deployed at https://huggingface.co/spaces/Shaurya-Noodle/Caramel_Coin
-> (Gradio app, free CPU tier, synthetic-data showcase only — no user PII).
-
----
-
-## Status
-
-| Phase | State |
-|---|---|
-| Phase 1 — Blueprint deck | **Ready** (11 / 11 slides shipped; 5 small fixes per `AUDIT_REPORT.md` before upload) |
-| Phase 2 — Prototype + 30-user pilot | **Scaffolded** at `phase2/` — awaiting shortlist email |
-| Phase 3 — Bangalore finals | **Scaffolded** at `phase3/` — awaiting Phase 2 shortlist |
+</div>
 
 ---
 
-## Problem
+Aura is a continuous, on-device orchestrator that watches the signals already on a Gen Z phone — notifications, calendar events, UPI SMS, Gmail receipts, HRV, sleep — and turns the four that matter into one quiet action a few times a day. Nothing leaves the device unless the user presses export. Every action ships with a Reasoning Trace the user can read, edit, or reject. Built by Galaxy Brain at Thapar Institute for Samsung EnnovateX 2026, on a total budget of two thousand rupees.
 
-Designing Empathetic Intelligence User Experience for Everyday Life.
+## Why Aura
 
-Indian Gen Z and Gen Alpha users live inside a notification flood. The phone buzzes
-two hundred times a day; almost none of those buzzes serve the user. Existing
-assistants are reactive, cloud-bound, and have no view of biometrics, no
-understanding of UPI or IRCTC or WhatsApp project groups, and no way to show
-their work. Aura is the layer that closes the loop from on-device signal to
-transparent autonomous action, and stays silent the rest of the time.
+The average Gen Z phone receives 237 notifications a day. Four of them matter. The other 233 are a tax on attention that nobody chose to pay. Existing assistants — Gemini Live, Apple Intelligence, Bixby, Pixel Assistant, Rabbit, Humane — start when the user starts. None of them see HRV, none read the WhatsApp project group, none parse a UPI SMS, and none expose a step-by-step trace the user can audit. Aura closes that loop on the device, with five defended product wedges shipped together.
 
-## What this is
+## The five wedges
 
-- An on-device, multi-agent empathetic intelligence layer.
-- Four specialist agents — Communications, Calendar, Finance, Wellness —
-  coordinated by a Phi-3-mini orchestrator.
-- A user-owned memory graph with one-tap export, time-range delete, and a
-  tamper-evident audit log.
-- A Reasoning Trace, visible for every action, that lets the user inspect,
-  edit, or reject any decision.
-- A daily Silence Budget that caps proactive surfaces at three.
+<table>
+<tr>
+<td width="50%">
 
-## What this is not
+**1. Indian context, not bolt-on**
 
-- Not a chatbot. No personality, no voice, no face.
-- Not a screen-time optimiser. We measure success in fewer taps, not more.
-- Not cloud inference by default. No byte leaves the device without an
-  explicit user-initiated action.
-- Not a Samsung-only product. iOS reference build first; Galaxy is the
-  production target.
-- Not a wellness gamifier.
+UPI parser, IRCTC PNR lookup, Zomato and Swiggy receipt extraction, Blinkit delivery windows, BMTC commute, Gmail thread reconciliation. Twelve bank SMS templates on the hot path.
 
-## Project Phases
+![Spend Mirror](https://raw.githubusercontent.com/ShAuRyA-Noodle/Combobulating/main/aura/img/aura_05_screen_spend_mirror.png)
 
-| Directory | Phase | Contents |
-|---|---|---|
-| `deck/phase1_blueprint/` | Phase 1 — Blueprint | 11 slides, deck.md, anti_cliché audit, judges memo, citation map, elevator-60s, production checklist, build/`aura_phase1_blueprint_v1.pptx` |
-| `phase2/` | Phase 2 — Prototype + Pilot | README, checklist, 5 deliverable scaffolds (pilot report, LoRA adapters, Galaxy emulator demo, threat model validation, Silence Budget KPI) |
-| `phase3/` | Phase 3 — Finals | README, travel logistics, stage kit, judge research, post-event followups, contingency kit |
+</td>
+<td width="50%">
 
-The Phase 3 pitch deck itself lives at `deck/phase3_pitch/`
-(scaffolded; deck content owned by the Phase 3 deck agent).
+**2. Closed biometric loop**
 
-## Repository layout
+HRV from HealthKit or Health Connect feeds an XGBoost Load Score that triggers a single quiet intervention — mute, breathe, nap.
 
+![Load Score](https://raw.githubusercontent.com/ShAuRyA-Noodle/Combobulating/main/aura/img/aura_07_screen_load_score_panel.png)
+
+</td>
+</tr>
+<tr>
+<td width="50%">
+
+**3. Glass-box Reasoning Trace**
+
+Every action emits trigger, signals, candidates, ranking, chosen, rationale, and outcome. Inspect, edit, reject, or rewind any decision.
+
+![Reasoning Trace](https://raw.githubusercontent.com/ShAuRyA-Noodle/Combobulating/main/aura/img/aura_03_screen_reasoning_trace_drawer.png)
+
+</td>
+<td width="50%">
+
+**4. Silence as a feature**
+
+A daily Silence Budget caps proactive surfaces at three. Useful taps refund a token. The cap is a hard floor on a learned cost function, not the function itself.
+
+![Silence Budget](https://raw.githubusercontent.com/ShAuRyA-Noodle/Combobulating/main/aura/img/aura_08_screen_silence_budget_state.png)
+
+</td>
+</tr>
+<tr>
+<td colspan="2">
+
+**5. Owned memory graph**
+
+SQLite plus sqlite-vss, encrypted at rest with Secure Enclave or Keystore. Nine node types, eight edge types, one-tap export, time-range delete, panic-wipe gesture, daily Merkle root for audit.
+
+![Memory Tab](https://raw.githubusercontent.com/ShAuRyA-Noodle/Combobulating/main/aura/img/aura_04_screen_memory_tab.png)
+
+</td>
+</tr>
+</table>
+
+## Architecture
+
+Three layers. Four agents. One orchestrator.
+
+![Three-layer architecture](https://raw.githubusercontent.com/ShAuRyA-Noodle/Combobulating/main/aura/img/aura_12_arch_3_layer_diagram.png)
+
+- **Sense.** Reads on-device signals only. iOS: HealthKit, EventKit, App Intents, Background Tasks. Android: UsageStatsManager, NotificationListenerService, Health Connect, Calendar Provider, custom IME for typing-entropy buckets (entropy only, never characters).
+- **Intelligence.** Four agents and one Phi-3-mini orchestrator. CommsAgent and FinanceAgent run Gemma 2B Q4 with LoRA adapters. CalendarAgent runs a rule engine plus Phi-3-mini for prose. WellnessAgent runs an XGBoost Load Score plus Phi-3-mini. The orchestrator is a deterministic LangGraph state machine across seven named states with typed JSON tool calls.
+- **Experience.** Phone, watch, earbuds, tablet. Morning Brief card, action card, Reasoning Trace drawer, Memory tab, Spend Mirror, Quiet Group Chat. Cross-surface continuity via Multipeer Connectivity on iOS and Nearby Connections on Android.
+
+Full document at [`docs/architecture.md`](docs/architecture.md). Eleven Architecture Decision Records under [`docs/decisions/`](docs/decisions/).
+
+## Get the demo
+
+A Gradio Space runs a synthetic-data showcase of the orchestrator and Reasoning Trace on the free CPU tier — no PII, no install. Try it here.
+
+[**Caramel_Coin on HuggingFace Spaces**](https://huggingface.co/spaces/Shaurya-Noodle/Caramel_Coin)
+
+For the iPhone build, see [`docs/site/install.html`](docs/site/install.html). The Apple Personal Team certificate from a free Apple ID signs and sideloads the app onto a personal iPhone for seven days at a time. No paid Apple Developer Program needed for evaluators.
+
+## Get the source
+
+```bash
+git clone https://github.com/ShAuRyA-Noodle/Combobulating.git
+cd Combobulating/aura
+
+# Python orchestrator + agents
+python -m venv .venv && source .venv/bin/activate
+pip install -e .
+
+# Run the orchestrator state machine
+python -m orchestrator --help
+
+# Run the test suite
+pytest
+
+# iOS reference build
+cd apps/ios/Aura
+brew install xcodegen
+xcodegen generate
+open Aura.xcodeproj
 ```
-apps/         iOS (primary), Android (port — Phase 2), Watch (Phase 2)
-agents/       Per-agent Python reference implementations (comms, calendar, finance, wellness, core)
-orchestrator/ LangGraph state machine, tool schemas, ranking policy, trace, tests
-memory/       SQLite + sqlite-vss schema, migrations, audit log, store, tests
-models/       LoRA training, eval harness, quantised exports, configs
-datasets/     comms + finance synthetic training corpora
-pilot/        Consent forms, qual + quant protocols, recruitment, raw_data templates, analysis (5 notebooks, charts)
-design/       Brand kit, screens, architecture, charts, QR pack, leave-behind, anti-cliché audit
-deck/         phase1_blueprint/ (shipped), phase3_pitch/ (scaffolded)
-demo/         5-min live script, 90s storyboard, Q&A anticipated, recording setup, dress rehearsal
-docs/         plan, architecture, threat model, runbook, references, glossary, privacy promises, decisions, release notes, site
-phase2/       Phase 2 deliverable scaffolds (README, checklist, 5 deliverables)
-phase3/       Phase 3 finals scaffolds (README, travel, stage kit, judges, follow-ups, contingency)
-e2e/          End-to-end pytest scaffolds (Monday Brief, Quiet Group Chat)
-hf_space/     Live HuggingFace Space — Caramel Coin (deployed)
-web/          Local FastAPI + React fallback for venue-stage demo
-_trust/       Press kit, social posts, slide-9 evidence block, risk-recovery brief, site copy
-```
 
-## Key documents
+## Pilot study
 
-- Master plan: `../plan.md` (root level — single source of truth)
-- Technical spec: `../technical_spec.md`
-- Competitive: `../competitive.md`
-- Deck spec: `../deck_spec.md`
-- Architecture: `docs/architecture.md`
-- Threat model: `docs/threat_model.md`
-- Privacy promises: `docs/privacy_promises.md`
-- Glossary: `docs/glossary.md`
-- References (citation aggregate): `docs/references.md`
-- Runbook: `docs/runbook.md`
-- ADR index: `docs/decisions/` (ADR-0001 through ADR-0011)
-- Phase 1 deck: `deck/phase1_blueprint/`
-- Phase 1 audit: `AUDIT_REPORT.md`
-- Plan-completion audit: `../PLAN_COMPLETION_AUDIT.md`
+A Wizard-of-Oz pilot at Thapar campus, designed for Phase 2.
 
-## Getting started
+- **Quantitative.** 30 users across years and branches. Five standardised tasks, randomised order, baseline measured first. Stopwatch, tap count, in-app telemetry. Means with 95% confidence intervals, paired Wilcoxon, Cohen's d.
+- **Qualitative.** 8 users, 60-minute semi-structured interviews, daily diary entries.
+- **Wizard-of-Oz.** A human operator drives the orchestrator while the user sees only the action card and Reasoning Trace. Operator latency budget 2.5 s p95. Operator script and consent form under [`pilot/`](pilot/).
+- **Six KPIs** match the EnnovateX brief one-for-one. Effort reduction ≥ 30 %, task completion ≥ 90 %, autonomy quality ≥ 85 %, satisfaction ≥ 4.5 / 5, HRV trend up, willingness to pay ₹199 / month ≥ 60 % via Van Westendorp.
 
-iOS reference build: see `apps/ios/README.md`.
-Python orchestrator: `pip install -r agents/core/requirements.txt && python -m orchestrator --help`.
-Pilot analysis: `pip install -r pilot/analysis/requirements.txt && jupyter lab pilot/analysis/notebooks/`.
+Raw CSV publishes in the repo with the Phase 2 cut.
 
-## Team
+## Privacy — zero-cloud promise
 
-Galaxy Brain — Thapar Institute of Engineering and Technology.
+1. Your data lives on your device.
+2. Nothing leaves the device unless you press export.
+3. Every action shows its work, and you can erase the work.
+4. Aura speaks at most three times a day, and you can take that to zero.
+5. Five rapid taps wipe everything, including from us.
 
-- Shaurya Punj — architecture, Wellness agent, KPI study, pitch.
-- Shorya Gupta — iOS app, Comms / Calendar / Finance agents, memory graph.
+Each promise is tested against the [threat model](docs/threat_model.md). Five named adversaries, STRIDE per surface, panic-wipe spec at [`docs/threat_model.md`](docs/threat_model.md). Full text at [`docs/privacy_promises.md`](docs/privacy_promises.md).
 
-EnnovateX: https://www.ennovatex.io
+## Team Galaxy Brain
+
+Two undergraduates at Thapar Institute of Engineering and Technology, Patiala. We are the user we design for.
+
+![Team Galaxy Brain](https://raw.githubusercontent.com/ShAuRyA-Noodle/Combobulating/main/aura/img/aura_22_press_kit_team_portrait.png)
+
+- **Shaurya Punj** — third-year ECE. Architecture, Wellness agent, KPI study, pitch. Roll 102486013. spunj_be23@thapar.edu.
+- **Shorya Gupta** — second-year Computer Engineering. iOS app, Comms / Calendar / Finance agents, memory graph, audit log. Roll 1024037521. sgupta9_be24@thapar.edu.
 
 ## License
 
-MIT. See `LICENSE`.
+MIT. See [`LICENSE`](LICENSE).
+
+## Citation
+
+```bibtex
+@software{galaxy_brain_aura_2026,
+  author       = {Punj, Shaurya and Gupta, Shorya},
+  title        = {Aura: An On-Device Empathetic Intelligence Layer for Indian Gen Z},
+  year         = {2026},
+  version      = {1.0.0},
+  publisher    = {Galaxy Brain, Thapar Institute of Engineering and Technology},
+  url          = {https://github.com/ShAuRyA-Noodle/Combobulating},
+  note         = {Samsung EnnovateX 2026}
+}
+```
+
+A machine-readable [`CITATION.cff`](CITATION.cff) is also provided.

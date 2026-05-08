@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Privacy promises — Aura</title>
+<meta name="description" content="Five plain-English privacy promises for Aura, each tested against a documented threat model and tied to specific architecture commitments." />
+<meta name="theme-color" content="#FAF8F5" />
+<link rel="icon" type="image/svg+xml" href="assets/aura_logo.svg" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600&family=Inter+Tight:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<a class="skip" href="#main">skip to content</a>
+
+<header class="topbar" role="banner">
+  <a class="brand" href="index.html" aria-label="Aura, home">
+    <img src="assets/aura_logo.svg" alt="" width="28" height="28" />
+    <span>Aura</span>
+  </a>
+  <nav class="nav" aria-label="primary">
+    <a href="index.html#04">wedges</a>
+    <a href="install.html">install</a>
+    <a href="privacy.html" aria-current="page">privacy</a>
+    <a href="about.html">about</a>
+  </nav>
+</header>
+
+<main id="main" class="page" role="main">
+  <p class="crumbs"><a href="index.html">Aura</a> &rsaquo; Privacy</p>
+  <h1>The five privacy promises</h1>
+  <p class="lede">
+    Five plain-English promises. Each is tested against the
+    <a href="../threat_model.md">threat model</a> and tied to a specific architecture commitment
+    in the <a href="../decisions/">ADR index</a>.
+  </p>
+
+  <ol>
+    <li class="promise">
+      <h3>Your data lives on your device.</h3>
+      <p>
+        Aura processes notification metadata, Gmail metadata, calendar events, SMS
+        (Android only), HRV, sleep, and typing-entropy buckets on the phone. The encrypted
+        memory graph stays on your device. There is no <code>api.aura.ai</code>; we do not
+        operate a backend. ADR-0005.
+      </p>
+    </li>
+    <li class="promise">
+      <h3>Nothing leaves the device unless you press export.</h3>
+      <p>
+        No background sync of personal data. The only network calls Aura makes are OAuth
+        token exchange, model weight download on first install, and Distance Matrix queries
+        when computing a Leave-By Alert. Memory graph export to JSON is share-sheet driven;
+        you pick the destination.
+      </p>
+    </li>
+    <li class="promise">
+      <h3>Every action shows its work, and you can erase the work.</h3>
+      <p>
+        Every autonomous or semi-autonomous Aura action emits a Reasoning Trace — trigger,
+        signals, candidates, chosen, rationale, outcome. Inspect any trace, delete a trace,
+        a node, a time-range, or the whole graph in one tap. Daily Merkle roots in Settings
+        let you verify the audit log has not been retroactively edited. ADR-0004.
+      </p>
+    </li>
+    <li class="promise">
+      <h3>Aura speaks at most three times a day, and you can take that to zero.</h3>
+      <p>
+        A named state variable, the Silence Budget, caps proactive non-safety surfaces at 3
+        per local day. Each surface decrements the budget by one token. Tapping
+        <em>Useful</em> on a card refunds one token, capped at the daily ceiling. The default
+        is configurable from 1 to 5. ADR-0003.
+      </p>
+    </li>
+    <li class="promise">
+      <h3>Five rapid taps wipe everything, including from us.</h3>
+      <p>
+        The panic-wipe gesture (five rapid presses of the side button within three seconds)
+        destroys the SQLCipher key, revokes OAuth refresh tokens, deletes the app sandbox,
+        and relaunches Aura into fresh-install state. There is a three-second hold-cancel
+        window. Nothing is logged about the wipe — that absence is a feature.
+      </p>
+    </li>
+  </ol>
+
+  <h2>What we explicitly do not promise</h2>
+  <ul>
+    <li>We do not promise unbreakable privacy. The OS itself is the floor.</li>
+    <li>We do not promise that a determined coercer cannot extract every secret from the user.</li>
+    <li>We do not promise zero false positives in the orchestrator's decisions. Every action is reversible.</li>
+    <li>We do not promise no notifications. We promise at most three proactive non-safety surfaces a day under default settings.</li>
+  </ul>
+
+  <p>
+    Full text in the repo:
+    <a href="../privacy_promises.md"><code>docs/privacy_promises.md</code></a>.
+    Threat model: <a href="../threat_model.md"><code>docs/threat_model.md</code></a>.
+    Responsible disclosure: <a href="/.well-known/security.txt"><code>/.well-known/security.txt</code></a>.
+  </p>
+</main>
+
+<footer class="foot" role="contentinfo">
+  <p>Galaxy Brain &mdash; Thapar Institute of Engineering and Technology, Patiala.</p>
+  <p>Samsung EnnovateX 2026 submission. MIT licensed code. v1.0.0 &middot; &copy; 2026.</p>
+</footer>
+</body>
+</html>

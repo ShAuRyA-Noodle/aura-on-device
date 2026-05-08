@@ -128,6 +128,141 @@ def validate_trace(trace: Trace) -> None:
     _VALIDATOR.validate(payload)
 
 
+def pretty_render_html(trace: Trace, *, embed_css: bool = True) -> str:
+    """HTML rendering for the iOS Memory tab + HF Space.
+
+    Mirrors the four-section layout from spec §5.3. The iOS WebView and the
+    HF Space Gradio HTML component both feed this string verbatim. Pair with
+    ``trace.css`` for the locked palette (deck slide 8a).
+    """
+    import html
+
+    css_link = (
+        "<style>" + _read_trace_css() + "</style>"
+        if embed_css
+        else '<link rel="stylesheet" href="trace.css" />'
+    )
+
+    def esc(v: Any) -> str:
+        return html.escape(str(v))
+
+    # Section 1 — trigger.
+    trig_src = esc(trace.trigger.get("source", "?"))
+    trig_val = esc(trace.trigger.get("value", ""))
+
+    # Section 2 — signals: 3-column key/value table per agent.
+    signal_rows = []
+    for s in trace.signals:
+        agent = esc(s.get("agent", "?"))
+        decision = esc(s.get("decision", ""))
+        drivers_html = ", ".join(esc(d) for d in s.get("drivers", []))
+        slow_badge = (
+            '<span class="aura-badge aura-badge--warn">slow</span>'
+            if s.get("slow")
+            else ""
+        )
+        signal_rows.append(
+            f"<tr><td class='aura-key'>{agent}</td>"
+            f"<td>{decision}{slow_badge}</td>"
+            f"<td class='aura-drivers'>{drivers_html}</td></tr>"
+        )
+
+    # Section 3 — candidates: ranked, score breakdown.
+    cand_rows = []
+    for c in trace.candidates:
+        comp = c.components or {}
+        comp_html = " &middot; ".join(
+            f'<span class="aura-comp">{esc(k)}={esc(v)}</span>' for k, v in comp.items()
+        )
+        confirm_badge = (
+            '<span class="aura-badge aura-badge--confirm">confirm</span>'
+            if c.confirm_required
+            else '<span class="aura-badge aura-badge--auto">auto</span>'
+        )
+        cand_rows.append(
+            f"<tr><td class='aura-kind'>{esc(c.kind)}</td>"
+            f"<td class='aura-score'>{c.score:+.3f}</td>"
+            f"<td>{comp_html}</td>"
+            f"<td>{confirm_badge}</td></tr>"
+        )
+
+    # Section 4 — chosen + rationale.
+    rationale = esc(trace.rationale or "")
+    chosen = esc(trace.chosen)
+    outcome = esc(trace.outcome.value if hasattr(trace.outcome, "value") else trace.outcome)
+    confirm_badge = (
+        '<span class="aura-badge aura-badge--confirm">confirm required</span>'
+        if trace.confirm_required
+        else '<span class="aura-badge aura-badge--auto">auto-execute</span>'
+    )
+    redactions_html = (
+        f"<p class='aura-redactions'>Redacted: {esc(', '.join(trace.redactions))}</p>"
+        if trace.redactions
+        else ""
+    )
+
+    return f"""<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Aura Reasoning Trace {esc(trace.trace_id)}</title>
+{css_link}
+</head>
+<body class="aura-trace">
+<header class="aura-header">
+  <span class="aura-trace-id">{esc(trace.trace_id)}</span>
+  <span class="aura-ts">{esc(trace.ts)}</span>
+</header>
+
+<section class="aura-section aura-section--why">
+  <h2>Why now</h2>
+  <p><span class="aura-key">{trig_src}</span> &middot; <span class="aura-val">{trig_val}</span></p>
+</section>
+
+<section class="aura-section aura-section--saw">
+  <h2>What I saw</h2>
+  <table class="aura-table">
+    <thead><tr><th>Agent</th><th>Decision</th><th>Drivers</th></tr></thead>
+    <tbody>
+      {''.join(signal_rows) or '<tr><td colspan="3"><em>(no signals)</em></td></tr>'}
+    </tbody>
+  </table>
+</section>
+
+<section class="aura-section aura-section--considered">
+  <h2>What I considered</h2>
+  <table class="aura-table">
+    <thead><tr><th>Kind</th><th>Score</th><th>Components</th><th>Surface</th></tr></thead>
+    <tbody>
+      {''.join(cand_rows) or '<tr><td colspan="4"><em>(no candidates)</em></td></tr>'}
+    </tbody>
+  </table>
+</section>
+
+<section class="aura-section aura-section--chose">
+  <h2>What I chose</h2>
+  <p class="aura-chosen">
+    <span class="aura-kind aura-kind--chosen">{chosen}</span>
+    {confirm_badge}
+    <span class="aura-outcome">{outcome}</span>
+  </p>
+  <p class="aura-rationale">{rationale}</p>
+  {redactions_html}
+</section>
+</body>
+</html>"""
+
+
+def _read_trace_css() -> str:
+    """Read the locked-palette CSS that pairs with the HTML render."""
+    from pathlib import Path
+
+    css_path = Path(__file__).resolve().parent / "trace.css"
+    if css_path.exists():
+        return css_path.read_text()
+    return ""
+
+
 def pretty_render(trace: Trace) -> str:
     """Human-readable rendering for the Reasoning Trace drawer + CLI debug.
 

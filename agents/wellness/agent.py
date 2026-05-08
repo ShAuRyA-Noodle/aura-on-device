@@ -55,7 +55,10 @@ class WellnessAgent(Agent):
     )
 
     def __init__(self, model: Optional[LoadScoreModel] = None) -> None:
-        self.model = model or LoadScoreModel()
+        # Production runs through the trained XGBoost booster; the linear
+        # fallback is used only when the artefact is missing on disk. Tests
+        # may pass an explicit model to keep the suite fast and deterministic.
+        self.model = model if model is not None else LoadScoreModel.load_default()
         self._history: List[Dict[str, Any]] = []  # rolling list of {ts, score}
         self._last_recovery_ts: Optional[datetime] = None
 
