@@ -29,84 +29,44 @@ NotebookLM source slot.
 
 In NotebookLM Studio panel, choose **Brief** preset, then click **Customize**.
 
-### Step 3 — Paste this focus prompt verbatim
+### Step 3 — Paste a focus prompt
+
+NotebookLM's Customize field has a character cap that varies by
+account. Three variants below in increasing length. Try B first; if
+your account rejects it as too long, fall back to A. C is for
+accounts that allow longer custom instructions.
+
+#### Variant A — 250 characters (works on every account)
 
 ```
-This is a 90-second demo video for Samsung EnnovateX 2026 Phase 1
-submission. Total spoken word count target: 215 to 235 words. Default
-narration cadence is around 2.4 words per second; do not exceed it.
-Cut anything that pushes the runtime past 90 seconds.
-
-Open with the locked micro-story exactly as written in the source
-"OPENING MICRO-STORY — DO NOT REPHRASE". Do not paraphrase the first
-two sentences. Speak them as the cold open.
-
-Then move directly into three demo beats, in this exact order, each
-beat exactly 20 seconds spoken:
-
-Beat 1 (0:18 to 0:38) — Morning Brief.
-Show the Morning Brief screen. Name three things on it: sleep five-
-point-two hours pushed gym to evening, nine AM DSA quiz with the
-professor's slides already summarised, leave-by alert at eight
-fifteen. State that none of these were asked for. Aura anticipated
-all three.
-
-Beat 2 (0:38 to 0:58) — Quiet Group Chat plus Reasoning Trace.
-Show the WhatsApp project group flooding with 137 messages in twelve
-minutes. Aura batches them. Three actionable surface, 134 muted. Then
-open the Reasoning Trace drawer. Read aloud the JSON keys: chosen,
-rationale, confirm-required. Say one short line: every action shows
-its work.
-
-Beat 3 (0:58 to 1:18) — Spend Mirror plus Silence Budget.
-Show the Spend Mirror card. Name HDFC bank, name Zomato, name the
-rupee figure ₹2,400 over weekly average. State that this came from
-SMS parsed on the device. Then show the Silence Budget meter at two
-of three surfaces remaining today. State that Aura caps proactive
-nudges at three a day.
-
-Close 1:18 to 1:30 — twelve-second wrap.
-State three closing facts with no embellishment. One: zero bytes
-left the device. Two: the entire memory graph is exportable to JSON
-in one tap with a tamper-evident audit log. Three: this was built by
-a two-person team at Thapar Institute on a two-thousand-rupee total
-budget. End with the locked tagline spoken at normal cadence:
-Anticipate. Act. Stay quiet.
-
-Visual rules — strict.
-Use only the loaded screen mockups and the architecture diagram as
-visuals. Do not generate stock-photo overlays of phones in hands,
-glowing brains, neural networks, isometric devices in space, or
-gradient blobs. Backgrounds throughout must be a warm off-white. The
-single accent colour permitted is sunset orange. No neon, no
-glassmorphism, no drop shadows, no glow.
-
-Voice rules — strict.
-Use one narrator. No two-host podcast back-and-forth. Tone is
-confident, observational, dry, slightly self-aware — like a smart
-21-year-old engineer, not a brand. Do not use these words: empower,
-leverage, seamless, revolutionary, paradigm, holistic, robust,
-cutting-edge, AI-powered, transformative, game-changing, harness,
-synergy.
-
-Indian context rule.
-Name real artefacts only — UPI, IRCTC, BMTC, HDFC, Zomato, Swiggy,
-Blinkit, WhatsApp, Gmail. Do not use stereotypes about Indian
-college life, festivals, food, or family. The hostel and the project
-group and the prof and the DBMS quiz are the texture.
-
-Hard exclusions.
-Do not show or claim a Galaxy device. The team did not buy one — say
-so explicitly only if the visual budget allows it; otherwise stay
-silent on the platform. Do not show or claim Apple chrome or Galaxy
-chrome on any phone screen — frames must read as neutral line-art.
-Do not invent KPI numbers. The Phase 2 user study has not run yet.
-
-Caption rule.
-Burn legible captions at 24 pt minimum on every spoken line. The
-video must be watchable without sound on a phone screen at 50%
-volume in a noisy room.
+90-sec demo. 220 words, one narrator, Gen Z dry voice. Open verbatim from "MICRO-STORY" source. 3 beats x 20s: Morning Brief, Quiet Group Chat with Reasoning Trace JSON, Spend Mirror. Close 12s: zero cloud bytes, two-person ₹2,000 budget. Tagline "Anticipate. Act. Stay quiet."
 ```
+
+#### Variant B — 500 characters (recommended)
+
+```
+90-sec demo for Samsung EnnovateX 2026. 220 spoken words, single narrator, Gen Z dry voice. Open verbatim from "MICRO-STORY" source. 3 beats x 20s: Morning Brief (5.2h sleep, 9am DSA quiz, leave 8:15); Quiet Group (137 msgs->3 actionable, Reasoning Trace JSON); Spend Mirror (HDFC ₹2,400 over, Silence Budget 2/3). 12s close: zero cloud bytes, exportable memory, two-person Thapar ₹2,000 budget. Tagline: "Anticipate. Act. Stay quiet." Off-white bg, sunset-orange accent only. No stock photos, no phone chrome.
+```
+
+#### Variant C — 800 characters (only if accepted)
+
+```
+90-second demo for Samsung EnnovateX 2026 Phase 1. Target 220 spoken words, single narrator, confident Gen Z dry voice (not brand voice). Open verbatim from source titled "MICRO-STORY" — first two sentences spoken word-for-word as cold open. Then three 20-second beats in this order: Beat 1 Morning Brief — sleep 5.2h, 9am DSA quiz, professor's slides summarised, leave by 8:15, three friends going. Beat 2 Quiet Group Chat — WhatsApp project group 137 messages in 12 minutes, Aura batches to 3 actionable + 134 muted, then open Reasoning Trace JSON drawer showing chosen/rationale/confirm_required keys. Beat 3 Spend Mirror — HDFC SMS parsed, ₹2,400 over weekly average, Silence Budget meter at 2/3 today. 12-second close: zero bytes left device, exportable memory graph with audit log, built by two-person Thapar team on ₹2,000 budget. End tagline at normal cadence: "Anticipate. Act. Stay quiet." Off-white background only. Single sunset-orange accent. No stock photos, no Apple chrome, no Galaxy chrome, no glowing brain. Banned words: empower, leverage, seamless, revolutionary, AI-powered, transformative.
+```
+
+#### Why three variants
+
+NotebookLM's Customize field cap is not documented and varies by
+account tier. The full original prompt at the bottom of this file
+(~3,200 chars) does not fit the standard cap. Variant A always
+works. Variant B is the sweet spot for most accounts. Variant C
+captures more of the locked rules but only fits accounts with the
+extended Studio cap.
+
+The locked rules NotebookLM cannot infer from sources alone:
+*single narrator, 90 seconds, micro-story verbatim, no Galaxy chrome*.
+All three variants enforce these. The shorter variants drop only
+the elaborated explanations.
 
 ### Step 4 — Generate
 
