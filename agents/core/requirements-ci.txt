@@ -1,0 +1,14 @@
+# CI-only slim dependency set.
+# Excludes heavy ML packages (sentence-transformers, transformers, peft,
+# llama-cpp-python) that the runtime needs but the test suite does not.
+# llama-cpp-python in particular requires C++ build tooling that breaks
+# free-tier GitHub Actions runners on cold cache.
+#
+# The agent + orchestrator + memory tests import only the lightweight
+# packages below; ML calls are stubbed.
+
+pydantic==2.7.4
+jsonschema==4.23.0
+pytest==8.3.3
+pytest-asyncio==0.24.0
+python-dateutil==2.9.0.post0
