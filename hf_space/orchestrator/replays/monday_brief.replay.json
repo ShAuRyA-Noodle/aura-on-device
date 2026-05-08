@@ -1,0 +1,54 @@
+{
+  "fixture_version": "1.0",
+  "name": "monday_brief",
+  "description": "plan §7 Journey A — Rohan's Monday Morning Brief. Unlock at 07:45 -> SHOW_BRIEF + LEAVE_BY_ALERT in first 60s.",
+  "tick_ts": "2026-05-07T07:45:00+05:30",
+  "user_baseline": {"rmssd_p50": 38.2, "rmssd_p10": 22.1, "switch_p50": 6, "sleep_target_min": 420},
+  "user_state": {
+    "load_score": 42,
+    "wellness_state": "BASELINE",
+    "in_focus_block": false,
+    "dnd_active": false,
+    "open_app": "com.android.systemui",
+    "local_time": "2026-05-07T07:45:00+05:30",
+    "surfaces_today": 0
+  },
+  "agent_payloads": {
+    "comms": {
+      "notif_events": [
+        {"id": "n_8a", "app_pkg": "com.whatsapp", "channel": "group:Thapar-DSA-Project", "sender_hash": "h_anu", "preview": "@you can you confirm the schema diagram for the quiz", "ts": "2026-05-07T07:30:00+05:30"},
+        {"id": "n_8b", "app_pkg": "com.whatsapp", "channel": "group:friends", "sender_hash": "h_kabir", "preview": "lol that meme tho", "ts": "2026-05-07T07:32:00+05:30"}
+      ],
+      "gmail_threads": [
+        {"thread_id": "t_p1", "sender": "prof.kumar@thapar.edu", "subject": "Tomorrow's quiz — slides for review", "subject_class": "prof"}
+      ]
+    },
+    "calendar": {
+      "events_today": [
+        {"id": "e_12", "title": "DSA Quiz", "start": "2026-05-07T09:00:00+05:30", "end": "2026-05-07T10:00:00+05:30", "loc": "LT-3", "loc_coords": {"lat": 30.354, "lon": 76.367}, "attendees": 2, "mode": "cab", "travel_min": 22},
+        {"id": "e_13", "title": "Lunch with Anu", "start": "2026-05-07T13:00:00+05:30", "end": "2026-05-07T14:00:00+05:30", "loc": "Hostel mess", "attendees": 2}
+      ],
+      "user_loc": {"lat": 30.300, "lon": 76.300},
+      "preferences": {"buffer_minutes": 15, "morning_brief_time": "07:45"}
+    },
+    "finance": {
+      "sms_unprocessed": [],
+      "gmail_receipts": [],
+      "balance_seed": {"account_hash": "a_hdfc_1234", "amount": 68400, "as_of": "2026-05-07T08:00:00+05:30"}
+    },
+    "wellness": {
+      "hrv_window": {"rmssd_ms": 39.5, "samples": 12, "window_min": 5},
+      "sleep_last_night": {"asleep_min": 312, "rem_min": 41, "deep_min": 33, "efficiency": 0.82},
+      "typing_entropy_60s": 3.0,
+      "app_switch_rate_60s": 4,
+      "notif_dismiss_rate_60m": 0.2,
+      "screen_on_min_60m": 5,
+      "personal_baseline": {"rmssd_p50": 38.2, "rmssd_p10": 22.1, "switch_p50": 6}
+    }
+  },
+  "expected": {
+    "trace_count_min": 1,
+    "chosen_in": ["SHOW_BRIEF", "LEAVE_BY_ALERT"],
+    "must_not_choose": ["MUTE_GROUP_30"]
+  }
+}

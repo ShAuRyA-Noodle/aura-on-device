@@ -1,0 +1,16 @@
+# Aura — Python reference implementation pinned deps.
+# Mirrors technical_spec.md §13.3 with the four packages this owner needs.
+# Note: heavy ML deps (mlx, mlx-lm) are dev-only on Apple Silicon — not pinned
+# here so CI runs on Linux without forcing Metal.
+
+pydantic==2.7.4
+langgraph==0.2.30
+langchain-core==0.3.5
+jsonschema==4.23.0
+pytest==8.3.3
+pytest-asyncio==0.24.0
+sentence-transformers==3.0.1
+transformers==4.44.2
+peft==0.12.0
+llama-cpp-python==0.2.90
+python-dateutil==2.9.0.post0

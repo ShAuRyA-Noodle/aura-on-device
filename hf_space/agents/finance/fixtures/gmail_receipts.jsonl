@@ -1,0 +1,20 @@
+{"thread_id":"tg_r01","sender":"noreply@swiggy.in","subject":"Order delivered — Total Rs. 420","snippet":"Your Swiggy order #SW123 from Behrouz has been delivered.","amount":420,"merchant":"swiggy","ts":"2026-05-07T13:15:00+05:30"}
+{"thread_id":"tg_r02","sender":"orders@zomato.com","subject":"Zomato order receipt — Rs. 540","snippet":"Order ZM987 delivered.","amount":540,"merchant":"zomato","ts":"2026-05-07T20:45:00+05:30"}
+{"thread_id":"tg_r03","sender":"noreply@blinkit.com","subject":"Blinkit order — INR 1200 charged","snippet":"Groceries delivered in 9 minutes.","amount":1200,"merchant":"blinkit","ts":"2026-05-07T18:25:00+05:30"}
+{"thread_id":"tg_r04","sender":"auto-confirm@amazon.in","subject":"Your Amazon.in order of Rs.2,400.00","snippet":"Echo Dot — arriving Friday.","amount":2400,"merchant":"amazon","ts":"2026-05-05T19:01:00+05:30"}
+{"thread_id":"tg_r05","sender":"ticket-no-reply@irctc.co.in","subject":"IRCTC ticket booked — PNR 8400123456 Rs. 1100","snippet":"Train 12628 KARNATAKA EXP departing 09:00.","amount":1100,"merchant":"irctc","ts":"2026-05-04T18:00:00+05:30"}
+{"thread_id":"tg_r06","sender":"receipts@uber.com","subject":"Your Tuesday morning trip with Uber — Rs. 95","snippet":"From PG to office.","amount":95,"merchant":"uber","ts":"2026-05-05T08:50:00+05:30"}
+{"thread_id":"tg_r07","sender":"orders@swiggy.in","subject":"Order delivered — Rs. 480","snippet":"Late lunch from Truffles.","amount":480,"merchant":"swiggy","ts":"2026-05-06T14:00:00+05:30"}
+{"thread_id":"tg_r08","sender":"noreply@blinkit.com","subject":"Blinkit — Rs. 220 paid","snippet":"Bread, eggs, oats.","amount":220,"merchant":"blinkit","ts":"2026-05-05T10:45:00+05:30"}
+{"thread_id":"tg_r09","sender":"auto-confirm@amazon.in","subject":"Your Amazon.in order of Rs.1,500.00","snippet":"Mechanical keyboard.","amount":1500,"merchant":"amazon","ts":"2026-05-06T20:00:00+05:30"}
+{"thread_id":"tg_r10","sender":"receipts@uber.com","subject":"Your evening trip with Uber — Rs. 640","snippet":"Friday after-work ride.","amount":640,"merchant":"uber","ts":"2026-05-06T22:55:00+05:30"}
+{"thread_id":"tg_r11","sender":"noreply@bookmyshow.com","subject":"BookMyShow — Avengers ticket Rs. 300","snippet":"PVR Forum Mall 19:00.","amount":300,"merchant":"bookmyshow","ts":"2026-05-02T18:15:00+05:30"}
+{"thread_id":"tg_r12","sender":"orders@zomato.com","subject":"Zomato — Rs. 350 paid","snippet":"Anu and Manish ordered together.","amount":350,"merchant":"zomato","ts":"2026-05-06T13:42:00+05:30"}
+{"thread_id":"tg_r13","sender":"orders@swiggy.in","subject":"Order delivered — Rs. 250","snippet":"Coffee + brownie.","amount":250,"merchant":"swiggy","ts":"2026-05-07T22:14:00+05:30"}
+{"thread_id":"tg_r14","sender":"noreply@blinkit.com","subject":"Blinkit — INR 800 paid","snippet":"Quick groceries.","amount":800,"merchant":"blinkit","ts":"2026-05-07T18:25:00+05:30"}
+{"thread_id":"tg_r15","sender":"auto-confirm@amazon.in","subject":"Your Amazon.in order of Rs.980.00","snippet":"USB-C hub.","amount":980,"merchant":"amazon","ts":"2026-05-05T19:14:00+05:30"}
+{"thread_id":"tg_r16","sender":"ticket-no-reply@irctc.co.in","subject":"IRCTC ticket — PNR 8400789012 Rs. 1840","snippet":"Patiala -> Delhi return.","amount":1840,"merchant":"irctc","ts":"2026-05-01T11:00:00+05:30"}
+{"thread_id":"tg_r17","sender":"receipts@uber.com","subject":"Your trip with Uber — Rs. 540","snippet":"Late evening.","amount":540,"merchant":"uber","ts":"2026-05-07T13:42:00+05:30"}
+{"thread_id":"tg_r18","sender":"orders@swiggy.in","subject":"Order delivered — Rs. 450","snippet":"Lunch from Meghana.","amount":450,"merchant":"swiggy","ts":"2026-05-02T12:00:00+05:30"}
+{"thread_id":"tg_r19","sender":"orders@zomato.com","subject":"Zomato — Rs. 540","snippet":"Late dinner.","amount":540,"merchant":"zomato","ts":"2026-05-03T21:00:00+05:30"}
+{"thread_id":"tg_r20","sender":"noreply@blinkit.com","subject":"Blinkit — Rs. 225","snippet":"Riya's snacks.","amount":225,"merchant":"blinkit","ts":"2026-04-30T20:00:00+05:30"}

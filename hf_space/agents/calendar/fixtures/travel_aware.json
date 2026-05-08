@@ -1,0 +1,34 @@
+{
+  "fixture": "travel_aware",
+  "description": "Worked example A from technical_spec.md §3.2 (Rohan Monday Brief). User in PG; quiz in LT-3 about 8 km away. Expected leave-by: 22 min travel + 15 min buffer => alert at 08:23.",
+  "tick_ts": "2026-05-07T07:45:00+05:30",
+  "events_today": [
+    {
+      "id": "e_12",
+      "title": "DSA Quiz",
+      "start": "2026-05-07T09:00:00+05:30",
+      "end": "2026-05-07T10:00:00+05:30",
+      "loc": "LT-3",
+      "loc_coords": {"lat": 30.354, "lon": 76.367},
+      "attendees": 2,
+      "mode": "cab",
+      "travel_min": 22
+    },
+    {
+      "id": "e_13",
+      "title": "Lunch with Anu",
+      "start": "2026-05-07T13:00:00+05:30",
+      "end": "2026-05-07T14:00:00+05:30",
+      "loc": "Hostel mess",
+      "attendees": 2
+    }
+  ],
+  "user_loc": {"lat": 30.300, "lon": 76.300},
+  "preferences": {"buffer_minutes": 15, "morning_brief_time": "07:45"},
+  "expected": {
+    "decision": "leave_by_alert",
+    "next_event_id": "e_12",
+    "travel_min": 22,
+    "leave_by": "2026-05-07T08:23:00+05:30"
+  }
+}

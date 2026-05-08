@@ -1,0 +1,6 @@
+{"fixture": "slack_thread", "description": "Slack thread with one actionable @you mention. Expected: SHOW_BRIEF, 1 urgent, 4 muted.", "expected": {"top_suggested_action": "SHOW_BRIEF", "urgent_count": 1, "muted_count": 4}}
+{"id": "n_sl01", "app_pkg": "com.Slack", "channel": "channel:#aura-dev", "sender_hash": "h_kabir", "preview": "lol same", "ts": "2026-05-07T15:02:00+05:30"}
+{"id": "n_sl02", "app_pkg": "com.Slack", "channel": "channel:#aura-dev", "sender_hash": "h_riya", "preview": "haha okay", "ts": "2026-05-07T15:02:30+05:30"}
+{"id": "n_sl03", "app_pkg": "com.Slack", "channel": "channel:#aura-dev", "sender_hash": "h_anu", "preview": "@you can you review the merge before standup tomorrow, urgent please", "ts": "2026-05-07T15:03:10+05:30"}
+{"id": "n_sl04", "app_pkg": "com.Slack", "channel": "channel:#aura-dev", "sender_hash": "h_manish", "preview": "lmao", "ts": "2026-05-07T15:03:50+05:30"}
+{"id": "n_sl05", "app_pkg": "com.Slack", "channel": "channel:#aura-dev", "sender_hash": "h_riya", "preview": "fr", "ts": "2026-05-07T15:04:15+05:30"}

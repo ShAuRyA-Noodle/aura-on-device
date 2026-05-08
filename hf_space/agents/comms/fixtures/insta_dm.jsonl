@@ -1,0 +1,2 @@
+{"fixture": "insta_dm", "description": "Single Instagram DM, social, low urgency. Expected: top_suggested_action=DO_NOTHING.", "expected": {"top_suggested_action": "DO_NOTHING", "urgent_count": 0, "muted_count": 1}}
+{"id": "n_ig01", "app_pkg": "com.instagram.android", "channel": "dm:h_mira", "sender_hash": "h_mira", "preview": "haha that reel was so cute lol", "ts": "2026-05-07T20:14:00+05:30"}

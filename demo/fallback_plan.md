@@ -54,7 +54,7 @@ Operator: Riya. Backup: Aarav.
 
 1. Open Terminal on the team's MacBook.
 2. ```bash
-   cd ~/galaxybrain/aura
+   cd "/Users/shauryapunj/Desktop/Samsung Hack/aura"
    bash web/run_local.sh
    ```
 3. Browser auto-opens `http://localhost:8080/index.html`.
@@ -80,7 +80,7 @@ extension blocks localhost. Switch to Tier 4.
 Operator: Aarav. Backup: Sid.
 
 1. Open Safari (avoids Chrome extension surprises).
-2. Navigate to `https://huggingface.co/spaces/galaxybrain/aura-demo`.
+2. Navigate to `https://huggingface.co/spaces/Shaurya-Noodle/Caramel_Coin`.
 3. Wait for the Space to wake (cold start ~25 s on free CPU tier).
 4. Click through the same 5 tabs as Tier 3, plus the Memory Graph tab.
 

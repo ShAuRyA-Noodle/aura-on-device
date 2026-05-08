@@ -1,7 +1,7 @@
 ---
 title: Aura — On-device proactive assistant
 emoji: 🌅
-colorFrom: orange
+colorFrom: red
 colorTo: gray
 sdk: gradio
 sdk_version: 4.44.0
@@ -44,8 +44,8 @@ python app.py
 
 ```bash
 huggingface-cli login
-git clone https://huggingface.co/spaces/galaxybrain/aura-demo
-cd aura-demo
+git clone https://huggingface.co/spaces/Shaurya-Noodle/Caramel_Coin
+cd Caramel_Coin
 cp -R ../aura/hf_space/* .
 # Make sure the agent stack is on the Python path. Two options:
 #   (a) git submodule add the aura/ repo as `aura/` and set PYTHONPATH in app.py

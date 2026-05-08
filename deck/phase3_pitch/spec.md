@@ -370,7 +370,7 @@ ready Monday.
 Names in Fraunces 56 pt; role label in Inter Tight 22 pt at 60% opacity;
 roll, dept, year, email in JetBrains Mono 16 pt. Bottom-left lockup:
 `Aura — Anticipate. Act. Stay quiet.`. Bottom-right small line:
-`Repo: github.com/galaxybrain/aura  /  Demo: aura.galaxy.brain/finals`.
+`Repo: github.com/ShAuRyA-Noodle/Combobulating  /  Demo: huggingface.co/spaces/Shaurya-Noodle/Caramel_Coin`.
 
 **BODY.** Shaurya Punj — ECE, Thapar. Shorya Gupta — CompE, Thapar. Aura
 ships.

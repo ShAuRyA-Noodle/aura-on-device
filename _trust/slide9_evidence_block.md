@@ -11,20 +11,23 @@ demo block). All URLs verbatim. The QR encodes the repo URL only.
 Repo
 github.com/ShAuRyA-Noodle/Combobulating
 
+Live Demo (synthetic data)
+huggingface.co/spaces/Shaurya-Noodle/Caramel_Coin
+
 Deck PDF
-deck/phase1_blueprint/aura_phase1_blueprint_v1.pdf
+deck/phase1_blueprint/build/aura_phase1_blueprint_v1.pdf
 
 Demo video (Phase 2)
-deck/phase3_pitch/demo.mp4
-[TEAM TO VERIFY: replace with raw GitHub URL once committed]
+[TEAM TO VERIFY: link added once 90s video filmed]
 
 Threat model
 docs/threat_model.md
-[TEAM TO VERIFY: file does not yet exist; create from technical_spec §11]
 
 ADR index
 docs/decisions/README.md
-[TEAM TO VERIFY: index file does not yet exist; create at Phase 1 freeze]
+
+Plan completion audit
+PLAN_COMPLETION_AUDIT.md (root)
 
 README
 README.md

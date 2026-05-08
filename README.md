@@ -6,12 +6,12 @@ Galaxy Brain — Shaurya Punj, Shorya Gupta. Thapar Institute of Engineering and
 Samsung EnnovateX 2026 submission.
 
 [![Free-tier-only — Total Cost ₹2,000](https://img.shields.io/badge/Build-%E2%82%B92%2C000%20total-FF5B2E)](docs/decisions/ADR-0011-no-apple-developer-program.md)
-[![Live Demo — HuggingFace Space](https://img.shields.io/badge/Live%20Demo-HuggingFace%20Space-orange)](https://huggingface.co/spaces/galaxybrain/aura)
+[![Live Demo — Caramel Coin](https://img.shields.io/badge/Live%20Demo-Caramel__Coin-FF5B2E)](https://huggingface.co/spaces/Shaurya-Noodle/Caramel_Coin)
 [![Audit — AUDIT_REPORT.md](https://img.shields.io/badge/Audit-AUDIT__REPORT.md-green)](AUDIT_REPORT.md)
 [![Audit — PLAN_COMPLETION_AUDIT.md](https://img.shields.io/badge/Audit-PLAN__COMPLETION__AUDIT.md-green)](../PLAN_COMPLETION_AUDIT.md)
 
-> Live Demo URL is a placeholder until the HuggingFace Space deploys
-> from `aura/hf_space/`. Update once the Space goes live.
+> Live Demo deployed at https://huggingface.co/spaces/Shaurya-Noodle/Caramel_Coin
+> (Gradio app, free CPU tier, synthetic-data showcase only — no user PII).
 
 ---
 
@@ -85,8 +85,8 @@ docs/         plan, architecture, threat model, runbook, references, glossary, p
 phase2/       Phase 2 deliverable scaffolds (README, checklist, 5 deliverables)
 phase3/       Phase 3 finals scaffolds (README, travel, stage kit, judges, follow-ups, contingency)
 e2e/          End-to-end pytest scaffolds (Monday Brief, Quiet Group Chat)
-hf_space/     HuggingFace Space deployment target (placeholder)
-web/          Public site (placeholder)
+hf_space/     Live HuggingFace Space — Caramel Coin (deployed)
+web/          Local FastAPI + React fallback for venue-stage demo
 _trust/       Press kit, social posts, slide-9 evidence block, risk-recovery brief, site copy
 ```
 
