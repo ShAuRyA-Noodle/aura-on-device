@@ -1,7 +1,7 @@
 # HuggingFace Spaces — Aura interactive demo (CPU tier).
 # Lightweight only: no torch, no mlx, no llama.cpp, no sentence-transformers.
 
-gradio==4.44.0
+gradio==6.7.0
 # huggingface_hub<1.0 because gradio 4.44 imports HfFolder from the legacy
 # location, removed in huggingface_hub 1.0.
 huggingface_hub<1.0
