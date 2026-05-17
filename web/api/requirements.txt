@@ -18,7 +18,7 @@ pytest>=8.0
 pytest-asyncio>=0.23
 
 # Optional: QR code rendering for `aura serve --show-token`.
-qrcode>=7.4
+qrcode>=8.2
 
 # Optional: load testing.
 locust>=2.20
