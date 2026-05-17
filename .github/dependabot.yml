@@ -1,0 +1,53 @@
+version: 2
+updates:
+  - package-ecosystem: pip
+    directory: /agents/core
+    schedule:
+      interval: weekly
+      day: monday
+    groups:
+      minor-patch:
+        update-types: [minor, patch]
+    open-pull-requests-limit: 5
+
+  - package-ecosystem: pip
+    directory: /web/api
+    schedule:
+      interval: weekly
+      day: monday
+    groups:
+      minor-patch:
+        update-types: [minor, patch]
+    open-pull-requests-limit: 5
+
+  - package-ecosystem: pip
+    directory: /hf_space
+    schedule:
+      interval: weekly
+      day: monday
+    groups:
+      minor-patch:
+        update-types: [minor, patch]
+    open-pull-requests-limit: 5
+
+  - package-ecosystem: pip
+    directory: /pilot/analysis
+    schedule:
+      interval: weekly
+      day: monday
+    groups:
+      minor-patch:
+        update-types: [minor, patch]
+    open-pull-requests-limit: 5
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+
+  - package-ecosystem: docker
+    directory: /hf_space
+    schedule:
+      interval: weekly
+      day: monday

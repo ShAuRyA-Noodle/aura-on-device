@@ -161,11 +161,27 @@ app = FastAPI(
     lifespan=lifespan,
 )
 
+# CORS — default to the local LAN origins the iOS client uses. Set AURA_CORS
+# to a comma-separated allowlist for staging / demo deploys. A wildcard ("*")
+# is rejected so an operator can't accidentally open the daemon to the world.
+_cors_env = os.environ.get("AURA_CORS", "").strip()
+if _cors_env == "*":
+    raise RuntimeError(
+        "AURA_CORS=* is not allowed. Provide an explicit comma-separated origin "
+        "allowlist (e.g. http://localhost:3000,http://192.168.1.20:3000)."
+    )
+_cors_origins = (
+    [o.strip() for o in _cors_env.split(",") if o.strip()]
+    if _cors_env
+    else ["http://localhost:3000", "http://127.0.0.1:3000"]
+)
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=os.environ.get("AURA_CORS", "*").split(","),
-    allow_methods=["*"],
-    allow_headers=["*"],
+    allow_origins=_cors_origins,
+    allow_credentials=True,
+    allow_methods=["GET", "POST", "DELETE", "OPTIONS"],
+    allow_headers=["Authorization", "Content-Type", "X-Aura-Token"],
+    max_age=600,
 )
 
 install_middleware(app)

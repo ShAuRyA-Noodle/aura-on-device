@@ -66,6 +66,19 @@ def serve(
     log_level: str = typer.Option("info"),
 ) -> None:
     """Start the FastAPI daemon. Token is written to ~/.aura/local_auth_token."""
+    # Refuse the unsafe combo of disabled auth + non-loopback bind. The local
+    # demo path is `127.0.0.1` with auth on; explicitly opening the daemon to
+    # the LAN without a token would let any peer on the network drive the
+    # agent stack, hit Gemini quota, and read every memory node.
+    auth_off = os.environ.get("AURA_DISABLE_AUTH", "").strip() in ("1", "true", "yes")
+    if auth_off and host not in ("127.0.0.1", "::1", "localhost"):
+        typer.secho(
+            f"refusing to serve: AURA_DISABLE_AUTH=1 with bind={host} would expose the "
+            "daemon on the LAN without a token. Unset AURA_DISABLE_AUTH or bind to 127.0.0.1.",
+            fg=typer.colors.RED,
+            err=True,
+        )
+        raise typer.Exit(code=2)
     token = init_auth()
     lan_ip = _resolve_lan_ip() if host in ("0.0.0.0", "::") else host
     base = f"http://{lan_ip}:{port}"

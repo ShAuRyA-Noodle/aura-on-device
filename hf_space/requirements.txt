@@ -1,14 +1,12 @@
 # HuggingFace Spaces — Aura interactive demo (CPU tier).
 # Lightweight only: no torch, no mlx, no llama.cpp, no sentence-transformers.
 
-gradio==4.44.0
-# huggingface_hub<1.0 because gradio 4.44 imports HfFolder from the legacy
-# location, removed in huggingface_hub 1.0.
-huggingface_hub<1.0
-# starlette<1.0 because gradio 4.44 + starlette 1.0.0 collide in jinja2
-# template rendering. Pin to last 0.x release that gradio 4.44 was tested with.
-starlette<1.0
-fastapi<0.130
+# Gradio 6.x is required to clear the Dependabot advisory chain; the
+# `huggingface_hub` + `starlette` pins below moved together with it.
+gradio>=6.6.0
+huggingface_hub>=1.0
+starlette>=1.0
+fastapi>=0.130
 pydantic==2.7.4
 jsonschema==4.23.0
 python-dateutil==2.9.0.post0
