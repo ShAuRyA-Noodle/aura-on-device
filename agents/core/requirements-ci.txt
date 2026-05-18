@@ -19,6 +19,6 @@ python-dateutil==2.9.0.post0
 # statistical helpers in the orchestrator (scipy.stats).
 numpy>=1.26
 scikit-learn>=1.4
-scipy>=1.11
+scipy>=1.17.1
 xgboost>=2.0
 deepdiff>=7.0
