@@ -4,7 +4,7 @@
 # Gradio 6.x is required to clear the Dependabot advisory chain; the
 # `huggingface_hub` + `starlette` pins below moved together with it.
 gradio>=6.6.0
-huggingface_hub>=1.0
+huggingface_hub>=1.18.0
 starlette>=1.0
 fastapi>=0.130
 pydantic==2.13.4
