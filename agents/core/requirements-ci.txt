@@ -17,7 +17,7 @@ python-dateutil==2.9.0.post0
 # agents/comms/classifier.py (numpy + scikit-learn for the LR baseline),
 # agents/wellness/load_score.py (xgboost), and a couple of small
 # statistical helpers in the orchestrator (scipy.stats).
-numpy>=1.26
+numpy>=2.4.6
 scikit-learn>=1.4
 scipy>=1.11
 xgboost>=2.0
