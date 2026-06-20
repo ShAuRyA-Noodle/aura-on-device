@@ -16,6 +16,7 @@ Key invariants
 
 import asyncio
 import os
+import secrets
 
 # The deterministic Python orchestrator handles agents whose ``name`` attr is
 # None (e.g. the dataclass-based FinanceAgent). The LangGraph build assumes
@@ -1009,7 +1010,9 @@ async def ws_trace(websocket: WebSocket, token: Optional[str] = Query(default=No
             await websocket.close(code=1011, reason="auth not initialised")
             return
         candidate = token or websocket.headers.get("authorization", "").removeprefix("Bearer ").strip()
-        if candidate != expected:
+        # Constant-time comparison to match require_token / require_token_ws and
+        # avoid leaking the session token through response-timing side channels.
+        if not candidate or not secrets.compare_digest(candidate, expected):
             await websocket.close(code=4401, reason="invalid token")
             return
     await websocket.accept()
