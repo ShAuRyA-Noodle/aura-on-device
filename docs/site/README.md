@@ -1,9 +1,9 @@
-# Aura — GitHub Pages site
+# Aura GitHub Pages site
 
 Static landing page for project Aura. Plain HTML + CSS, no Jekyll, no build step.
 
-Live (target): https://ShAuRyA-Noodle.github.io/Combobulating
-Live (current Pages config): https://shaurya-noodle.github.io/Combobulating/aura/docs/site/
+Live (target): https://ShAuRyA-Noodle.github.io/aura-on-device
+Live (current Pages config): https://shaurya-noodle.github.io/aura-on-device/docs/site/
 
 > Note: the GitHub Pages REST API only accepts `/` or `/docs` as a source
 > path; `/docs/site` is rejected with HTTP 422. Pages was therefore enabled
@@ -12,12 +12,12 @@ Live (current Pages config): https://shaurya-noodle.github.io/Combobulating/aura
 > landing page, do **one** of the following manual steps:
 >
 > 1. In the GitHub UI at
->    `https://github.com/ShAuRyA-Noodle/Combobulating/settings/pages`,
+>    `https://github.com/ShAuRyA-Noodle/aura-on-device/settings/pages`,
 >    switch the source to "GitHub Actions" and add a workflow that uploads
 >    `aura/docs/site/` as the Pages artifact (recommended).
 > 2. Or copy / symlink the contents of `aura/docs/site/` to repo root
 >    `docs/` and re-run
->    `gh api -X PUT /repos/ShAuRyA-Noodle/Combobulating/pages -f build_type=legacy -F 'source[branch]=main' -F 'source[path]=/docs'`.
+>    `gh api -X PUT /repos/ShAuRyA-Noodle/aura-on-device/pages -f build_type=legacy -F 'source[branch]=main' -F 'source[path]=/docs'`.
 
 ## Files
 
@@ -57,13 +57,13 @@ git commit -m "site: ship landing page"
 git push origin main
 
 # one-time enable (already run):
-gh repo edit ShAuRyA-Noodle/Combobulating --enable-pages
-gh api -X PATCH /repos/ShAuRyA-Noodle/Combobulating/pages \
+gh repo edit ShAuRyA-Noodle/aura-on-device --enable-pages
+gh api -X PATCH /repos/ShAuRyA-Noodle/aura-on-device/pages \
   -f source.branch=main -f source.path=/docs/site
 ```
 
 If `gh api` rejects the path setting, set it manually at
-`https://github.com/ShAuRyA-Noodle/Combobulating/settings/pages`:
+`https://github.com/ShAuRyA-Noodle/aura-on-device/settings/pages`:
 Source = "Deploy from a branch", Branch = `main`, Folder = `/docs/site`.
 
 ## Constraints honoured

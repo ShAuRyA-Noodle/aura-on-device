@@ -91,10 +91,10 @@ _LITE_MODE = not all(_LITE_FLAGS.values())
 # Banner / hero / footer
 # ---------------------------------------------------------------------------
 
-_REPO_URL = "https://github.com/ShAuRyA-Noodle/Combobulating"
+_REPO_URL = "https://github.com/ShAuRyA-Noodle/aura-on-device"
 _README_URL = f"{_REPO_URL}/blob/main/README.md"
-_DECK_URL = f"{_REPO_URL}/blob/main/aura/deck/phase1_deck.pdf"
-_THREAT_URL = f"{_REPO_URL}/blob/main/aura/docs/threat_model.md"
+_DECK_URL = f"{_REPO_URL}/blob/main/deck/phase1_deck.pdf"
+_THREAT_URL = f"{_REPO_URL}/blob/main/docs/threat_model.md"
 
 _LITE_BADGE = (
     '<span class="aura-lite-badge">Running in lite mode</span>' if _LITE_MODE else ""
@@ -113,12 +113,12 @@ HERO_HTML = f"""
     </div>
   </div>
   <img class="aura-hero-image"
-       src="https://raw.githubusercontent.com/ShAuRyA-Noodle/Combobulating/main/aura/img/aura_03_screen_reasoning_trace_drawer.png"
+       src="https://raw.githubusercontent.com/ShAuRyA-Noodle/aura-on-device/main/img/aura_03_screen_reasoning_trace_drawer.png"
        alt="Aura reasoning trace drawer signature visual"
        onerror="this.style.display='none'"/>
   <div class="aura-privacy">
     Demo runs on synthetic + your-pasted data. Nothing is logged.
-    Open-source: <a href="{_REPO_URL}" target="_blank" rel="noreferrer">github.com/ShAuRyA-Noodle/Combobulating</a>.
+    Open-source: <a href="{_REPO_URL}" target="_blank" rel="noreferrer">github.com/ShAuRyA-Noodle/aura-on-device</a>.
   </div>
   <div class="aura-not-callout">
     <strong>What this is NOT</strong>

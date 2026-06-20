@@ -51,10 +51,10 @@ Three layers — Sense, Intelligence, Experience. Four specialist agents (Comms,
 
 ## Links
 
-- Repository — github.com/ShAuRyA-Noodle/Combobulating
+- Repository — github.com/ShAuRyA-Noodle/aura-on-device
 - Live demo — huggingface.co/spaces/Shaurya-Noodle/Caramel_Coin
-- Site — shaurya-noodle.github.io/Combobulating
-- Install guide — shaurya-noodle.github.io/Combobulating/install.html
+- Site — shaurya-noodle.github.io/aura-on-device
+- Install guide — shaurya-noodle.github.io/aura-on-device/install.html
 - Press kit — `press_kit/` in the repo, or run `bash press_kit/build_press_kit.sh`
 - Security disclosure — `/.well-known/security.txt`
 - Citation — `CITATION.cff` in the repo

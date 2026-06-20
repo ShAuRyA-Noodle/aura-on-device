@@ -6,23 +6,23 @@
 
 An on-device empathetic intelligence layer for Indian Gen Z and Gen Alpha. Four specialist agents, one Phi-3-mini orchestrator, a glass-box Reasoning Trace, and a memory graph the user owns.
 
-[![build](https://img.shields.io/github/actions/workflow/status/ShAuRyA-Noodle/Combobulating/ci.yml?branch=main&label=build)](https://github.com/ShAuRyA-Noodle/Combobulating/actions)
+[![build](https://img.shields.io/github/actions/workflow/status/ShAuRyA-Noodle/aura-on-device/ci.yml?branch=main&label=build)](https://github.com/ShAuRyA-Noodle/aura-on-device/actions)
 [![hf space](https://img.shields.io/badge/%F0%9F%A4%97%20space-Caramel__Coin-FF5B2E)](https://huggingface.co/spaces/Shaurya-Noodle/Caramel_Coin)
-[![pages](https://img.shields.io/github/deployments/ShAuRyA-Noodle/Combobulating/github-pages?label=pages)](https://shaurya-noodle.github.io/Combobulating/)
-[![license](https://img.shields.io/github/license/ShAuRyA-Noodle/Combobulating)](LICENSE)
-[![last commit](https://img.shields.io/github/last-commit/ShAuRyA-Noodle/Combobulating)](https://github.com/ShAuRyA-Noodle/Combobulating/commits/main)
-[![contributors](https://img.shields.io/github/contributors/ShAuRyA-Noodle/Combobulating)](https://github.com/ShAuRyA-Noodle/Combobulating/graphs/contributors)
-[![release](https://img.shields.io/github/v/release/ShAuRyA-Noodle/Combobulating?include_prereleases)](https://github.com/ShAuRyA-Noodle/Combobulating/releases)
+[![pages](https://img.shields.io/github/deployments/ShAuRyA-Noodle/aura-on-device/github-pages?label=pages)](https://shaurya-noodle.github.io/aura-on-device/)
+[![license](https://img.shields.io/github/license/ShAuRyA-Noodle/aura-on-device)](LICENSE)
+[![last commit](https://img.shields.io/github/last-commit/ShAuRyA-Noodle/aura-on-device)](https://github.com/ShAuRyA-Noodle/aura-on-device/commits/main)
+[![contributors](https://img.shields.io/github/contributors/ShAuRyA-Noodle/aura-on-device)](https://github.com/ShAuRyA-Noodle/aura-on-device/graphs/contributors)
+[![release](https://img.shields.io/github/v/release/ShAuRyA-Noodle/aura-on-device?include_prereleases)](https://github.com/ShAuRyA-Noodle/aura-on-device/releases)
 
 </div>
 
 ---
 
-Aura is a continuous, on-device orchestrator that watches the signals already on a Gen Z phone — notifications, calendar events, UPI SMS, Gmail receipts, HRV, sleep — and turns the four that matter into one quiet action a few times a day. Nothing leaves the device unless the user presses export. Every action ships with a Reasoning Trace the user can read, edit, or reject. Built by Galaxy Brain at Thapar Institute for Samsung EnnovateX 2026, on a total budget of two thousand rupees.
+Aura is a continuous, on-device orchestrator that watches the signals already on a Gen Z phone (notifications, calendar events, UPI SMS, Gmail receipts, HRV, sleep) and turns the four that matter into one quiet action a few times a day. Nothing leaves the device unless the user presses export. Every action ships with a Reasoning Trace the user can read, edit, or reject. Built by Galaxy Brain at Thapar Institute for Samsung EnnovateX 2026, on a total budget of two thousand rupees.
 
 ## Why Aura
 
-The average Gen Z phone receives 237 notifications a day. Four of them matter. The other 233 are a tax on attention that nobody chose to pay. Existing assistants — Gemini Live, Apple Intelligence, Bixby, Pixel Assistant, Rabbit, Humane — start when the user starts. None of them see HRV, none read the WhatsApp project group, none parse a UPI SMS, and none expose a step-by-step trace the user can audit. Aura closes that loop on the device, with five defended product wedges shipped together.
+The average Gen Z phone receives 237 notifications a day. Four of them matter. The other 233 are a tax on attention that nobody chose to pay. Existing assistants, from Gemini Live and Apple Intelligence to Bixby, Pixel Assistant, Rabbit, and Humane, start when the user starts. None of them see HRV, none read the WhatsApp project group, none parse a UPI SMS, and none expose a step-by-step trace the user can audit. Aura closes that loop on the device, with five defended product wedges shipped together.
 
 ## The five wedges
 
@@ -34,16 +34,16 @@ The average Gen Z phone receives 237 notifications a day. Four of them matter. T
 
 UPI parser, IRCTC PNR lookup, Zomato and Swiggy receipt extraction, Blinkit delivery windows, BMTC commute, Gmail thread reconciliation. Twelve bank SMS templates on the hot path.
 
-![Spend Mirror](https://raw.githubusercontent.com/ShAuRyA-Noodle/Combobulating/main/aura/img/aura_05_screen_spend_mirror.png)
+![Spend Mirror](https://raw.githubusercontent.com/ShAuRyA-Noodle/aura-on-device/main/img/aura_05_screen_spend_mirror.png)
 
 </td>
 <td width="50%">
 
 **2. Closed biometric loop**
 
-HRV from HealthKit or Health Connect feeds an XGBoost Load Score that triggers a single quiet intervention — mute, breathe, nap.
+HRV from HealthKit or Health Connect feeds an XGBoost Load Score that triggers a single quiet intervention: mute, breathe, nap.
 
-![Load Score](https://raw.githubusercontent.com/ShAuRyA-Noodle/Combobulating/main/aura/img/aura_07_screen_load_score_panel.png)
+![Load Score](https://raw.githubusercontent.com/ShAuRyA-Noodle/aura-on-device/main/img/aura_07_screen_load_score_panel.png)
 
 </td>
 </tr>
@@ -54,7 +54,7 @@ HRV from HealthKit or Health Connect feeds an XGBoost Load Score that triggers a
 
 Every action emits trigger, signals, candidates, ranking, chosen, rationale, and outcome. Inspect, edit, reject, or rewind any decision.
 
-![Reasoning Trace](https://raw.githubusercontent.com/ShAuRyA-Noodle/Combobulating/main/aura/img/aura_03_screen_reasoning_trace_drawer.png)
+![Reasoning Trace](https://raw.githubusercontent.com/ShAuRyA-Noodle/aura-on-device/main/img/aura_03_screen_reasoning_trace_drawer.png)
 
 </td>
 <td width="50%">
@@ -63,7 +63,7 @@ Every action emits trigger, signals, candidates, ranking, chosen, rationale, and
 
 A daily Silence Budget caps proactive surfaces at three. Useful taps refund a token. The cap is a hard floor on a learned cost function, not the function itself.
 
-![Silence Budget](https://raw.githubusercontent.com/ShAuRyA-Noodle/Combobulating/main/aura/img/aura_08_screen_silence_budget_state.png)
+![Silence Budget](https://raw.githubusercontent.com/ShAuRyA-Noodle/aura-on-device/main/img/aura_08_screen_silence_budget_state.png)
 
 </td>
 </tr>
@@ -74,7 +74,7 @@ A daily Silence Budget caps proactive surfaces at three. Useful taps refund a to
 
 SQLite plus sqlite-vss, encrypted at rest with Secure Enclave or Keystore. Nine node types, eight edge types, one-tap export, time-range delete, panic-wipe gesture, daily Merkle root for audit.
 
-![Memory Tab](https://raw.githubusercontent.com/ShAuRyA-Noodle/Combobulating/main/aura/img/aura_04_screen_memory_tab.png)
+![Memory Tab](https://raw.githubusercontent.com/ShAuRyA-Noodle/aura-on-device/main/img/aura_04_screen_memory_tab.png)
 
 </td>
 </tr>
@@ -84,7 +84,7 @@ SQLite plus sqlite-vss, encrypted at rest with Secure Enclave or Keystore. Nine 
 
 Three layers. Four agents. One orchestrator.
 
-![Three-layer architecture](https://raw.githubusercontent.com/ShAuRyA-Noodle/Combobulating/main/aura/img/aura_12_arch_3_layer_diagram.png)
+![Three-layer architecture](https://raw.githubusercontent.com/ShAuRyA-Noodle/aura-on-device/main/img/aura_12_arch_3_layer_diagram.png)
 
 - **Sense.** Reads on-device signals only. iOS: HealthKit, EventKit, App Intents, Background Tasks. Android: UsageStatsManager, NotificationListenerService, Health Connect, Calendar Provider, custom IME for typing-entropy buckets (entropy only, never characters).
 - **Intelligence.** Four agents and one Phi-3-mini orchestrator. CommsAgent and FinanceAgent run Gemma 2B Q4 with LoRA adapters. CalendarAgent runs a rule engine plus Phi-3-mini for prose. WellnessAgent runs an XGBoost Load Score plus Phi-3-mini. The orchestrator is a deterministic LangGraph state machine across seven named states with typed JSON tool calls.
@@ -94,7 +94,7 @@ Full document at [`docs/architecture.md`](docs/architecture.md). Eleven Architec
 
 ## Get the demo
 
-A Gradio Space runs a synthetic-data showcase of the orchestrator and Reasoning Trace on the free CPU tier — no PII, no install. Try it here.
+A Gradio Space runs a synthetic-data showcase of the orchestrator and Reasoning Trace on the free CPU tier, with no PII and no install. Try it here.
 
 [**Caramel_Coin on HuggingFace Spaces**](https://huggingface.co/spaces/Shaurya-Noodle/Caramel_Coin)
 
@@ -103,8 +103,8 @@ For the iPhone build, see [`docs/site/install.html`](docs/site/install.html). Th
 ## Get the source
 
 ```bash
-git clone https://github.com/ShAuRyA-Noodle/Combobulating.git
-cd Combobulating/aura
+git clone https://github.com/ShAuRyA-Noodle/aura-on-device.git
+cd aura-on-device
 
 # Python orchestrator + agents
 python -m venv .venv && source .venv/bin/activate
@@ -134,7 +134,7 @@ A Wizard-of-Oz pilot at Thapar campus, designed for Phase 2.
 
 Raw CSV publishes in the repo with the Phase 2 cut.
 
-## Privacy — zero-cloud promise
+## Privacy: zero-cloud promise
 
 1. Your data lives on your device.
 2. Nothing leaves the device unless you press export.
@@ -148,10 +148,10 @@ Each promise is tested against the [threat model](docs/threat_model.md). Five na
 
 Two undergraduates at Thapar Institute of Engineering and Technology, Patiala. We are the user we design for.
 
-![Team Galaxy Brain](https://raw.githubusercontent.com/ShAuRyA-Noodle/Combobulating/main/aura/img/aura_22_press_kit_team_portrait.png)
+![Team Galaxy Brain](https://raw.githubusercontent.com/ShAuRyA-Noodle/aura-on-device/main/img/aura_22_press_kit_team_portrait.png)
 
-- **Shaurya Punj** — third-year ECE. Architecture, Wellness agent, KPI study, pitch. Roll 102486013. spunj_be23@thapar.edu.
-- **Shorya Gupta** — second-year Computer Engineering. iOS app, Comms / Calendar / Finance agents, memory graph, audit log. Roll 1024037521. sgupta9_be24@thapar.edu.
+- **Shaurya Punj.** Third-year ECE. Architecture, Wellness agent, KPI study, pitch. Roll 102486013. spunj_be23@thapar.edu.
+- **Shorya Gupta.** Second-year Computer Engineering. iOS app, Comms / Calendar / Finance agents, memory graph, audit log. Roll 1024037521. sgupta9_be24@thapar.edu.
 
 ## License
 
@@ -166,7 +166,7 @@ MIT. See [`LICENSE`](LICENSE).
   year         = {2026},
   version      = {1.0.0},
   publisher    = {Galaxy Brain, Thapar Institute of Engineering and Technology},
-  url          = {https://github.com/ShAuRyA-Noodle/Combobulating},
+  url          = {https://github.com/ShAuRyA-Noodle/aura-on-device},
   note         = {Samsung EnnovateX 2026}
 }
 ```

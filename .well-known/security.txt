@@ -5,15 +5,15 @@
 Contact: mailto:spunj_be23@thapar.edu
 Contact: mailto:sgupta9_be24@thapar.edu
 Expires: 2027-05-07T00:00:00.000Z
-Encryption: https://github.com/ShAuRyA-Noodle/Combobulating/blob/main/aura/.well-known/pgp-key.asc
+Encryption: https://github.com/ShAuRyA-Noodle/aura-on-device/blob/main/.well-known/pgp-key.asc
 Preferred-Languages: en, hi
-Canonical: https://shaurya-noodle.github.io/Combobulating/.well-known/security.txt
-Policy: https://github.com/ShAuRyA-Noodle/Combobulating/blob/main/aura/SECURITY.md
-Acknowledgments: https://github.com/ShAuRyA-Noodle/Combobulating/blob/main/aura/SECURITY.md#acknowledgments
-Hiring: https://shaurya-noodle.github.io/Combobulating/about.html
+Canonical: https://shaurya-noodle.github.io/aura-on-device/.well-known/security.txt
+Policy: https://github.com/ShAuRyA-Noodle/aura-on-device/blob/main/SECURITY.md
+Acknowledgments: https://github.com/ShAuRyA-Noodle/aura-on-device/blob/main/SECURITY.md#acknowledgments
+Hiring: https://shaurya-noodle.github.io/aura-on-device/about.html
 
 # Threat model:
-# https://github.com/ShAuRyA-Noodle/Combobulating/blob/main/aura/docs/threat_model.md
+# https://github.com/ShAuRyA-Noodle/aura-on-device/blob/main/docs/threat_model.md
 #
 # Please report on-device privacy issues, panic-wipe bypass paths, audit log
 # tamper paths, OAuth-token leakage, and SQLCipher key extraction first.

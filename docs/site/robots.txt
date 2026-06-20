@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://shaurya-noodle.github.io/Combobulating/sitemap.xml
+Sitemap: https://shaurya-noodle.github.io/aura-on-device/sitemap.xml

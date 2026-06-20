@@ -91,7 +91,7 @@ cat > "${STAGING}/screencast.txt" <<'EOF'
 Screencast placeholder.
 
 The 90-second product screencast will live at:
-  https://shaurya-noodle.github.io/Combobulating/screencast.mp4
+  https://shaurya-noodle.github.io/aura-on-device/screencast.mp4
 
 It is recorded against the Wizard-of-Oz pilot rig on iPhone 13 (iOS 17),
 following the storyboard in demo/storyboard_90s.md.
@@ -129,9 +129,9 @@ Contact
 -------
 Shaurya Punj — spunj_be23@thapar.edu
 Shorya Gupta — sgupta9_be24@thapar.edu
-Repository    — https://github.com/ShAuRyA-Noodle/Combobulating
+Repository    — https://github.com/ShAuRyA-Noodle/aura-on-device
 Live demo     — https://huggingface.co/spaces/Shaurya-Noodle/Caramel_Coin
-Site          — https://shaurya-noodle.github.io/Combobulating
+Site          — https://shaurya-noodle.github.io/aura-on-device
 
 License
 -------

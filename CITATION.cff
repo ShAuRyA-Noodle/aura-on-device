@@ -5,8 +5,8 @@ type: software
 version: "1.0.0"
 date-released: "2026-05-07"
 license: MIT
-repository-code: "https://github.com/ShAuRyA-Noodle/Combobulating"
-url: "https://shaurya-noodle.github.io/Combobulating"
+repository-code: "https://github.com/ShAuRyA-Noodle/aura-on-device"
+url: "https://shaurya-noodle.github.io/aura-on-device"
 abstract: >-
   Aura is a multi-agent on-device empathetic intelligence layer for Indian
   Gen Z and Gen Alpha smartphone users. Four specialist agents — Communications,
@@ -52,6 +52,6 @@ preferred-citation:
       given-names: Shorya
   version: "1.0.0"
   year: 2026
-  url: "https://github.com/ShAuRyA-Noodle/Combobulating"
+  url: "https://github.com/ShAuRyA-Noodle/aura-on-device"
   license: MIT
   notes: "Samsung EnnovateX 2026. Galaxy Brain, Thapar Institute of Engineering and Technology."
