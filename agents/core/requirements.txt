@@ -4,7 +4,7 @@
 # here so CI runs on Linux without forcing Metal.
 
 pydantic==2.13.4
-langgraph>=1.0.10
+langgraph>=1.2.6
 langchain-core>=0.3.85
 jsonschema==4.26.0
 pytest>=8.3.3
