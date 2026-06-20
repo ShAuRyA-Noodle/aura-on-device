@@ -2,7 +2,7 @@
 # Production-grade Mac-side daemon for the iPhone client.
 
 fastapi>=0.115
-uvicorn[standard]>=0.30
+uvicorn[standard]>=0.49.0
 pydantic>=2.7
 structlog>=24.0
 slowapi>=0.1.9
