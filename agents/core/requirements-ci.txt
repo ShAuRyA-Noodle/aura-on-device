@@ -21,4 +21,4 @@ numpy>=1.26
 scikit-learn>=1.4
 scipy>=1.11
 xgboost>=2.0
-deepdiff>=7.0
+deepdiff>=9.1.0
