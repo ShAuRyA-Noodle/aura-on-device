@@ -20,5 +20,5 @@ python-dateutil==2.9.0.post0
 numpy>=2.4.6
 scikit-learn>=1.4
 scipy>=1.11
-xgboost>=2.0
+xgboost>=3.3.0
 deepdiff>=9.1.0
