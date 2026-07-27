@@ -9,8 +9,8 @@ langchain-core>=0.3.85
 jsonschema==4.26.0
 pytest>=8.3.3
 pytest-asyncio>=0.24.0
-sentence-transformers==5.6.0
+sentence-transformers==5.6.1
 transformers>=5.12.1
 peft==0.19.1
-llama-cpp-python==0.3.23
+llama-cpp-python==0.3.34
 python-dateutil==2.9.0.post0
