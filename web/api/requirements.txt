@@ -8,7 +8,7 @@ structlog>=26.1.0
 slowapi>=0.1.9
 prometheus-client>=0.20
 typer>=0.26.7
-websockets>=12.0
+websockets>=17.1
 jsonschema>=4.23
 python-dateutil>=2.9
 
