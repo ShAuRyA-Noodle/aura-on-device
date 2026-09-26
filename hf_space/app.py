@@ -1211,8 +1211,6 @@ def build_app() -> gr.Blocks:
     """Build and return the Gradio Blocks app. Exposed for tests / CI."""
     with gr.Blocks(
         title="Aura — On-device proactive assistant (interactive demo)",
-        css=CUSTOM_CSS,
-        theme=_aura_theme(),
     ) as demo:
         gr.HTML(HERO_HTML)
 
@@ -1391,6 +1389,8 @@ def main() -> None:
         server_name=os.environ.get("GRADIO_SERVER_NAME", "0.0.0.0"),
         server_port=int(os.environ.get("GRADIO_SERVER_PORT", "7860")),
         share=False,
+        css=CUSTOM_CSS,
+        theme=_aura_theme(),
     )
 
 
