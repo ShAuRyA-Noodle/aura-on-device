@@ -1,18 +1,11 @@
 [tool.pytest.ini_options]
 minversion = "7.0"
-addopts = "-q --tb=short"
+addopts = "-q --tb=short --import-mode=importlib"
 testpaths = ["agents", "orchestrator", "memory", "e2e"]
 python_files = ["test_*.py", "*_test.py"]
 python_classes = ["Test*"]
 python_functions = ["test_*"]
-
-# importmode=importlib bypasses the legacy import path that conflicts with
-# Python's stdlib `calendar` module when our agents/calendar/ tests are
-# collected alongside other agent dirs.
-[tool.pytest.ini_options.markers]
-slow = "marks tests as slow (deselect with -m 'not slow')"
-
-[tool.pytest]
+markers = ["slow: marks tests as slow (deselect with -m 'not slow')"]
 filterwarnings = [
     "ignore::DeprecationWarning",
     "ignore::PendingDeprecationWarning",
