@@ -1,4 +1,6 @@
 version: 2
+# Version updates share one PR per directory for minor and patch releases.
+# Major updates and security updates stay separate for focused review.
 updates:
   - package-ecosystem: pip
     directory: /agents/core
@@ -9,6 +11,7 @@ updates:
       compatible-updates:
         applies-to: version-updates
         patterns: ["*"]
+        update-types: [minor, patch]
     # Python 3.11 remains in CI and cannot install these release lines.
     ignore:
       - dependency-name: numpy
@@ -28,6 +31,7 @@ updates:
       compatible-updates:
         applies-to: version-updates
         patterns: ["*"]
+        update-types: [minor, patch]
     open-pull-requests-limit: 5
 
   - package-ecosystem: pip
@@ -39,6 +43,7 @@ updates:
       compatible-updates:
         applies-to: version-updates
         patterns: ["*"]
+        update-types: [minor, patch]
     open-pull-requests-limit: 5
 
   - package-ecosystem: pip
@@ -50,6 +55,7 @@ updates:
       compatible-updates:
         applies-to: version-updates
         patterns: ["*"]
+        update-types: [minor, patch]
     ignore:
       - dependency-name: numpy
         versions: [">=2.5.0"]
@@ -64,6 +70,7 @@ updates:
       actions-updates:
         applies-to: version-updates
         patterns: ["*"]
+        update-types: [minor, patch]
 
   - package-ecosystem: docker
     directory: /hf_space
