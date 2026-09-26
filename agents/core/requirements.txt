@@ -3,7 +3,7 @@
 # Note: heavy ML deps (mlx, mlx-lm) are dev-only on Apple Silicon — not pinned
 # here so CI runs on Linux without forcing Metal.
 
-pydantic==2.13.4
+pydantic==2.13.5
 langgraph>=1.2.6
 langchain-core>=0.3.85
 jsonschema==4.26.0
@@ -11,6 +11,6 @@ pytest>=9.1.1
 pytest-asyncio>=0.24.0
 sentence-transformers==5.6.0
 transformers>=5.12.1
-peft==0.19.1
-llama-cpp-python==0.3.23
+peft==0.20.0
+llama-cpp-python==0.3.35
 python-dateutil==2.9.0.post0
