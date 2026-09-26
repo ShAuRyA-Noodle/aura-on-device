@@ -6,8 +6,9 @@ updates:
       interval: weekly
       day: monday
     groups:
-      minor-patch:
-        update-types: [minor, patch]
+      compatible-updates:
+        applies-to: version-updates
+        patterns: ["*"]
     # Python 3.11 remains in CI and cannot install these release lines.
     ignore:
       - dependency-name: numpy
@@ -24,8 +25,9 @@ updates:
       interval: weekly
       day: monday
     groups:
-      minor-patch:
-        update-types: [minor, patch]
+      compatible-updates:
+        applies-to: version-updates
+        patterns: ["*"]
     open-pull-requests-limit: 5
 
   - package-ecosystem: pip
@@ -34,8 +36,9 @@ updates:
       interval: weekly
       day: monday
     groups:
-      minor-patch:
-        update-types: [minor, patch]
+      compatible-updates:
+        applies-to: version-updates
+        patterns: ["*"]
     open-pull-requests-limit: 5
 
   - package-ecosystem: pip
@@ -44,8 +47,9 @@ updates:
       interval: weekly
       day: monday
     groups:
-      minor-patch:
-        update-types: [minor, patch]
+      compatible-updates:
+        applies-to: version-updates
+        patterns: ["*"]
     ignore:
       - dependency-name: numpy
         versions: [">=2.5.0"]
@@ -56,6 +60,10 @@ updates:
     schedule:
       interval: weekly
       day: monday
+    groups:
+      actions-updates:
+        applies-to: version-updates
+        patterns: ["*"]
 
   - package-ecosystem: docker
     directory: /hf_space
