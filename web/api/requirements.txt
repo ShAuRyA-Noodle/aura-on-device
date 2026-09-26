@@ -21,7 +21,7 @@ pytest-asyncio>=1.4.0
 qrcode>=7.4
 
 # Optional: load testing.
-locust>=2.44.1
+locust>=2.44.4
 
 # Diff helpers used in tests.
 deepdiff>=7.0
