@@ -8,6 +8,12 @@ updates:
     groups:
       minor-patch:
         update-types: [minor, patch]
+    # Python 3.11 remains in CI and cannot install these release lines.
+    ignore:
+      - dependency-name: numpy
+        versions: [">=2.5.0"]
+      - dependency-name: xgboost
+        versions: [">=3.3.0"]
     open-pull-requests-limit: 5
 
   - package-ecosystem: pip
@@ -38,6 +44,9 @@ updates:
     groups:
       minor-patch:
         update-types: [minor, patch]
+    ignore:
+      - dependency-name: numpy
+        versions: [">=2.5.0"]
     open-pull-requests-limit: 5
 
   - package-ecosystem: github-actions
