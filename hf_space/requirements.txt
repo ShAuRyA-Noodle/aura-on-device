@@ -5,7 +5,7 @@
 # `huggingface_hub` + `starlette` pins below moved together with it.
 gradio>=6.26.0
 huggingface_hub>=1.30.0
-starlette>=1.6.0
+starlette>=1.7.0
 fastapi>=0.141.1
 pydantic==2.13.5
 jsonschema==4.26.0
