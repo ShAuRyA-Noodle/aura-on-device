@@ -9,7 +9,7 @@ langchain-core>=0.3.85
 jsonschema==4.26.0
 pytest>=9.1.1
 pytest-asyncio>=1.4.0
-sentence-transformers==5.6.0
+sentence-transformers==6.1.0
 transformers>=5.12.1
 peft==0.21.0
 llama-cpp-python==0.3.35
