@@ -2,22 +2,13 @@
 
 Static landing page for project Aura. Plain HTML + CSS, no Jekyll, no build step.
 
-Live (target): https://ShAuRyA-Noodle.github.io/aura-on-device
-Live (current Pages config): https://shaurya-noodle.github.io/aura-on-device/docs/site/
+Live entry URL: https://shaurya-noodle.github.io/aura-on-device/
+Landing page: https://shaurya-noodle.github.io/aura-on-device/site/
 
-> Note: the GitHub Pages REST API only accepts `/` or `/docs` as a source
-> path; `/docs/site` is rejected with HTTP 422. Pages was therefore enabled
-> with `source.branch=main, source.path=/docs`, and the site is served from
-> `/aura/docs/site/` underneath that. To get the bare-root URL to serve the
-> landing page, do **one** of the following manual steps:
->
-> 1. In the GitHub UI at
->    `https://github.com/ShAuRyA-Noodle/aura-on-device/settings/pages`,
->    switch the source to "GitHub Actions" and add a workflow that uploads
->    `aura/docs/site/` as the Pages artifact (recommended).
-> 2. Or copy / symlink the contents of `aura/docs/site/` to repo root
->    `docs/` and re-run
->    `gh api -X PUT /repos/ShAuRyA-Noodle/aura-on-device/pages -f build_type=legacy -F 'source[branch]=main' -F 'source[path]=/docs'`.
+GitHub Pages publishes `main:/docs`. The root `docs/index.html` sends visitors
+to the landing page in `docs/site/`, keeping the documentation files available
+beside it. The `docs/.well-known/security.txt` copy makes the disclosure link
+work on the published site.
 
 ## Files
 
