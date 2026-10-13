@@ -1,7 +1,7 @@
 # Aura local-network FastAPI bridge.
 # Production-grade Mac-side daemon for the iPhone client.
 
-fastapi>=0.141.1
+fastapi>=0.143.0
 uvicorn[standard]>=0.53.0
 pydantic>=2.13.5
 structlog>=26.1.0
