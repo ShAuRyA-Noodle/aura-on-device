@@ -2,7 +2,7 @@
 # HF Spaces accepts either a Gradio SDK config or a Dockerfile; this is the
 # Dockerfile path for teams that want full control of the runtime.
 
-FROM python:3.11-slim
+FROM python:3.12-slim
 
 # System deps stay tiny: sqlite is shipped with Python; no GPU drivers.
 RUN apt-get update \
