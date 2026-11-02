@@ -7,10 +7,10 @@
 # The agent + orchestrator + memory tests import only the lightweight
 # packages below; ML calls are stubbed.
 
-pydantic==2.13.5
+pydantic==2.14.2
 jsonschema==4.26.0
 pytest>=9.1.1
-pytest-asyncio==1.4.0
+pytest-asyncio==1.4.1
 python-dateutil==2.9.0.post0
 
 # CI needs these too — they're used by the test code paths in
